@@ -1,18 +1,18 @@
 # DuploJS - Sommaire
 
-## [Introduction](./docs/introduction.md)
+## [Introduction](./introduction.md)
 
-1. [Raison d'être](./docs/introduction.md#raison-dêtre)
-2. [Philosophie du framework](./docs/introduction.md#philosophie-du-framework)
-3. [Le scope](./docs/introduction.md#le-scope)
+1. [Raison d'être](./introduction.md#raison-dêtre)
+2. [Philosophie du framework](./introduction.md#philosophie-du-framework)
+3. [Le scope](./introduction.md#le-scope)
 
 ## Duplo Prérequis
 
-1. [Typescript](./docs/typescript.md)
+1. [Typescript](./typescript.md)
 
-2. [Zod](./docs/zod.md)
+2. [Zod](./zod.md)
 
-3. [Design pattern builder](./docs/designPaternBuilder.md)
+3. [Design pattern builder](./designPaternBuilder.md)
 
 ## DuploJS
 
