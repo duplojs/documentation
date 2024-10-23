@@ -1,11 +1,11 @@
 ---
 nav_order: 1
 layout: default
-title: Accueil
+title: Home
 permalink: "/"
-nav_exclude: true
-nav_enabled: false
+heading_anchors: false
 ---
 # hello world
 
 [FR](./fr/home){: .btn .btn-purple }
+[EN](./en/home){: .btn .btn-blue }
