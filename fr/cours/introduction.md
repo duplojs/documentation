@@ -3,9 +3,7 @@ parent: Coures
 layout: default
 title: Introduction
 nav_order: 1
-permalink: /cours/introduction
 ---
-
 # Introduction
 
 ## Raison d'être

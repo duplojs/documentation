@@ -1,3 +1,10 @@
+---
+parent: Prérequis
+layout: default
+title: Zod
+nav_order: 2
+---
+
 # Introduction à la librairie `Zod`
 
 `Zod` est une librairie de schéma qui permet de valider des données en fonction de règles définies.
@@ -223,4 +230,4 @@ const number = numberSchema.parse("42"); // (number)
 `Zod` est une librairie de validation de données puissante et flexible qui s'intègre parfaitement avec `TypeScript`.
 Elle permet de définir des schémas complexes et de valider des données en fonction de ces schémas, offrant ainsi une solution robuste pour la gestion des entrées dans les applications `TypeScript`.
 
-[Retour au Sommaire](./README.md)
+[Retour au Sommaire](/documentation/cours/)

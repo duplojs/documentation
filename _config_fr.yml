@@ -19,14 +19,20 @@
 # in the templates via {{ site.myvariable }}.
 title: DuploJS
 url: https://duplojs.github.io
-baseurl: /documentation
+baseurl: /documentation/fr
 email: campani.mathieu@gmail.com
 github_username: mathcovax
+permalink: pretty
 
 # Build settings
+source: "fr"
+destination: "_site/fr"
 theme: just-the-docs
 plugins:
   - jekyll-feed
+exclude:
+  - en/
+  - index.md
 
 # Exclude from processing.
 # The following items will not be processed, by default.

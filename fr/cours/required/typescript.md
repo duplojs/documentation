@@ -1,3 +1,10 @@
+---
+parent: Prérequis
+layout: default
+title: TypeScript
+nav_order: 1
+---
+
 # Introduction à TypeScript
 
 `TypeScript` est un langage de programmation qui s'appuie sur `JavaScript`, tout en ajoutant des fonctionnalités comme les **types statiques**, qui permet notamment à savoir à l'avance dans notre IDE si notre code est correct et s'éxecutera bien. C'est un langage qui rend `JavaScript` plus **robuste**, **lisible** et permet aux développeurs de coder avec plus de **sécurité** en évitant certaines erreurs courantes. Il est de plus en plus utilisé dans le développement d'applications web modernes pour sa capacité à améliorer la **qualité** et la **maintenabilité** du code.
@@ -114,4 +121,4 @@ const labelsContract: StatusLabel = {
 type labelsContractKeys = keyof typeof labelsContract // type string
 ```
 
-[Retour au Sommaire](./README.md)
+[Retour au Sommaire](/documentation/cours/)

@@ -1,27 +1,11 @@
 ---
 layout: default
-title: Coures
-nav_order: 2
-permalink: /cours/
+title: Commencer
+nav_order: 3
+has_toc: false
 ---
 
-# DuploJS - Sommaire
-
-## Introduction
-
-1. [Raison d'être](./introduction)
-2. [Philosophie du framework](./introduction)
-3. [Le scope](./introduction)
-
-## Duplo Prérequis
-
-1. [Typescript](./typescript.md)
-
-2. [Zod](./zod.md)
-
-3. [Design pattern builder](./designPaternBuilder.md)
-
-## DuploJS
+# Commencer !
 
 1. Ma première route
     - Extraction de données `extract()`

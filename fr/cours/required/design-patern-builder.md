@@ -1,3 +1,10 @@
+---
+parent: Prérequis
+layout: default
+title: Design Pattern Builder
+nav_order: 3
+---
+
 # Design Pattern Builder
 
 **Qu'est que c'est ?**
@@ -55,4 +62,4 @@ const myCar = new CarBuilder()
 console.log(myCar); // Car { engine: 'V8', wheels: 4, color: 'Red' }
 ```
 
-[Retour au Sommaire](./README.md)
+[Retour au Sommaire](/documentation/cours/)
