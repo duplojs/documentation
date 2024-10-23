@@ -7,11 +7,11 @@ permalink: /cours/
 
 # DuploJS - Sommaire
 
-## [Introduction](./introduction.md)
+## Introduction
 
-1. [Raison d'être](./introduction.md#raison-dêtre)
-2. [Philosophie du framework](./introduction.md#philosophie-du-framework)
-3. [Le scope](./introduction.md#le-scope)
+1. [Raison d'être](./introduction)
+2. [Philosophie du framework](./introduction)
+3. [Le scope](./introduction)
 
 ## Duplo Prérequis
 
