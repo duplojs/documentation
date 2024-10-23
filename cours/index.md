@@ -1,3 +1,10 @@
+---
+layout: default
+title: Coures
+nav_order: 2
+permalink: /cours/
+---
+
 # DuploJS - Sommaire
 
 ## [Introduction](./introduction.md)

@@ -1,3 +1,11 @@
+---
+parent: Coures
+layout: default
+title: Introduction
+nav_order: 1
+permalink: /cours/introduction
+---
+
 # Introduction
 
 ## Raison d'être
@@ -29,4 +37,4 @@ Enfin, `Duplo` se veut agnostique[^2]. Son core ne dépend d’aucune plateforme
 [^5]: Middleware: Fonction intermédiaire qui peut être utilisée pour effectuer des tâches supplémentaires avant ou après le traitement de la requête.
 [^6]: ORM: Object-Relational Mapping, permet de manipuler des données de la base de données en utilisant des objets.
 
-[Retour au Sommaire](./README.md)
+[Retour au Sommaire](/documentation/cours/)
