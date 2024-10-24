@@ -23,13 +23,20 @@ baseurl: /documentation/fr
 email: campani.mathieu@gmail.com
 github_username: mathcovax
 permalink: pretty
-  
+logo: "/assets/images/logo.svg"
+
 # Build settings
 source: "fr"
 destination: "_site/fr"
 theme: just-the-docs
+assets:
+  destination: "_site/fr/otto"
+  sources:
+    - assets/images
 plugins:
   - jekyll-feed
+  - jekyll-assets
+
 
 # Exclude from processing.
 # The following items will not be processed, by default.
