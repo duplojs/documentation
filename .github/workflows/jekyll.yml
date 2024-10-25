@@ -42,9 +42,10 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - run: bundle exec jekyll build --config _config_home.yml
-      - run: bundle exec jekyll build --config _config_fr.yml
       - run: bundle exec jekyll build --config _config_en.yml
+        env:
+          JEKYLL_ENV: production
+      - run: bundle exec jekyll build --config _config_fr.yml
         env:
           JEKYLL_ENV: production
       - name: Upload artifact
