@@ -1,0 +1,18 @@
+@import "./color_schemes/light";
+
+$primary-color: $yellow-300;
+
+$color-scheme: light;
+$body-background-color: $white;
+$body-heading-color: $grey-ydk-300;
+$body-text-color: $grey-ydk-100;
+$link-color: $yellow-300;
+$nav-child-link-color: $grey-ydk-100;
+$sidebar-color: $grey-ylt-000;
+$base-button-color: #f7f7f7;
+$btn-primary-color: $yellow-300;
+$code-background-color: $grey-ylt-000;
+$feedback-color: darken($sidebar-color, 3%);
+$table-background-color: $white;
+$search-background-color: $white;
+$search-result-preview-color: $grey-ydk-000;

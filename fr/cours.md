@@ -22,5 +22,5 @@ has_toc: false
 ## Commençons à expérimenter DuploJS
 {: .mb-6}
 
-[C'est Partie !](../get-started/){: .btn .btn-purple .mr-6 } 
+[C'est Partie !](../get-started/){: .btn .btn-yellow .mr-6 } 
 [Non](https://www.youtube.com/watch?v=dQw4w9WgXcQ){: .btn .btn-outline }

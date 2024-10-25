@@ -1,0 +1,3 @@
+.btn-yellow {
+    @include btn-color($white, $yellow-300);
+}
