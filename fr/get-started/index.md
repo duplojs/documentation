@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Commencer
-nav_order: 3
+nav_order: 4
 has_toc: false
 ---
 
@@ -27,3 +27,5 @@ has_toc: false
 5. Exercice système d'authentification
 6. Initiation à la création d'un plugin (Logger)
 7. Fonctionnement des Tests (TU Route)
+
+[Retour au Références](..)
