@@ -11,7 +11,7 @@ nav_order: 1
 - [tsx v4 ou +](https://www.npmjs.com/package/tsx)
 
 # Installation manuel
-
+Pour utilisais `Duplo` sur `NodeJS`, il vous faut installer le [@duplojs/core](https://github.com/duplojs/core) et la librairy de portage [@duplojs/node](https://github.com/duplojs/node).
 ```bash
 npm install @duplojs/core @duplojs/node
 ```
@@ -26,7 +26,8 @@ Définisé le paramétre `type` sur la valeur `module` dans le `package.json`.
     ...,
 ++  "type": "module",
     "scripts": {
-++      "dev": "tsx src/main.ts", /* permet de lancer le fichier src/main.ts avec la command npm run dev */
+        /* permet de lancer le fichier src/main.ts avec la command npm run dev */
+++      "dev": "tsx src/main.ts", 
         ...
     },
     ...
@@ -50,7 +51,8 @@ Les paramétres suivant sont fortement conseillés a inclure dans votre fichier 
         "strict": true,
         ...
     },
-    "include": ["src/**/*.ts"], /* ce paramétre dépant de votre configuration */
+    /* ce paramétre dépant de votre configuration */
+    "include": ["src/**/*.ts"], 
     ...
 }
 ```
@@ -68,6 +70,7 @@ const duplo = new Duplo({
     port: 1506,
 });
 
+// method qui lance le serveur web
 const server = await duplo.launch();
 ```
 

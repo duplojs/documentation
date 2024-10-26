@@ -25,11 +25,11 @@ title: Référence
 
 ## Commencer [▶](./get-started)
 
-1. [Déclaré une route]()
-2. [Obtenir de la donné d'une requéte]()
-3. [Faire une vérification]()
-4. [Définir une réponse]()
-5. [Comment abordé une nouvel route]()
-6. [Routine de vérification]()
+1. [Déclaré une route](./get-started/declare-route)
+2. [Obtenir de la donné d'une requéte](./get-started/getting-data-from-request)
+3. [Faire une vérification](./get-started/do-check)
+4. [Définir une réponse](./get-started/define-response)
+5. [Comment abordé une nouvel route](./get-started/how-to-approach-new-road)
+6. [Routine de vérification](./get-started/verification-routine)
 
 ## Examples [▶](./examples/)
