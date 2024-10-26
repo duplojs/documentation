@@ -1,0 +1,28 @@
+<script>
+    if(location.search.includes("moodle")){
+    const sideBar = document.querySelector(".side-bar");
+
+    if(sideBar){
+        sideBar.remove();
+    }
+
+    const mainHeader = document.getElementById("main-header");
+
+    if(mainHeader){
+        mainHeader.remove();
+    }
+
+    const top = document.getElementById("top");
+
+    if(top){
+        const calque = document.createElement("div");
+        calque.style.position = "fixed";
+        calque.style.width = "100%";
+        calque.style.height = "100%";
+        calque.style.top = "0";
+        calque.style.left = "0";
+
+        top.appendChild(calque);
+    }
+}
+</script>

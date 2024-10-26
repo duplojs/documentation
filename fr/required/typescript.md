@@ -121,4 +121,4 @@ const labelsContract: StatusLabel = {
 type labelsContractKeys = keyof typeof labelsContract // type string
 ```
 
-[Retour au Sommaire](../..)
+[Retour au Références](../..)

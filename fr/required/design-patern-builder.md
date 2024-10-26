@@ -62,4 +62,4 @@ const myCar = new CarBuilder()
 console.log(myCar); // Car { engine: 'V8', wheels: 4, color: 'Red' }
 ```
 
-[Retour au Sommaire](../..)
+[Retour au Références](../..)
