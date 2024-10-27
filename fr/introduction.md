@@ -7,7 +7,7 @@ nav_order: 2
 
 ## Raison d'être
 
-Comme beaucoup de librairies, `Duplo` est né d'une frustration. Aujourd'hui `JavaScript` est un écosystème complet qui vous permet aussi bien de faire du front-end web, mobile ou desktops que du back-end. Mais, forcé d'avouer que les librairies front-end sont bien plus élaborées et complètes surtout d'un point de vue de développeur `Typescript`. Cela est bien dommage, `Typescript` aujourd'hui augmente significativement la maintenabilité de vos projets. Les frameworks front-end ont une intégration très intéressante de `Typescript`. Ils mettent à disposition énormément de helpers[^1] fortement typés mais flexibles qui facilitent la vie des développeurs. Malheureusement côté back-end si je prends pour exemple `Express` (peut-être pas le meilleur mais sûrement le plus représentatif et le plus répandu) le typage a été fait à côté de la librairie. Ce qui donne une impression de bricolage lorsqu'on l'utilise avec `Typescript`.
+Comme beaucoup de librairies, `Duplo` est né d'une frustration. Aujourd'hui `JavaScript` est un écosystème complet qui vous permet aussi bien de faire du front-end web, mobile ou desktops que du back-end. Cependant, force est de constater que les librairies front-end sont bien plus élaborées et complètes, surtout d'un point de vue de développeur `Typescript`. C'est regrettable, car `Typescript` aujourd'hui améliore significativement la maintenabilité des projets. Les frameworks front-end offrent une intégration très intéressante de `Typescript` en proposant de nombreux helpers[^1] fortement typés mais flexibles, qui facilitent le travail des développeurs. Malheureusement, du côté back-end, si l'on prend par exemple `Express` (peut-être pas le meilleur mais sûrement le plus représentatif et le plus répandu) le typage a été fait à côté de la librairie. Ce qui donne une impression de bricolage lorsqu'on l'utilise avec `Typescript`.
 
 Cependant `Express` propose une liberté complète dans ses points d'entrée. Il vous livre à vous-même avec dans une main un objet représentant la Request et dans l'autre la Response. Certains trouveront ça fantastique, il y a tout à construire. Donc pour chacun de vos points d'entrée, il faudra implémenter votre système de validation de données, vos systèmes d'authentification et gérer également leurs erreurs. Les middlewares[^5] pourront sûrement vous aider, sauf si vous souhaitez passer des données à votre fonction principale tout en gardant un typage réel. Vos solutions pourraient fonctionner, il faudrait alors bien documenter votre travail pour qu'il puisse continuer à être maintenu. Mais ne serait-ce pas mieux d'avoir un outil qui vous propose de vous décharger de tout l'aspect technique des vérifications et qui vous donnerait l'occasion de ne réfléchir qu'au besoin métier ? C'est dans ce but que `Duplo` a été créé, en vous proposant une solution agnostique[^2], opiniâtre[^3] et 100% typesafe[^4].
 
@@ -27,11 +27,11 @@ Enfin, `Duplo` se veut agnostique[^2]. Son core ne dépend d’aucune plateforme
 
 `Duplo` est comparable a un `Express` ou un `Fastify`, il se branche directement au APIs natives des platforms. `Duplo` ne prend pas en charge la couche ORM[^6] et gestion des services. Cependant il met des solutions pour intégrer ce que vous souhaitez. Le rôle de `Duplo` est de vous inciter a faire le plus de vérification possible pour vous garantir la fiabilité des données.
 
-[^1]: Helpers: Fonctions utilitaires et asistant au typage.
-[^2]: Agnostique: Qui n'est pas lié à une technologie particulière.
-[^3]: Opiniâtre: vision tranchée sur les solutions possibles.
-[^4]: Typesafe: Qui garantit la sécurité des types.
-[^5]: Middleware: Fonction intermédiaire qui peut être utilisée pour effectuer des tâches supplémentaires avant ou après le traitement de la requête.
-[^6]: ORM: Object-Relational Mapping, permet de manipuler des données de la base de données en utilisant des objets.
+[^1]: Helpers : Fonctions utilitaires et assistantes au typage.
+[^2]: Agnostique : Qui n'est pas lié à une technologie particulière.
+[^3]: Opiniâtre : vision tranchée sur les solutions possibles.
+[^4]: Typesafe : Qui garantit la sécurité des types.
+[^5]: Middleware : Fonction intermédiaire qui peut être utilisée pour effectuer des tâches supplémentaires avant ou après le traitement de la requête.
+[^6]: ORM : Object-Relational Mapping, permet de manipuler des données de la base de données en utilisant des objets.
 
 [Retour au Références](..)

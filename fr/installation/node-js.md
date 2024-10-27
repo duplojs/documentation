@@ -5,19 +5,19 @@ title: NodeJS
 nav_order: 1
 ---
 
-## Prérequit minimal pour installer et utiliser Duplo
+## Prérequis minimum pour installer et utiliser Duplo
 - [NodeJS v20 ou +](https://nodejs.org/fr/blog/release/v20.0.0)
 - [Typescript v5.5 ou +](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-5.html)
 - [tsx v4 ou +](https://www.npmjs.com/package/tsx)
 
-# Installation manuel
-Pour utilisais `Duplo` sur `NodeJS`, il vous faut installer le [@duplojs/core](https://github.com/duplojs/core) et la librairy de portage [@duplojs/node](https://github.com/duplojs/node).
+# Installation manuelle
+Pour utiliser `Duplo` sur `NodeJS`, vous devez installer le package [@duplojs/core](https://github.com/duplojs/core) et la librairie de portage [@duplojs/node](https://github.com/duplojs/node).
 ```bash
 npm install @duplojs/core @duplojs/node
 ```
 
 ## Configuration package.json
-Définisé le paramétre `type` sur la valeur `module` dans le `package.json`.
+Définissez le paramètre `type` sur la valeur `module` dans le `package.json`.
 
 ```js
 {
@@ -35,7 +35,7 @@ Définisé le paramétre `type` sur la valeur `module` dans le `package.json`.
 ```
 
 ## Configuration tsconfig.json
-Les paramétres suivant sont fortement conseillés a inclure dans votre fichier `tsconfig.json` pour une compatibilité optimale avec le plus de package.
+Les paramètres suivants sont fortement conseillés à inclure dans votre fichier `tsconfig.json` pour une compatibilité optimale avec la plupart des packages.
 
 ```js
 {
@@ -51,14 +51,14 @@ Les paramétres suivant sont fortement conseillés a inclure dans votre fichier 
         "strict": true,
         ...
     },
-    /* ce paramétre dépant de votre configuration */
+    /* ce paramètre dépend de votre configuration */
     "include": ["src/**/*.ts"], 
     ...
 }
 ```
 
 ## Premier fichier
-Créer le fichier `src/main.ts` avec le contenue suivant dedans.
+Créer le fichier `src/main.ts` avec le contenu suivant.
 
 ```ts
 import "@duplojs/node";
@@ -70,7 +70,7 @@ const duplo = new Duplo({
     port: 1506,
 });
 
-// method qui lance le serveur web
+// methode qui lance le serveur web
 const server = await duplo.launch();
 ```
 

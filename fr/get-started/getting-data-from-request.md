@@ -1,8 +1,8 @@
 ---
 layout: default
 parent: Commencer
-title: Obtenir de la donné d'une requéte
+title: Obtenir de la donnée d'une requête
 nav_order: 2
 ---
 
-# Obtenir de la donné d'une requéte
+# Obtenir de la donnée d'une requête

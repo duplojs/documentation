@@ -1,8 +1,8 @@
 ---
 layout: default
 parent: Commencer
-title: Comment abordé une nouvel route
+title: Aborder une nouvelle route
 nav_order: 5
 ---
 
-# Comment abordé une nouvel route
+# Aborder une nouvelle route

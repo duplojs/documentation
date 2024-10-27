@@ -19,7 +19,7 @@ nav_order: 1
 
 ## Comment fonctionne TypeScript ?
 
-`TypeScript` fonctionne en tant que sur-ensemble de `JavaScript`. Cela signifie que tout code `JavaScript` valide est également du code `TypeScript` valide. Cependant, `TypeScript` ajoute des fonctionnalités supplémentaires, comme le typage statique et les interfaces. Lorsque tu écris du code `TypeScript`, il est ensuite transpilé en `JavaScript` standard pour pouvoir être exécuté dans un navigateur ou un environnement comme Node.js. Cela permet d'avoir les avantages de `TypeScript` tout en restant compatible avec l'écosystème `JavaScript`.
+`TypeScript` fonctionne en tant que sur-ensemble de `JavaScript`. Cela signifie que tout code `JavaScript` valide est également du code `TypeScript` valide. Cependant, `TypeScript` ajoute des fonctionnalités supplémentaires, comme le typage statique et les interfaces. Lorsque l'on écrit du code `TypeScript`, il est ensuite transpilé en `JavaScript` standard pour pouvoir être exécuté dans un navigateur ou un environnement comme Node.js. Cela permet d'avoir les avantages de `TypeScript` tout en restant compatible avec l'écosystème `JavaScript`.
 
 ## Qu'est-ce que le duck typing en TypeScript ?
 
@@ -74,7 +74,7 @@ type checkString = string extends A ? true : false // checkString = false
 
 ## L'opérateur keyof
 
-L'opérateur **keyof** en `TypeScript` te permet de récupérer les clés (ou propriétés) d'un objet sous forme de type. Imaginons qu'on a un objet `Chien` qui a les propriétés `nom` et `race`. On peut utiliser l'opérateur `keyof` afin de récupérer les propriétés de l'objet voulu, ici `Chien` par exemple.
+L'opérateur **keyof** en `TypeScript` permet de récupérer les clés (ou propriétés) d'un objet sous forme de type. Imaginons un objet `Chien` qui a les propriétés `nom` et `race`. On peut utiliser l'opérateur `keyof` afin de récupérer les propriétés de l'objet voulu, ici `Chien` par exemple.
 
 ```ts
 class Chien {

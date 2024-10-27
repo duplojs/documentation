@@ -207,7 +207,7 @@ const userSchema = zod.object({
 
 ### 5. Transformer des données
 
-`Zod` permet également de transformer des données lors de la validation avec .transform().
+`Zod` permet également de transformer des données lors de la validation avec `.transform()`.
 
 ```ts
 const stringToNumberSchema = zod.string().transform((val) => parseInt(val, 10));
@@ -215,7 +215,7 @@ const stringToNumberSchema = zod.string().transform((val) => parseInt(val, 10));
 stringToNumberSchema.parse("42"); // 42 (nombre)
 ```
 
-On peut aussi éffectuer des transformations plus basic avec `.coerce.typeAttendu()` (`date()`, `number()`, etc).
+On peut aussi éffectuer des transformations plus basique avec `.coerce.typeAttendu()` (`date()`, `number()`, etc).
 
 ```ts
 const dateSchema = zod.coerce.date(); // equivalent à new Date("2022-01-01")

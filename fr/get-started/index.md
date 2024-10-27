@@ -7,31 +7,31 @@ has_toc: false
 
 # Commencer !
 
-1. [Déclaré une route](./declare-route)
+1. [Déclarer une route](./declare-route)
     - Créer une route simple
     - Enregister les routes
     - Le floor
-2. [Obtenir de la donné d'une requéte](./getting-data-from-request)
+2. [Obtenir de la donnée d'une requête](./getting-data-from-request)
     - La method extract
-    - Niveau d'extraction de la donner
-    - Gestion des echecs
+    - Niveau d'extraction de la donnée
+    - Gestion des échecs
 3. [Faire une vérification](./do-check)
     - Les checkers
     - Création d'un checker
     - Implémentation d'un checker dans une route
-    - Les preset checkers
+    - Les presets checkers
     - Implémentation d'un preset checker dans une route
     - Les cuts
 4. [Définir une réponse](./define-response)
-    - Les shema de documents
+    - Les schemas de documents
     - Implémentations d'un schema dans une route
-5. [Comment abordé une nouvel route](./how-to-approach-new-road)
-    - Outils a ma disposition
-    - Pars quoi commencé
+5. [Aborder une nouvelle route](./how-to-approach-new-road)
+    - Outils à ma disposition
+    - Par quoi commencer ?
     - Réalisation d'une route
 6. [Routine de vérification](./verification-routine)
     - Les process
-    - Implémentations d'un process
-    - Crées c'est propre builder
+    - Implémentation d'un process
+    - Créer ses propres builders
 
 [Retour au Références](..)
