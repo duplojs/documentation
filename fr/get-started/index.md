@@ -5,7 +5,7 @@ nav_order: 5
 has_toc: false
 ---
 
-# Commencer !
+# Commencer
 
 1. [Déclarer une route](./declare-route)
     - Créer une route simple
