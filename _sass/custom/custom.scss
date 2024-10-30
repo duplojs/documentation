@@ -28,10 +28,17 @@
             padding: 0.75rem 1rem;
             border-radius: 8px;
             color: $body-heading-color;
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
 
             &:hover, &.active {
-                background-image: none;
-                background-color: #FFF6E0;
+                background-image: linear-gradient(
+                    -90deg,
+                    rgba(#FFF6E0, 0.6) 0%,
+                    rgba(#FFF6E0, 0.4) 60%,
+                    rgba(#fff6e0, 0) 100%
+                );
                 color: $link-color !important;
             }
         }
