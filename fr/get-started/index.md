@@ -9,8 +9,9 @@ has_toc: false
 
 1. [Déclarer une route](./declare-route)
     - Créer une route simple
-    - Enregister les routes
+    - Enregistrer les routes
     - Le floor
+    - Les informations
 2. [Obtenir de la donnée d'une requête](./getting-data-from-request)
     - La method extract
     - Niveau d'extraction de la donnée
