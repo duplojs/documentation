@@ -118,7 +118,7 @@ export const myRoute = useBuilder()
     .createRoute("GET", "/hello-world")
     // Extract est une step qui permet d'enrichir le floor
     .extract({
-        query:{
+        query: {
             foo: zod.string()
         }
     })
