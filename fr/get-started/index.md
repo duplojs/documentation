@@ -12,6 +12,7 @@ has_toc: false
     - Enregistrer les routes
     - Le floor
     - Les informations
+    - Les réponse preset
 2. [Obtenir de la donnée d'une requête](./getting-data-from-request)
     - La method extract
     - Niveau d'extraction de la donnée
