@@ -14,6 +14,7 @@ Tous les exemples présent dans ce cours son disponible en entier [ici](https://
 {:toc}
 
 ## Les checkers
+Les checkers sont des interface. Ils transforme du code impératife en action explicite pour le DuploJS.
 
 <br>
 
