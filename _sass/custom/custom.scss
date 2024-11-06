@@ -78,6 +78,7 @@
         max-width: none;
 
         .main-header {
+            z-index: 1;
             position: sticky;
             top: 0;
         }
