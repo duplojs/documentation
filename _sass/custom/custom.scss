@@ -51,7 +51,7 @@
     }
 }
 
-@media (max-width: 50rem) {
+@media (min-width: 50rem) {
     .side-bar {
         flex-flow: column nowrap;
         position: fixed;
