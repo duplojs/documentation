@@ -13,6 +13,8 @@ Tous les exemples présent dans ce cours son disponible en entier [ici](https://
 1. TOC
 {:toc}
 
+## Les checkers
+
 <br>
 
 [\<\< Obtenir de la donnée d'une requête](../getting-data-from-request){: .btn .mr-4 }
