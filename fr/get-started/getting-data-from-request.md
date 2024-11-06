@@ -19,39 +19,42 @@ La method `extract` fait partir du builder de l'objet `Route`. Elle a pour effet
 import { CreatedHttpResponse, useBuilder, zod } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("POST", "/user")
-	.extract({
-		body: zod.object({
-			userName: zod.string(),
-			email: zod.string(),
-			age: zod.coerce.string(),
-		}).strip(),
-	})
-	.handler(
-		(pickup) => {
-			const { userName, email, age } = pickup("body");
+    .createRoute("POST", "/user")
+    .extract({
+        body: zod.object({
+            userName: zod.string(),
+            email: zod.string(),
+            age: zod.coerce.string(),
+        }).strip(),
+    })
+    .handler(
+        (pickup) => {
+            const { userName, email, age } = pickup("body");
 
-			const user = {
-				id: 1,
-				userName,
-				email,
-				age,
-			};
+            const user = {
+                id: 1,
+                userName,
+                email,
+                age,
+            };
 
-			return new CreatedHttpResponse(
-				"user.created",
-				user,
-			);
-		},
-	);
+            return new CreatedHttpResponse(
+                "user.created",
+                user,
+            );
+        },
+    );
 ```
 
 Dans cet exemple :
 - La method `extract` est utilisé avant la method `handler` donc l'exécution de l'étape `ExtractStep` ce fera avand l'exécution de la `HandlerStep`.
 - Le premier argument de `extract` est un objet qui a les même clefs que l'objet `Request`.
-- Le schema zod sur la clef `body` de l'objet passé en premier argument, sera appliqué la valeur que porte l'objet `Request` sur ça clef `body`.
-- La method `strip` sur le schema zod prévient d'une erreur typescript ts(2589).
-- La clef `body` est ajouté au `floor`
+- Le schema `zod` sur la clef `body` de l'objet passé en premier argument, sera appliqué la valeur que porte l'objet `Request` sur ça clef `body`.
+- La clef `body` est ajouté au `floor` et auras le type qui est renvoyer par le schema `zod`.
+- En cas d'echec de parsing, la route renvera une réponse et l'execution s'arrétera a l'étape `ExtractStep`. Toute les étapes déclaré derrier notre cette `ExtractStep` ne seront donc pas éxécuter.
+- La method `strip` sur le schema `zod` prévient d'une erreur typescript `ts(2589)`.
+
+
 
 <br>
 
