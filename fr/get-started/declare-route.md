@@ -166,6 +166,7 @@ export const myRoute = useBuilder()
 
 Dans cette exemple :
 - La réponse renvoyée aura un header se nommant `information` possédant la valeur `My super info!`.
+- La réponse porte un body `undefined`.
 
 Dans l'idéal, chaque réponse envoyée possède une information différente, ce qui permet d'identifier de quelle partie du code provient la réponse. Le front pourra également se baser sur ces informations pour identifier le succès ou l'erreur d'une réponse. Par exemple, il peut vous arriver de renvoyer des erreurs 400 pour des raisons différentes. Cela vous permettera de les différencier.
 
