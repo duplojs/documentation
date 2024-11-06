@@ -42,6 +42,55 @@ Dans cet exemple :
 {: .no_toc }
 La method `handler` fait partir du builder de l'objet `Route`. Elle a pour effet direct d'ajouter une `HandlerStep` au étape de la route en cours de création. Les routes ne peuve avoir qu'une seul `HandlerStep` qui est obligatoirment la dernier `Step`. C'est pour cela que l'appel de cette method cloture la création de l'objet route et le renvois.
 
+### Cycle d'éxécution
+{: .no_toc }
+Une route est constituer de `Step` implémenter a traver un builder. l'ordre d'implémentation compte car l'éxécution d'une route est sécanciel, du haut vers le bas. Chaque `Step` vas avoir la posibilité d'interompre l'éxécution et renvoyer une réponse.
+
+```ts
+import { useBuilder, OkHttpResponse } from "@duplojs/core";
+
+useBuilder()
+    .createRoute("GET", "/hello-world")
+    .extract(/* ... */)
+    .check(/* ... */)
+    .exec(/* ... */)
+    .handler(() => {
+        return new OkHttpResponse(
+            "Hello World!", 
+            "This is a body."
+        );
+    });
+```
+
+Dans cet exemple :
+- Une route a étais créer avec 4 `Step`.
+- Le cycle d'éxécution de la route ce lit du haut vers le bas :
+    - `ExtractStep`
+    - `CheckerStep`
+    - `ProcessStep`
+    - `HandlerStep`
+
+### Paramétre de path
+{: .no_toc }
+Les `Route` peuvet étre dynamic pour avoir des paramétre. Les paramétre courant sont accecible a travers la clef `params` de l'object `Request`.
+
+```ts
+import { useBuilder, OkHttpResponse } from "@duplojs/core";
+
+useBuilder()
+    .createRoute("GET", "/user/{userId}")
+    .handler(() => {
+        return new OkHttpResponse(
+            "Hello World!", 
+            "This is a body."
+        );
+    });
+```
+
+Dans cet exemple :
+- La route posséde un paramétre `userId`.
+- Les paramétres sont tout le temps de type `string`
+
 ## Les réponses prédéfinit
 Comme vous avez pue le remarqué, l'objet retourné par le handler des route en exemple est `OkHttpResponse`. cette objet est une réponse prédéfinit. Ici `OkHttpResponse` représente une réponse avec le code `200`. il éxiste plus de 30 objet de réponse prédéfinit. Tous ces objet sont étendu de l'objet `Response`. Les réponses prédéfinit ont étais créer pour éviter d'utilisé directement des status de réponse qui sont juste des nombre. Cela permet d'avoir plus de sens lors de la lecture du code.
 
