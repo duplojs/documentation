@@ -150,6 +150,7 @@ Dans cet exemple :
 - La clef `userId` sera ajouter au `floor` et auras le type qui est renvoyer par le schema `zod`.
 
 ### Gestion des échecs global
+{: .no_toc }
 Il est possibles de changer le comportement par défaut sur toutes les étaps `ExtractStep`.
 
 ```ts
