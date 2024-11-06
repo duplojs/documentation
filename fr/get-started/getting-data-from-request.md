@@ -61,24 +61,24 @@ Il y a deux niveaux d'extraction, simple ou profond.
 import { OkHttpResponse, useBuilder, zod } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("GET", "/user/{userId}")
-	.extract({
-		params: zod.object({
-			userId: zod.string(),
-		}).strip(),
-	})
-	.handler(
-		(pickup) => {
-			const params = pickup("params");
+    .createRoute("GET", "/user/{userId}")
+    .extract({
+        params: zod.object({
+            userId: zod.string(),
+        }).strip(),
+    })
+    .handler(
+        (pickup) => {
+            const params = pickup("params");
 
-			console.log(params.userId);
+            console.log(params.userId);
 
-			return new OkHttpResponse(
-				"user",
-				undefined,
-			);
-		},
-	);
+            return new OkHttpResponse(
+                "user",
+                undefined,
+            );
+        },
+    );
 ```
 Dans cet exemple :
 - L'extraction ce fait sur un niveau simple
@@ -88,24 +88,24 @@ Dans cet exemple :
 import { OkHttpResponse, useBuilder, zod } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("GET", "/user/{userId}")
-	.extract({
-		params: {
-			userId: zod.string(),
-		},
-	})
-	.handler(
-		(pickup) => {
-			const userId = pickup("userId");
+    .createRoute("GET", "/user/{userId}")
+    .extract({
+        params: {
+            userId: zod.string(),
+        },
+    })
+    .handler(
+        (pickup) => {
+            const userId = pickup("userId");
 
-			console.log(userId);
+            console.log(userId);
 
-			return new OkHttpResponse(
-				"user",
-				undefined,
-			);
-		},
-	);
+            return new OkHttpResponse(
+                "user",
+                undefined,
+            );
+        },
+    );
 ```
 
 Dans cet exemple :
@@ -119,30 +119,30 @@ En d'échec sur l'execution d'une étape `ExtractStep` causé par l'invalidité 
 import { OkHttpResponse, InternalServerErrorHttpResponse, useBuilder, zod } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("GET", "/user/{userId}")
-	.extract(
-		{
-			params: {
-				userId: zod.string(),
-			},
-		},
-		(type, key, zodError) => new InternalServerErrorHttpResponse(
-			"error",
-			zodError,
-		),
-	)
-	.handler(
-		(pickup) => {
-			const userId = pickup("userId");
+    .createRoute("GET", "/user/{userId}")
+    .extract(
+        {
+            params: {
+                userId: zod.string(),
+            },
+        },
+        (type, key, zodError) => new InternalServerErrorHttpResponse(
+            "error",
+            zodError,
+        ),
+    )
+    .handler(
+        (pickup) => {
+            const userId = pickup("userId");
 
-			console.log(userId);
+            console.log(userId);
 
-			return new OkHttpResponse(
-				"user.get",
-				undefined,
-			);
-		},
-	);
+            return new OkHttpResponse(
+                "user.get",
+                undefined,
+            );
+        },
+    );
 ```
 
 Dans cet exemple :
@@ -159,10 +159,10 @@ import { UnprocessableEntityHttpResponse, useBuilder, Duplo } from "@duplojs/cor
 const duplo = new Duplo({ environment: "TEST" });
 
 duplo.setExtractError(
-	(type, key, zodError) => new UnprocessableEntityHttpResponse(
-		"error.extract",
-		zodError,
-	),
+    (type, key, zodError) => new UnprocessableEntityHttpResponse(
+        "error.extract",
+        zodError,
+    ),
 );
 
 duplo.register(...useBuilder.getAllCreatedDuplose());
