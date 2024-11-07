@@ -6,6 +6,23 @@ github_username: mathcovax
 permalink: pretty
 logo: "/assets/images/logo.svg"
 
+callouts_level: quiet # or loud
+callouts:
+  highlight:
+    color: yellow
+  important:
+    title: Important
+    color: blue
+  new:
+    title: New
+    color: green
+  note:
+    title: Note
+    color: purple
+  warning:
+    title: Warning
+    color: red
+
 # Build settings
 source: .
 destination: _site

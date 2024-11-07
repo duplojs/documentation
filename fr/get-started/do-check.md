@@ -20,24 +20,28 @@ Les checkers sont des interface. Ils transforme du code impératife en action de
 import { createChecker } from "@duplojs/core";
 
 export const userExistCheck = createChecker("userExist")
-	.handler(
-		(input: number, output) => {
-			const user = getUser({ id: input });
+    .handler(
+        (input: number, output) => {
+            const user = getUser({ id: input });
 
-			if (user) {
-				return output("user.exist", user);
-			} else {
-				return output("user.notfound", user);
-			}
-		},
-	);
+            if (user) {
+                return output("user.exist", user);
+            } else {
+                return output("user.notfound", user);
+            }
+        },
+    );
 ```
 
-Dans cette exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - Un checker a étais créer avec le nom `userExist`
 - La method handler définit la fonction passe plat.
+></div>
 
-Les `Checker` prenne une ou plusieur valeur d'entré et retourne plusieur sortie. Je présise bien plusieur car dans une vérification il une possibilité de resulta valide ou invalide au minimume. Pour précisé, tout depend du context dans le qu'elle vous éte. Dans l'exemple du `Checker` ci dessus, vous pouvez souhaiter qu'un utilisateur éxiste dans le cas d'une authentification. Mais vous pouvez égalment souhaiter qu'un utilisateur n'existe pas dans le cas de la création d'un utilisateur. Le `Checker` peux donc vous effectuer les vérification quen vous voulez dans le sens que vous souhaiter.
+{: .note }
+Les `Checker` prenne une ou plusieur valeur d'entré et retourne plusieur sortie. Je présise bien plusieur car dans une vérification il une possibilité de resulta valide ou invalide au minimume. Pour précisé, tout depend du context dans le qu'elle vous éte. Dans l'exemple du `Checker` ci dessus, vous pouvez souhaiter qu'un utilisateur éxiste dans le cadre d'une authentification. Mais vous pouvez égalment souhaiter qu'un utilisateur n'existe pas dans le cas de la création d'un utilisateur. Le `Checker` peux donc vous effectuer les vérification dans le sens que vous souéter. 
 
 <br>
 

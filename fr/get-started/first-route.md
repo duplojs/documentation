@@ -32,14 +32,16 @@ export const myRoute = useBuilder()
     });
 ```
 
-Dans cet exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - La méthode `createRoute` est utilisée pour créer un builder d’objet Route.
 - La route créée est de type `GET` avec le chemin `/hello-world`.
 - La méthode `handler` fait partie du builder de route et termine la création de celle-ci.
 - La méthode handler doit contenir l'action de la route et renvoyer une réponse positive.
+></div>
 
-### La method handler
-{: .no_toc }
+{: .note }
 La method `handler` fait partir du builder de l'objet `Route`. Elle a pour effet direct d'ajouter une `HandlerStep` au étape de la route en cours de création. Les routes ne peuve avoir qu'une seul `HandlerStep` qui est obligatoirment la dernier `Step`. C'est pour cela que l'appel de cette method cloture la création de l'objet route et le renvois.
 
 ### Cycle d'éxécution
@@ -62,13 +64,16 @@ useBuilder()
     });
 ```
 
-Dans cet exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - Une route a étais créer avec 4 `Step`.
 - Le cycle d'éxécution de la route ce lit du haut vers le bas :
     - `ExtractStep`
     - `CheckerStep`
     - `ProcessStep`
     - `HandlerStep`
+></div>
 
 ### Paramétre de path
 {: .no_toc }
@@ -87,9 +92,12 @@ useBuilder()
     });
 ```
 
-Dans cet exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - La route posséde un paramétre `userId`.
 - Les paramétres sont tout le temps de type `string`
+></div>
 
 ## Les réponses prédéfinit
 Comme vous avez pue le remarqué, l'objet retourné par le handler des route en exemple est `OkHttpResponse`. cette objet est une réponse prédéfinit. Ici `OkHttpResponse` représente une réponse avec le code `200`. il éxiste plus de 30 objet de réponse prédéfinit. Tous ces objet sont étendu de l'objet `Response`. Les réponses prédéfinit ont étais créer pour éviter d'utilisé directement des status de réponse qui sont juste des nombre. Cela permet d'avoir plus de sens lors de la lecture du code.
@@ -105,10 +113,13 @@ const presetReponse = new OkHttpResponse("OK", "Hello, World!");
 const reponse = new Response(200, "OK", "Hello, World!");
 ```
 
-Dans cet exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - L'instance de l'objet `OkHttpResponse` est bien une instance égalment de l'objet `Reponse`.
 - Les constante `presetReponse` et `reponse`, contienne tout deux une réponse équivalente avec un status a `200`.
 - L'utilisation du nombre `200` t'el qu'elle est une mauvaise pratique qui porte le nom de `magic number`.
+></div>
 
 ### Créer ses réponses prédéfinit
 {: .no_toc }
@@ -141,11 +152,14 @@ class MyCustomResponse<
 const myCustomResponse = new MyCustomResponse();
 ```
 
-Dans cet exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - `MyCustomResponse` est une class étendu de la class `Response`.
 - Le code prédéfinit sera `200`.
 - A chaque fois que la classe sera instancier, les headers `Cache-Control` et `My-Super-Header` seront ajouter a la réponse.
 - Les generic sont important pour un typage robuste
+></div>
 
 ## Les informations
 
@@ -164,9 +178,12 @@ export const myRoute = useBuilder()
     });
 ```
 
-Dans cette exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - La réponse renvoyée aura un header se nommant `information` possédant la valeur `My super info!`.
 - La réponse porte un body `undefined`.
+></div>
 
 Dans l'idéal, chaque réponse envoyée possède une information différente, ce qui permet d'identifier de quelle partie du code provient la réponse. Le front pourra également se baser sur ces informations pour identifier le succès ou l'erreur d'une réponse. Par exemple, il peut vous arriver de renvoyer des erreurs 400 pour des raisons différentes. Cela vous permettera de les différencier.
 
@@ -184,9 +201,12 @@ const duplo = new Duplo({
 duplo.register(myRoute);
 ```
 
-Dans cet exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - `new Duplo` initialise l'application avec un environnement de test.
 - `register` ajoute la route `myRoute` pour qu'elle soit active dans l'application.
+></div>
 
 ### Enregistrer toutes les routes créées
 {: .no_toc }
@@ -204,9 +224,12 @@ const duplo = new Duplo({
 duplo.register(...useBuilder.getAllCreatedDuplose());
 ```
 
-Dans cet exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - `import "./route";` permet d'executer le fichier sans importer ses variables.
 - `getAllCreatedDuplose()` récupère toutes les routes créées avec `useBuilder`.
+></div>
 
 ## Le floor
 
@@ -224,9 +247,12 @@ const { foo, prop } = floor.pickup(["foo", "prop"]);
 // typeof prop === number
 ```
 
-Dans cet exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - `makeFloor` crée un `floor` avec des propriétés spécifiques (`foo` et `prop`).
 - `pickup` permet d'accéder aux valeurs de ces propriétés.
+></div>
 
 ### Exemple du floor dans une route
 {: .no_toc }
@@ -255,10 +281,13 @@ export const myRoute = useBuilder()
     });
 ```
 
-Dans cet exemple :
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
 - La method `extract` est utilisais pour enrichier le `floor`, son utilisation sera présicé plus tard.
 - `pickup` est passé au handler, permettant d’accéder aux propriétés du `floor` comme `foo`.
 - Le typage de la propriété `foo` est garanti.
+></div>
 
 <br>
 
