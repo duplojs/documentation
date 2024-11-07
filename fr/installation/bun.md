@@ -5,4 +5,4 @@ title: Bun
 nav_order: 3
 ---
 
-# Platefome non supportée pour le moment.
+# Plateforme non supportée pour le moment.

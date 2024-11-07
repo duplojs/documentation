@@ -5,4 +5,4 @@ title: Deno
 nav_order: 2
 ---
 
-# Platefome non supportée pour le moment.
+# Plateforme non supportée pour le moment.

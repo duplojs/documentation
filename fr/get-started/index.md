@@ -9,12 +9,12 @@ has_toc: false
 
 1. [Ma première route](./first-route)
     - Créer une route simple
-    - Les réponses prédéfinit
+    - Les réponses prédéfinies
     - Les informations
     - Enregistrer les routes
     - Le floor
 2. [Obtenir de la donnée d'une requête](./getting-data-from-request)
-    - La method extract
+    - La methode extract
     - Niveau d'extraction de la donnée
     - Gestion des échecs
 3. [Faire une vérification](./do-check)

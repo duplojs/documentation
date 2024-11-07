@@ -8,8 +8,8 @@ nav_order: 1
 # Ma première route
 {: .no_toc }
 
-Dans cette section, nous allons voirs la base de la création et du fonctionnement des routes.
-Tous les exemples présent dans ce cours son disponible en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/first-route).
+Dans cette section, nous allons voir la base de la création et du fonctionnement des routes.
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/first-route).
 
 1. TOC
 {:toc}
@@ -42,11 +42,11 @@ export const myRoute = useBuilder()
 ></div>
 
 {: .note }
-La method `handler` fait partir du builder de l'objet `Route`. Elle a pour effet direct d'ajouter une `HandlerStep` au étape de la route en cours de création. Les routes ne peuve avoir qu'une seul `HandlerStep` qui est obligatoirment la dernier `Step`. C'est pour cela que l'appel de cette method cloture la création de l'objet route et le renvois.
+La méthode `handler` fait partir du builder de l'objet `Route`. Elle a pour effet direct d'ajouter une `HandlerStep` aux étapes de la route en cours de création. Les routes ne peuvent avoir qu'une seule `HandlerStep` qui doit obligatoirement être la dernière `Step`. C'est pourquoi l'appel de cette méthode clôture la création de l'objet route et le renvoie.
 
-### Cycle d'éxécution
+### Cycle d'exécution
 {: .no_toc }
-Une route est constituer de `Step` implémenter a traver un builder. l'ordre d'implémentation compte car l'éxécution d'une route est sécanciel, du haut vers le bas. Chaque `Step` vas avoir la posibilité d'interompre l'éxécution et renvoyer une réponse.
+Une route est constituée de `Step` implémentées à travers un builder. L'ordre d'implémentation est important car l'exécution d'une route est séquentielle, du haut vers le bas. Chaque `Step` a la possibilité d'interrompre l'exécution et de renvoyer une réponse.
 
 ```ts
 import { useBuilder, OkHttpResponse } from "@duplojs/core";
@@ -67,17 +67,17 @@ useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Une route a étais créer avec 4 `Step`.
-- Le cycle d'éxécution de la route ce lit du haut vers le bas :
+- Une route a été créée avec 4 `Step`.
+- Le cycle d'exécution de la route se lit du haut vers le bas :
     - `ExtractStep`
     - `CheckerStep`
     - `ProcessStep`
     - `HandlerStep`
 ></div>
 
-### Paramétre de path
+### Paramètres de path
 {: .no_toc }
-Les `Route` peuvet étre dynamic pour avoir des paramétre. Les paramétre courant sont accecible a travers la clef `params` de l'object `Request`.
+Les `Route` peuvent être dynamiques pour accepter des paramètres. Les paramètres courants sont accessibles à travers la clé `params` de l'objet `Request`.
 
 ```ts
 import { useBuilder, OkHttpResponse } from "@duplojs/core";
@@ -95,12 +95,12 @@ useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- La route posséde un paramétre `userId`.
-- Les paramétres sont tout le temps de type `string`
+- La route possède un paramètre `userId`.
+- Les paramètres sont toujours de type `string`
 ></div>
 
-## Les réponses prédéfinit
-Comme vous avez pue le remarqué, l'objet retourné par le handler des route en exemple est `OkHttpResponse`. cette objet est une réponse prédéfinit. Ici `OkHttpResponse` représente une réponse avec le code `200`. il éxiste plus de 30 objet de réponse prédéfinit. Tous ces objet sont étendu de l'objet `Response`. Les réponses prédéfinit ont étais créer pour éviter d'utilisé directement des status de réponse qui sont juste des nombre. Cela permet d'avoir plus de sens lors de la lecture du code.
+## Les réponses prédéfinies
+Comme vous avez pu le remarquer, l'objet retourné par le handler des routes en exemple est `OkHttpResponse`. Cet objet est une réponse prédéfinie. Ici `OkHttpResponse` représente une réponse avec le code `200`. Il existe plus de 30 objets de réponse prédéfinis. Tous ces objets sont des extensions de l'objet `Response`. Les réponses prédéfinies ont été créées pour éviter d'utiliser directement des codes de statut de réponse qui sont de simples nombres. Cela permet d'apporter plus de sens lors de la lecture du code.
 
 ```ts
 import { Response, OkHttpResponse } from "@duplojs/core";
@@ -116,14 +116,14 @@ const reponse = new Response(200, "OK", "Hello, World!");
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- L'instance de l'objet `OkHttpResponse` est bien une instance égalment de l'objet `Reponse`.
-- Les constante `presetReponse` et `reponse`, contienne tout deux une réponse équivalente avec un status a `200`.
-- L'utilisation du nombre `200` t'el qu'elle est une mauvaise pratique qui porte le nom de `magic number`.
+- L'instance de l'objet `OkHttpResponse` est bien également une instance de l'objet `Reponse`.
+- Les constantes `presetReponse` et `reponse`, contiennent toutes deux une réponse équivalente avec un statut à `200`.
+- L'utilisation du nombre `200` tel quel est une mauvaise pratique appelée `magic number`.
 ></div>
 
-### Créer ses réponses prédéfinit
+### Créer ses réponses prédéfinies
 {: .no_toc }
-Il est trés simple de créer c'est propre réponse prédéfinit. Cela peut vous permettre de factorisé une routine de défiintion de headers pars exemple. 
+Il est très simple de créer ses propres réponses prédéfinies. Cela peut vous permettre de factoriser une routine de définition de headers par exemple.
 
 ```ts
 import { Response } from "@duplojs/core";
@@ -155,15 +155,15 @@ const myCustomResponse = new MyCustomResponse();
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- `MyCustomResponse` est une class étendu de la class `Response`.
-- Le code prédéfinit sera `200`.
-- A chaque fois que la classe sera instancier, les headers `Cache-Control` et `My-Super-Header` seront ajouter a la réponse.
-- Les generic sont important pour un typage robuste
+- `MyCustomResponse` est une classe étendue de la classe `Response`.
+- Le code prédéfini sera `200`.
+- À chaque fois que la classe sera instanciée, les headers `Cache-Control` et `My-Super-Header` seront ajoutés à la réponse.
+- Les generics sont importants pour un typage robuste.
 ></div>
 
 ## Les informations
 
-Comme vous pouvez l'observer dans les exemples donnés précédement, lorsque l'on instancie une réponse, nous précisons en second argument l'information de celle-ci.
+Comme vous pouvez l'observer dans les exemples donnés précédemment, lorsque l'on instancie une réponse, nous précisons en second argument l'information de celle-ci.
 
 ```ts
 import { useBuilder, OkHttpResponse } from "@duplojs/core";
@@ -181,11 +181,11 @@ export const myRoute = useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- La réponse renvoyée aura un header se nommant `information` possédant la valeur `My super info!`.
-- La réponse porte un body `undefined`.
+- La réponse renvoyée aura un header nommé `information` possédant la valeur `My super info!`.
+- La réponse a un body `undefined`.
 ></div>
 
-Dans l'idéal, chaque réponse envoyée possède une information différente, ce qui permet d'identifier de quelle partie du code provient la réponse. Le front pourra également se baser sur ces informations pour identifier le succès ou l'erreur d'une réponse. Par exemple, il peut vous arriver de renvoyer des erreurs 400 pour des raisons différentes. Cela vous permettera de les différencier.
+Idéalement, chaque réponse envoyée possède une information différente, ce qui permet d'identifier de quelle partie du code provient la réponse. Le front pourra également se baser sur ces informations pour identifier le succès ou l'erreur d'une réponse. Par exemple, il peut arriver de renvoyer des erreurs 400 pour des raisons différentes. Cela permet de les différencier.
 
 ## Enregistrer les routes
 Après avoir défini les routes, il faut les enregistrer pour qu'elles soient utilisables par une instance DuploJS. La méthode la plus simple pour enregistrer une route est d'utiliser `register`.
@@ -233,7 +233,7 @@ duplo.register(...useBuilder.getAllCreatedDuplose());
 
 ## Le floor
 
-Le `floor` dans DuploJS est un accumulateur typé, qui s'enrichi suivant les différentes étapes implémentées dans les routes. Chaque route possède son propre `floor` pendant son éxecution.
+Le `floor` dans DuploJS est un accumulateur typé, qui s'enrichit suivant les différentes étapes implémentées dans les routes. Chaque route possède son propre `floor` pendant son exécution.
 
 ```ts
 import { makeFloor } from "@duplojs/core";
@@ -284,7 +284,7 @@ export const myRoute = useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- La method `extract` est utilisais pour enrichier le `floor`, son utilisation sera présicé plus tard.
+- La méthode `extract` est utilisée pour enrichir le `floor`, son utilisation sera précisée plus tard.
 - `pickup` est passé au handler, permettant d’accéder aux propriétés du `floor` comme `foo`.
 - Le typage de la propriété `foo` est garanti.
 ></div>

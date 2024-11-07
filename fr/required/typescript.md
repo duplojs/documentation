@@ -82,8 +82,8 @@ class Chien {
     race: string;
 }
 
-function afficherValeur(chien: Chien, clef: keyof Chien) {
-    return chien[clef];
+function afficherValeur(chien: Chien, clé: keyof Chien) {
+    return chien[clé];
 }
 
 const chien = { nom: "Toto", race: "Bulldog" };

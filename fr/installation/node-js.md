@@ -5,7 +5,7 @@ title: NodeJS
 nav_order: 1
 ---
 
-## Prérequis minimum pour installer et utiliser Duplo
+## Prérequis minimums pour installer et utiliser Duplo
 - [NodeJS v20 ou +](https://nodejs.org/fr/blog/release/v20.0.0)
 - [Typescript v5.5 ou +](https://www.typescriptlang.org/docs/handbook/release-notes/typescript-5-5.html)
 - [tsx v4 ou +](https://www.npmjs.com/package/tsx)
@@ -58,7 +58,7 @@ Les paramètres suivants sont fortement conseillés à inclure dans votre fichie
 ```
 
 ## Premier fichier
-Créer le fichier `src/main.ts` avec le contenu suivant.
+Créez le fichier `src/main.ts` avec le contenu suivant.
 
 ```ts
 import "@duplojs/node";

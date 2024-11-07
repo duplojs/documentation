@@ -7,14 +7,14 @@ nav_order: 3
 
 # Faire une vérification
 {: .no_toc }
-Dans cette section, nous allons voirs comment faire des vérifications explicite.
-Tous les exemples présent dans ce cours son disponible en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/do-check).
+Dans cette section, nous allons voir comment faire des vérifications explicites.
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/do-check).
 
 1. TOC
 {:toc}
 
 ## Les checkers
-Les checkers sont des interface. Ils transforme du code impératife en action de vérificatiion explicite pour le DuploJS. Le `Checker` fait parti des objets complexe qui n'éccésite un builder. Pour cela ont utilise `createChecker`.
+Les checkers sont des interfaces. Ils transforment du code impératif en actions de vérification explicites pour DuploJS. Le `Checker` fait partie des objets complexes qui nécessitent un builder. Pour cela, on utilise `createChecker`.
 
 ```ts
 import { createChecker } from "@duplojs/core";
@@ -36,12 +36,12 @@ export const userExistCheck = createChecker("userExist")
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Un checker a étais créer avec le nom `userExist`
-- La method handler définit la fonction passe plat.
+- Un checker a été créé avec le nom `userExist`
+- La methode handler définit la fonction passe plat.
 ></div>
 
 {: .note }
-Les `Checker` prenne une ou plusieur valeur d'entré et retourne plusieur sortie. Je présise bien plusieur car dans une vérification il une possibilité de resulta valide ou invalide au minimume. Pour précisé, tout depend du context dans le qu'elle vous éte. Dans l'exemple du `Checker` ci dessus, vous pouvez souhaiter qu'un utilisateur éxiste dans le cadre d'une authentification. Mais vous pouvez égalment souhaiter qu'un utilisateur n'existe pas dans le cas de la création d'un utilisateur. Le `Checker` peux donc vous effectuer les vérification dans le sens que vous souéter. 
+Les `Checker` prennent une ou plusieurs valeurs d'entrée et retournent plusieurs sorties. Je précise bien "plusieurs" car une vérification peut donner lieu à des résultats valides ou invalides, au minimum. Tout dépend du contexte dans lequel vous vous trouvez. Par exemple, le `Checker` ci-dessus peut être utilisé pour vérifier qu'un utilisateur existe dans le cadre d'une authentification. Mais vous pouvez également souhaiter qu'un utilisateur n'existe pas dans le cas de la création d'un compte utilisateur. Le `Checker` peut donc effectuer des vérifications selon le besoin que vous avez.
 
 <br>
 
