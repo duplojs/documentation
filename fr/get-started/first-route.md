@@ -1,15 +1,15 @@
 ---
 layout: default
 parent: Commencer
-title: Déclarer une route
+title: Ma première route
 nav_order: 1
 ---
 
-# Déclarer une route
+# Ma première route
 {: .no_toc }
 
 Dans cette section, nous allons voirs la base de la création et du fonctionnement des routes.
-Tous les exemples présent dans ce cours son disponible en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/declare-route).
+Tous les exemples présent dans ce cours son disponible en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/first-route).
 
 1. TOC
 {:toc}

@@ -7,7 +7,7 @@ has_toc: false
 
 # Commencer
 
-1. [Déclarer une route](./declare-route)
+1. [Ma première route](./first-route)
     - Créer une route simple
     - Les réponses prédéfinit
     - Les informations

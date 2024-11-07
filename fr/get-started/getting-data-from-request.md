@@ -175,5 +175,5 @@ Dans cet exemple :
 
 <br>
 
-[\<\< Déclarer une route](../declare-route){: .btn .mr-4 }
+[\<\< Ma première route](../first-route){: .btn .mr-4 }
 [Faire une vérification >\>\>](../do-check){: .btn .btn-yellow } 

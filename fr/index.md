@@ -25,7 +25,7 @@ title: Références
 
 ## Commencer [▶](./get-started)
 
-1. [Déclarer une route](./get-started/declare-route)
+1. [Ma première route](./get-started/first-route)
 2. [Obtenir de la donnée d'une requête](./get-started/getting-data-from-request)
 3. [Faire une vérification](./get-started/do-check)
 4. [Définir une réponse](./get-started/define-response)
