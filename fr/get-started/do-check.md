@@ -17,8 +17,7 @@ Tous les exemples présentés dans ce cours sont disponibles en entier [ici](htt
 Les **checkers** sont des interfaces. Ils utilise du code **impératif** pour le transformer en code **déclaratif**. Leur utilisation doit permettre de faire une **vérification**. Les **checkers** ne doive pas étre penssé pour un usage unique, ils doivent pouvoir étre réutilisable en étand le plus neutre possible. Une foit créer, un **checker** peut étre implémenter dans des **routes** ou des **processes**. Les **checkers** vous permette de créer une **vérification explicite** au endroit ou vous les implémenter. En plus de cela il vont **normalisé** votre code, ce qui le rendra **robuste** au passage de différente developeur.
 
 ## Création d'un checker
-Le **checker** fait partie des objets complexes qui nécessitent un **[builder](../../required/design-patern-builder)**. Pour cela, on utilise la fonction `createChecker`. Le **builder** ne renverra que la méthode `handler` qui aprés avoir étais appeler, clotura la création du **checker**. La fonction passé en argument a la méthode `handler` serre a interfacé une opération. Cette fonction prend en premier argument une valeur d'entré avec un type que vous devez définir, cette valeur sera généralment nomé `input`. En second argument la fonction vous donne une fonction `output`, cette fonction `output` permet que construire un retour correct avec a ce que vous lui donner. La fonction `output` prend en premier argument une `string` qui donne un sens explicite a votre vérification. En second argument la fonction `output` prend une valeur qui peut étre transmise. Le type de cette valeur est accosier a la `string` passé premier argument.
-
+Le **checker** fait partie des objets complexes qui nécessitent un **[builder](../../required/design-patern-builder)**. Pour cela, on utilise la fonction `createChecker` qui prend en premier argument le nom du **checker**. Le **builder** ne renverra que la méthode `handler` qui aprés avoir étais appeler, clotura la création du **checker**. La fonction passé en argument a la méthode `handler` serre a interfacé une opération. Cette fonction prend en premier argument une valeur d'entré avec un type que vous devez définir, cette valeur sera généralment nomé `input`. En second argument la fonction vous donne une fonction `output`, cette fonction `output` permet que construire un retour correct avec a ce que vous lui donner. La fonction `output` prend en premier argument une `string` qui donne un sens explicite a votre vérification. En second argument la fonction `output` prend une valeur qui peut étre transmise. Le type de cette valeur est accosier a la `string` passé premier argument.
 
 ```ts
 import { createChecker } from "@duplojs/core";
@@ -51,6 +50,54 @@ export const userExistCheck = createChecker("userExist")
 
 {: .note }
 Les **checkers** prennent une ou plusieurs **valeurs d'entrée** et retournent **plusieurs sorties**. Je précise bien "**plusieurs**" car une **vérification** peut donner lieu à des résultats valides ou invalides, au minimum. La validité du résulta du dépend du **contexte** dans lequel vous vous trouvez. Par exemple, le **checker** ci-dessus peut être utilisé pour **vérifier** qu'un utilisateur existe dans le cadre d'une authentification. Mais vous pouvez également souhaiter qu'un utilisateur n'existe pas dans le cas de la création d'un compte utilisateur. Le **checker** peut donc effectuer des vérifications selon le besoin que vous avez.
+
+### Ajouter des options
+{: .no_toc }
+Il est possible d'ajouter des options au checker. Les options sont une maniere de donner des directives suplémentaire pour l'éxécution d'un checker. Pour typé vos options vous pouver utilisé les généric de la fonction `createChecker`. Vous pouvez définir les valeur par défaut des options en passent un deuxiéme argument a la fonction `createChecker`. Les options seront donné a la fonction passe plat en trosiéme argument.
+
+```ts
+import { createChecker } from "@duplojs/core";
+
+interface InputCompareDate {
+	reference?: Date;
+	compared: Date;
+}
+
+interface OptionsCompareDate {
+	compareType: "greater" | "lower";
+}
+
+export const compareDateCheck = createChecker<OptionsCompareDate>(
+	"compareDate",
+	{ compareType: "lower" },
+)
+	.handler(
+		(input: InputCompareDate, output, options) => {
+			const { reference = new Date(), compared } = input;
+
+			if (options.compareType === "greater") {
+				if (reference.getTime() > compared.getTime()) {
+					return output("valid", null);
+				} else {
+					return output("invalid", null);
+				}
+			} else if (reference.getTime() < compared.getTime()) {
+				return output("valid", null);
+			} else {
+				return output("invalid", null);
+			}
+		},
+	);
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Un **chercker** nomé `compareDate` a étais créer avec comme options l'interface `OptionsCompareDate`.
+- La valeur pars défaut de l'option `compareType` est `lower`.
+- La **valuer d'entré** nomé `input` a étais définit sur `InputCompareDate`.
+- L'option `compareType` nous indique qu'elle type de comparaison faire.
+></div>
 
 ### Multiple entrés
 {: .no_toc }
