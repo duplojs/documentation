@@ -59,35 +59,35 @@ Il est possible d'ajouter des options au checker. Les options sont une maniere d
 import { createChecker } from "@duplojs/core";
 
 interface InputCompareDate {
-	reference?: Date;
-	compared: Date;
+    reference?: Date;
+    compared: Date;
 }
 
 interface OptionsCompareDate {
-	compareType: "greater" | "lower";
+    compareType: "greater" | "lower";
 }
 
 export const compareDateCheck = createChecker<OptionsCompareDate>(
-	"compareDate",
-	{ compareType: "lower" },
+    "compareDate",
+    { compareType: "lower" },
 )
-	.handler(
-		(input: InputCompareDate, output, options) => {
-			const { reference = new Date(), compared } = input;
+    .handler(
+        (input: InputCompareDate, output, options) => {
+            const { reference = new Date(), compared } = input;
 
-			if (options.compareType === "greater") {
-				if (reference.getTime() > compared.getTime()) {
-					return output("valid", null);
-				} else {
-					return output("invalid", null);
-				}
-			} else if (reference.getTime() < compared.getTime()) {
-				return output("valid", null);
-			} else {
-				return output("invalid", null);
-			}
-		},
-	);
+            if (options.compareType === "greater") {
+                if (reference.getTime() > compared.getTime()) {
+                    return output("valid", null);
+                } else {
+                    return output("invalid", null);
+                }
+            } else if (reference.getTime() < compared.getTime()) {
+                return output("valid", null);
+            } else {
+                return output("invalid", null);
+            }
+        },
+    );
 ```
 
 {: .highlight }
@@ -101,7 +101,68 @@ export const compareDateCheck = createChecker<OptionsCompareDate>(
 
 ### Multiple entrés
 {: .no_toc }
-Pour rendre un checker plus flexible, il est possible d'assigner plusieur type a l'argument `input` d'un checker.
+Pour rendre un checker plus flexible, il est possible d'assigner plusieur type a l'argument `input` d'un checker. Pour optimisé cette pratique **Duplo** met a disposition la fonction `createTypeInput`. Cette fonction prend en généric un type objet et renvoi un objet avec des méthodes. Le nom des méthodes correspond au clef du type objet donner en généric et le premier argument des méthodes correspond au type des clef. Les méthodes de votre input renvois un object avec une propriéter `inputName` corespondant au nom de la méthod et une autre propriéter `value` corespondant a l'argument passé a la méthod.
+
+```ts
+import { createTypeInput } from "@duplojs/core";
+
+export const inputUserExist = createTypeInput<{
+    id: number;
+    email: string;
+}>();
+
+inputUserExist.id(123); // { inputName: "id", value: 123 };
+inputUserExist.email("foo"); // { inputName: "email", value: "foo" };
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Un input a étais créer avec les méthodes `id` et `email`.
+- la méthode `id` a comme premier argument un `number`.
+- la méthode `id` renvoi un objet de type `{ inputName: "id", value: number }`.
+- la méthode `email` a comme premier argument une `string`.
+- la méthode `email` renvoi un objet de type `{ inputName: "email", value: string }`.
+></div>
+
+Pour utilisé l'input il suffit d'utilisé l'interface `GetTypeInput` et lui donner votre input.
+```ts
+import { createChecker, createTypeInput, type GetTypeInput } from "@duplojs/core";
+
+export const inputUserExist = createTypeInput<{
+    id: number;
+    email: string;
+}>();
+
+export const userExistCheck = createChecker("userExist")
+	.handler(
+		({ inputName, value }: GetTypeInput<typeof inputUserExist>, output) => {
+			const query: Parameters<typeof getUser>[0] = {};
+
+			if (inputName === "id") {
+				query.id = value;
+			} else if (inputName === "email") {
+				query.email = value;
+			}
+
+			const user = getUser(query);
+
+			if (user) {
+				return output("user.exist", user);
+			} else {
+				return output("user.notfound", null);
+			}
+		},
+	);
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- L'input `inputUserExist` est utiliser comme **input** de la fonction passe plat.
+- si `inputName` est égale a `id`, la recherche se fera pars l'id.
+- si `inputName` est égale a `email`, la recherche se fera pars l'email.
+></div>
 
 <br>
 
