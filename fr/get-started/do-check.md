@@ -14,7 +14,7 @@ Tous les exemples présentés dans ce cours sont disponibles en entier [ici](htt
 {:toc}
 
 ## Les checkers
-Les **checkers** sont des interfaces. Ils utilise du code **impératif** pour le transformer en code **déclaratif**. Leur utilisation doit permettre de faire une **vérification**. Les **checkers** ne doive pas étre penssé pour un usage unique, ils doivent pouvoir étre réutilisable en étand le plus neutre possible. Une foit créer, un **checker** peut étre implémenter dans des **routes** ou des **processes**. Les **checkers** vous permette de créer une **vérification explicite** au endroit ou vous les implémenter. En plus de cela il vont **normalisé** votre code, ce qui le rendra **robuste** au passage de différente developeur.
+Les **checkers** sont des interfaces. Ils utilise du code **impératif** pour le transformer en code **déclaratif**. Leur utilisation doit permettre de faire une **vérification**. Les **checkers** ne doive pas étre penssé pour un usage unique, ils doivent pouvoir étre réutilisable en étand le plus neutre possible. Une foit créer, un **checker** peut étre implémenter dans des **routes** ou des **processes**. Les **checkers** vous permette de créer une **vérification explicite** au endroit ou vous les implémenter. En plus de cela il vont **normalisé** votre code, ce qui le rendra **robuste** au passage de différent developeur.
 
 ## Création d'un checker
 Le **checker** fait partie des objets complexes qui nécessitent un **[builder](../../required/design-patern-builder)**. Pour cela, on utilise la fonction `createChecker` qui prend en premier argument le nom du **checker**. Le **builder** ne renverra que la méthode `handler` qui aprés avoir étais appeler, clotura la création du **checker**. La fonction passé en argument a la méthode `handler` serre a interfacé une opération. Cette fonction prend en premier argument une valeur d'entré avec un type que vous devez définir, cette valeur sera généralment nomé `input`. En second argument la fonction vous donne une fonction `output`, cette fonction `output` permet que construire un retour correct avec a ce que vous lui donner. La fonction `output` prend en premier argument une `string` qui donne un sens explicite a votre vérification. En second argument la fonction `output` prend une valeur qui peut étre transmise. Le type de cette valeur est accosier a la `string` passé premier argument.
@@ -135,25 +135,25 @@ export const inputUserExist = createTypeInput<{
 }>();
 
 export const userExistCheck = createChecker("userExist")
-	.handler(
-		({ inputName, value }: GetTypeInput<typeof inputUserExist>, output) => {
-			const query: Parameters<typeof getUser>[0] = {};
+    .handler(
+        ({ inputName, value }: GetTypeInput<typeof inputUserExist>, output) => {
+            const query: Parameters<typeof getUser>[0] = {};
 
-			if (inputName === "id") {
-				query.id = value;
-			} else if (inputName === "email") {
-				query.email = value;
-			}
+            if (inputName === "id") {
+                query.id = value;
+            } else if (inputName === "email") {
+                query.email = value;
+            }
 
-			const user = getUser(query);
+            const user = getUser(query);
 
-			if (user) {
-				return output("user.exist", user);
-			} else {
-				return output("user.notfound", null);
-			}
-		},
-	);
+            if (user) {
+                return output("user.exist", user);
+            } else {
+                return output("user.notfound", null);
+            }
+        },
+    );
 ```
 
 {: .highlight }
@@ -162,6 +162,51 @@ export const userExistCheck = createChecker("userExist")
 - L'input `inputUserExist` est utiliser comme **input** de la fonction passe plat.
 - si `inputName` est égale a `id`, la recherche se fera pars l'id.
 - si `inputName` est égale a `email`, la recherche se fera pars l'email.
+></div>
+
+## Implémentation d'un checker dans une route
+Les **checkers** une fois créer peuvent étre implémenter dans des **routes** ou des **processes**. Pour cela, les **builder** propose la méthode `check`. Cette Méthode a pour effet direct d'ajouter une `CheckerStep` aux **étapes** de la **route** en cours de création. Elle prend en premier argument le **checker** que vous voulez implémenter et en seconde argument les paramétre contextuel. Les propriéter importante des paramétre sont :
+- `input`: fonction qui envoi la valeur d'entré du checker. elle a en premier argument la méthode `pickup` du **floor**.
+- `result`: `string` qui correspond au résulta attendus.
+- `indexing`: clef d'indexation de la donner dans le **floor**.
+- `catch`: callback appler dans le cas ou le résulta du checker ne correspond pas au `result` indiqué.
+
+```ts
+import { useBuilder, zod, OkHttpResponse, NotFoundHttpResponse } from "@duplojs/core";
+import { userExistCheck } from ".";
+
+useBuilder()
+    .createRoute("GET", "/user/{id}")
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .check(
+        userExistCheck,
+        {
+            input: (pickup) => pickup("userId"),
+            result: "user.exist",
+            indexing: "user",
+            catch: () => new NotFoundHttpResponse("user.notfound"),
+        },
+    )
+    .handler(
+        (pickup) => {
+            const user = pickup("user");
+
+            return new OkHttpResponse("user.found", user);
+        },
+    );
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Le checker `userExistCheck` est implémenter dans la Route.
+- Le resulta attendu pour passer l'**étape** suivante est `user.exist`.
+- Si Le resulta de `userExistCheck` correspond au resulta attendu, les donner renvoyer pas le **chekcer** seront indéxer dans les **floor** a la clef `user` et la route passera a l'étape **suivante**.
+- Si le result ne correspond pas, l'exécution s'arrétera ici et la route renvera la réponse retourné par la fonction `catch`.
 ></div>
 
 <br>
