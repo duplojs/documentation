@@ -182,7 +182,7 @@ Les **checkers** une fois créer peuvent étre implémenter dans des **routes** 
 import { useBuilder, zod, OkHttpResponse, NotFoundHttpResponse } from "@duplojs/core";
 
 useBuilder()
-    .createRoute("GET", "/users/{id}")
+    .createRoute("GET", "/users/{userId}")
     .extract({
         params: {
             userId: zod.coerce.number(),
@@ -272,7 +272,7 @@ Les entrés multiple rende vos **checker** trés flexible. Il facilite l'adaptab
 import { useBuilder, zod, ConflictHttpResponse, OkHttpResponse, NotFoundHttpResponse, CreatedHttpResponse } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("GET", "/users/{id}")
+	.createRoute("GET", "/users/{userId}")
 	.extract({
 		params: {
 			userId: zod.coerce.number(),
