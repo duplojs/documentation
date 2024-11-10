@@ -289,6 +289,9 @@ export const myRoute = useBuilder()
 - Le **typage** de la propriété `foo` est garanti.
 ></div>
 
+{: note }
+Le **floor** est un élément très important dans **duplo**, chaque donnée insérée a l'intérieur provient d'une **étape** que vous avez implémentée dans votre **route**. Toute donnée disponible dans le **floor** est **typée**, ce qui rend son utilisation **robuste** et **fiable**. Cepandant, l'utilisation du type `any` sera toujours un **problème**. A vous de faire en sorte de ne **jamais** l'utiliser.
+
 <br>
 
-[Obtenir de la donnée d'une requête >\>\>](../getting-data-from-request){: .btn .btn-yellow}
+[Obtenir de la donnée d'une requête >\>\>](../getting-data-from-request){: .btn .btn-yellow }

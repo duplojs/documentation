@@ -7,14 +7,14 @@ nav_order: 2
 
 # Obtenir de la donnée d'une requête
 {: .no_toc }
-Dans cette section, nous allons voir comment **obtenir** de la **donnée  typée** d'une **requête**, de manière **robuste** et **100% fiable**. 
+Dans cette section, nous allons voir comment **obtenir** de la **donnée typée** d'une **requête**, de manière **robuste** et **100% fiable**.  
 Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/getting-data-from-request).
 
 1. TOC
 {:toc}
 
 ## La methode extract
-La methode `extract` fait partie du **[builder](../../required/design-patern-builder)** de l'objet `Route`. Elle a pour effet direct d'ajouter une `ExtractStep` aux **étapes** de la **route** en cours de création. Le but d'une **étape** `ExtractStep` est de **récupérer** des **données** provenant de la **requête** courante. Pour cela, **Duplo** utilise la librairie de parsing **[zod](../../required/zod)**, qui garantit la **validité** du **type** des **données** et **enrichit** le `floor`.
+La methode `extract` fait partie du **[builder](../../required/design-patern-builder)** de l'objet `Route`. Elle a pour effet direct d'ajouter une `ExtractStep` aux **étapes** de la **route** en cours de création. Le but d'une **étape** `ExtractStep` est de **récupérer** des **données** provenant de la **requête** courante. Pour cela, **Duplo** utilise la librairie de parsing **[zod](../../required/zod)**, qui garantit la **validité** du **type** des **données** et **enrichit** le **floor**. L'objet `Resquest` étant inaccecible directement, la méthode `extract` sera la seule passerelle vers celui-ci.
 
 ```ts
 import { CreatedHttpResponse, useBuilder, zod } from "@duplojs/core";
