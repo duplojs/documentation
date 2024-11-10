@@ -48,6 +48,8 @@ export const userExistCheck = createChecker("userExist")
 - l'**information** `user.notfound` est associer au **type** `null`.
 ></div>
 
+Implémentation du checker [ici](#implémentation-dun-checker-dans-une-route).
+
 {: .note }
 Les **checkers** prennent une ou plusieurs **valeurs d'entrée** et retournent **plusieurs sorties**. Je précise bien "**plusieurs**" car une **vérification** peut donner lieu à des résultats valides ou invalides, au minimum. La validité du résulta du dépend du **contexte** dans lequel vous vous trouvez. Par exemple, le **checker** ci-dessus peut être utilisé pour **vérifier** qu'un utilisateur existe dans le cadre d'une authentification. Mais vous pouvez également souhaiter qu'un utilisateur n'existe pas dans le cas de la création d'un compte utilisateur. Le **checker** peut donc effectuer des vérifications selon le besoin que vous avez.
 
@@ -98,6 +100,8 @@ export const compareDateCheck = createChecker<OptionsCompareDate>(
 - La **valuer d'entré** nomé `input` a étais définit sur `InputCompareDate`.
 - L'option `compareType` nous indique qu'elle type de comparaison faire.
 ></div>
+
+Implémentation du checker [ici](#implémentation-dun-checker-avec-options).
 
 ### Multiple entrés
 {: .no_toc }
@@ -164,19 +168,21 @@ export const userExistCheck = createChecker("userExist")
 - si `inputName` est égale a `email`, la recherche se fera pars l'email.
 ></div>
 
+Implémentation du checker [ici](#utilisé-une-checker-avec-un-multi-input).
+
+
 ## Implémentation d'un checker dans une route
 Les **checkers** une fois créer peuvent étre implémenter dans des **routes** ou des **processes**. Pour cela, les **builder** propose la méthode `check`. Cette Méthode a pour effet direct d'ajouter une `CheckerStep` aux **étapes** de la **route** en cours de création. Elle prend en premier argument le **checker** que vous voulez implémenter et en seconde argument les paramétre contextuel. Les propriéter importante des paramétre sont :
 - `input`: fonction qui envoi la valeur d'entré du checker. elle a en premier argument la méthode `pickup` du **floor**.
-- `result`: `string` qui correspond au résulta attendus.
+- `result`: `string` qui correspond a l'informations de sortie du checker attendu.
 - `indexing`: clef d'indexation de la donner dans le **floor**.
 - `catch`: callback appler dans le cas ou le résulta du checker ne correspond pas au `result` indiqué.
 
 ```ts
 import { useBuilder, zod, OkHttpResponse, NotFoundHttpResponse } from "@duplojs/core";
-import { userExistCheck } from ".";
 
 useBuilder()
-    .createRoute("GET", "/user/{id}")
+    .createRoute("GET", "/users/{id}")
     .extract({
         params: {
             userId: zod.coerce.number(),
@@ -203,10 +209,127 @@ useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Le checker `userExistCheck` est implémenter dans la Route.
+- Le checker `userExist` est implémenter dans la **route**.
 - Le resulta attendu pour passer l'**étape** suivante est `user.exist`.
-- Si Le resulta de `userExistCheck` correspond au resulta attendu, les donner renvoyer pas le **chekcer** seront indéxer dans les **floor** a la clef `user` et la route passera a l'étape **suivante**.
-- Si le result ne correspond pas, l'exécution s'arrétera ici et la route renvera la réponse retourné par la fonction `catch`.
+- Si Le resulta de `userExist` correspond au resulta attendu, les donner renvoyer pars le **chekcer** seront indéxer dans le **floor** a la clef `user` et la **route** passera a l'étape **suivante**.
+- Si le result ne correspond pas, l'exécution s'arrétera ici et la **route** renvera la réponse retourné par la fonction `catch`.
+></div>
+
+### Implémentation d'un checker avec options
+Dans il paramétre d'implémentation d'un **checker** il éxiste une propriéter `options`. Cette propriéter permet de modifier les options par défaut d'un **checker** de façon **local**.
+
+```ts
+import { ConflictHttpResponse, CreatedHttpResponse, useBuilder, zod } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("POST", "/events")
+	.extract({
+		body: zod.object({
+			name: zod.string(),
+			date: zod.coerce.date(),
+		}).strip(),
+	})
+	.check(
+		compareDateCheck,
+		{
+			input: (pickup) => ({ compared: pickup("body").date }),
+			options: { compareType: "greater" },
+			result: "valid",
+			catch: () => new ConflictHttpResponse("event.expire"),
+		},
+	)
+	.handler(
+		(pickup) => {
+			const { name, date } = pickup("body");
+
+			const event = {
+				id: 1,
+				name,
+				date,
+			};
+
+			return new CreatedHttpResponse("event.created", event);
+		},
+	);
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Le checker `compareDate` est implémenter dans la **route**.
+- L'option `compareType` du checker a étais définit sur `greater`
+- Le resulta attendu pour passer l'**étape** suivante est `valid`.
+- Si Le resulta de `compareDate` correspond au resulta attendu, la **route** passera a l'étape **suivante** et aucune donné ne sera indéxé dans le floor car le clef `indexing` n'a pas étais spécifier.
+- Si le result ne correspond pas, l'exécution s'arrétera ici et la **route** renvera la réponse retourné par la fonction `catch`.
+></div>
+
+### Utilisé une checker avec un multi input
+Les entrés multiple rende vos **checker** trés flexible. Il facilite l'adaptabilité des votre **checker** dans des context diférent. Pour cela il suffit d'appler les method de votre objet que vous avez créer avec la fonction `createTypeInput`.
+
+```ts
+import { useBuilder, zod, ConflictHttpResponse, OkHttpResponse, NotFoundHttpResponse, CreatedHttpResponse } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("GET", "/users/{id}")
+	.extract({
+		params: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.check(
+		userExistCheck,
+		{
+			input: (pickup) => inputUserExist.id(pickup("userId")),
+			result: "user.exist",
+			indexing: "user",
+			catch: () => new NotFoundHttpResponse("user.notfound"),
+		},
+	)
+	.handler(
+		(pickup) => {
+			const user = pickup("user");
+			return new OkHttpResponse("user.found", user);
+		},
+	);
+
+useBuilder()
+	.createRoute("POST", "/register")
+	.extract({
+		body: zod.object({
+			email: zod.string().email(),
+			password: zod.string(),
+		}).strip(),
+	})
+	.check(
+		userExistCheck,
+		{
+			input: (pickup) => inputUserExist.email(pickup("body").email),
+			result: "user.notfound",
+			catch: () => new ConflictHttpResponse("email.taken"),
+		},
+	)
+	.handler(
+		(pickup) => {
+			const { email, password } = pickup("body");
+
+			const user = {
+				id: 1,
+				email,
+				password,
+			};
+
+			return new CreatedHttpResponse("user.created", user);
+		},
+	);
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Le checker `userExist` a étais implémenter dans deux **route**.
+- La method `email` et `id` de l'objet `inputUserExist` son utilisé dans les fonction input aux endroit ou est implémenter le checker `userExist`.
+- l'utilisation de `inputUserExist.email` permetera de chercher un utilisateur pars son address email.
+- l'utilisation de `inputUserExist.id` permetera de chercher un utilisateur pars son indentifant.
 ></div>
 
 <br>
