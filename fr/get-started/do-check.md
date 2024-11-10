@@ -216,6 +216,7 @@ useBuilder()
 ></div>
 
 ### Implémentation d'un checker avec options
+{: .no_toc }
 Dans il paramétre d'implémentation d'un **checker** il éxiste une propriéter `options`. Cette propriéter permet de modifier les options par défaut d'un **checker** de façon **local**.
 
 ```ts
@@ -264,6 +265,7 @@ useBuilder()
 ></div>
 
 ### Utilisé une checker avec un multi input
+{: .no_toc }
 Les entrés multiple rende vos **checker** trés flexible. Il facilite l'adaptabilité des votre **checker** dans des context diférent. Pour cela il suffit d'appler les method de votre objet que vous avez créer avec la fonction `createTypeInput`.
 
 ```ts
