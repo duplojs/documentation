@@ -16,6 +16,59 @@ Tous les exemples présentés dans ce cours sont disponibles en entier [ici](htt
 ## Les checkers
 Les **checkers** sont des interfaces. Ils utilise du code **impératif** pour le transformer en code **déclaratif**. Leur utilisation doit permettre de faire une **vérification**. Les **checkers** ne doive pas étre penssé pour un usage unique, ils doivent pouvoir étre réutilisable en étand le plus neutre possible. Une foit créer, un **checker** peut étre implémenter dans des **routes** ou des **processes**. Les **checkers** vous permette de créer une **vérification explicite** au endroit ou vous les implémenter. En plus de cela il vont **normalisé** votre code, ce qui le rendra **robuste** au passage de différent developeur.
 
+### Exemple rapide
+{: .no_toc }
+Cette partie est trés danse en information donc je vais commencer pars vous donner un petit exemple que vous pouvez survolé. 
+
+```ts
+import { createChecker, useBuilder, zod, OkHttpResponse, NotFoundHttpResponse } from "@duplojs/core";
+
+export const userExistCheck = createChecker("userExist")
+    .handler(
+        (input: number, output) => {
+            const user = getUser({ id: input });
+
+            if (user) {
+                return output("user.exist", user);
+            } else {
+                return output("user.notfound", null);
+            }
+        },
+    );
+
+useBuilder()
+    .createRoute("GET", "/users/{userId}")
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .check(
+        userExistCheck,
+        {
+            input: (pickup) => pickup("userId"),
+            result: "user.exist",
+            indexing: "user",
+            catch: () => new NotFoundHttpResponse("user.notfound"),
+        },
+    )
+    .handler(
+        (pickup) => {
+            const user = pickup("user");
+
+            return new OkHttpResponse("user.found", user);
+        },
+    );
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Un **checker** a été créé avec le nom `userExist`, ça valeur d'entré est de type `number` et ces information de sortie sont `user.exist` et `user.notfound`.
+- Le **checker** `userExist` a étais implémenter dans une **route**. La valeur d'entré passé au **checker** corespond a la valeur `userId` du **floor**. L'information de sorti attendu pour passé a la suite est `user.exist`. La donner renvoyer pars le **checker** sera indéxé dans le **floor** a la clef `user`. Dans le cas ou une information différente a `user.exist` est renvoyer pars le **checker**, une réponse `NotFoundHttpResponse` sera renvoyer avec l'information `user.notfound`.
+- En survolant rapidement la déclaration de la **route** nous pouvont déduire qu'elle renvois la variable `user`. Cepandent, pour cela il faut que la **requéte** posséde un paramétre `userId` de type `number` et que a partire de ce paramétre il faut qu'un utilisateur éxiste.
+></div>
+
 ## Création d'un checker
 Le **checker** fait partie des objets complexes qui nécessitent un **[builder](../../required/design-patern-builder)**. Pour cela, on utilise la fonction `createChecker` qui prend en premier argument le nom du **checker**. Le **builder** ne renverra que la méthode `handler` qui aprés avoir étais appeler, clotura la création du **checker**. La fonction passé en argument a la méthode `handler` serre a interfacé une opération. Cette fonction prend en premier argument une valeur d'entré avec un type que vous devez définir, cette valeur sera généralment nomé `input`. En second argument la fonction vous donne une fonction `output`, cette fonction `output` permet que construire un retour correct avec a ce que vous lui donner. La fonction `output` prend en premier argument une `string` qui donne un sens explicite a votre vérification. En second argument la fonction `output` prend une valeur qui peut étre transmise. Le type de cette valeur est accosier a la `string` passé premier argument.
 
