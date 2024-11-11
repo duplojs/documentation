@@ -276,35 +276,35 @@ Dans il paramétre d'implémentation d'un **checker** il éxiste une propriéter
 import { ConflictHttpResponse, CreatedHttpResponse, useBuilder, zod } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("POST", "/events")
-	.extract({
-		body: zod.object({
-			name: zod.string(),
-			date: zod.coerce.date(),
-		}).strip(),
-	})
-	.check(
-		compareDateCheck,
-		{
-			input: (pickup) => ({ compared: pickup("body").date }),
-			options: { compareType: "greater" },
-			result: "valid",
-			catch: () => new ConflictHttpResponse("event.expire"),
-		},
-	)
-	.handler(
-		(pickup) => {
-			const { name, date } = pickup("body");
+    .createRoute("POST", "/events")
+    .extract({
+        body: zod.object({
+            name: zod.string(),
+            date: zod.coerce.date(),
+        }).strip(),
+    })
+    .check(
+        compareDateCheck,
+        {
+            input: (pickup) => ({ compared: pickup("body").date }),
+            options: { compareType: "greater" },
+            result: "valid",
+            catch: () => new ConflictHttpResponse("event.expire"),
+        },
+    )
+    .handler(
+        (pickup) => {
+            const { name, date } = pickup("body");
 
-			const event = {
-				id: 1,
-				name,
-				date,
-			};
+            const event = {
+                id: 1,
+                name,
+                date,
+            };
 
-			return new CreatedHttpResponse("event.created", event);
-		},
-	);
+            return new CreatedHttpResponse("event.created", event);
+        },
+    );
 ```
 
 {: .highlight }
@@ -325,57 +325,57 @@ Les entrés multiple rende vos **checker** trés flexible. Il facilite l'adaptab
 import { useBuilder, zod, ConflictHttpResponse, OkHttpResponse, NotFoundHttpResponse, CreatedHttpResponse } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("GET", "/users/{userId}")
-	.extract({
-		params: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.check(
-		userExistCheck,
-		{
-			input: (pickup) => inputUserExist.id(pickup("userId")),
-			result: "user.exist",
-			indexing: "user",
-			catch: () => new NotFoundHttpResponse("user.notfound"),
-		},
-	)
-	.handler(
-		(pickup) => {
-			const user = pickup("user");
-			return new OkHttpResponse("user.found", user);
-		},
-	);
+    .createRoute("GET", "/users/{userId}")
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .check(
+        userExistCheck,
+        {
+            input: (pickup) => inputUserExist.id(pickup("userId")),
+            result: "user.exist",
+            indexing: "user",
+            catch: () => new NotFoundHttpResponse("user.notfound"),
+        },
+    )
+    .handler(
+        (pickup) => {
+            const user = pickup("user");
+            return new OkHttpResponse("user.found", user);
+        },
+    );
 
 useBuilder()
-	.createRoute("POST", "/register")
-	.extract({
-		body: zod.object({
-			email: zod.string().email(),
-			password: zod.string(),
-		}).strip(),
-	})
-	.check(
-		userExistCheck,
-		{
-			input: (pickup) => inputUserExist.email(pickup("body").email),
-			result: "user.notfound",
-			catch: () => new ConflictHttpResponse("email.taken"),
-		},
-	)
-	.handler(
-		(pickup) => {
-			const { email, password } = pickup("body");
+    .createRoute("POST", "/register")
+    .extract({
+        body: zod.object({
+            email: zod.string().email(),
+            password: zod.string(),
+        }).strip(),
+    })
+    .check(
+        userExistCheck,
+        {
+            input: (pickup) => inputUserExist.email(pickup("body").email),
+            result: "user.notfound",
+            catch: () => new ConflictHttpResponse("email.taken"),
+        },
+    )
+    .handler(
+        (pickup) => {
+            const { email, password } = pickup("body");
 
-			const user = {
-				id: 1,
-				email,
-				password,
-			};
+            const user = {
+                id: 1,
+                email,
+                password,
+            };
 
-			return new CreatedHttpResponse("user.created", user);
-		},
-	);
+            return new CreatedHttpResponse("user.created", user);
+        },
+    );
 ```
 
 {: .highlight }
@@ -386,6 +386,12 @@ useBuilder()
 - l'utilisation de `inputUserExist.email` permetera de chercher un utilisateur pars son address email.
 - l'utilisation de `inputUserExist.id` permetera de chercher un utilisateur pars son indentifant.
 ></div>
+
+## Les presets checkers
+
+## Implémentation d'un preset checker dans une route
+
+## Les cuts
 
 <br>
 
