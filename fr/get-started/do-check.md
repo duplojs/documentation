@@ -388,6 +388,51 @@ useBuilder()
 ></div>
 
 ## Les presets checkers
+Pour simplifier l'implémentation des **checkers** vous pouvez en faire des **presets checkers**. Les **presets checkers** sont tout simplement des **checker** avec des paramétre d'implémentations prés configuré. Pour créer des **presets checkers** il vous suffit d'utilisé la fonction `createPresetChecker`. Cette fonction prend en premier argument un **checker** et en seconde ses paramétre d'implémentation. Les paramétre sont similaire a ce vue précédement. Vous y trouverais le praramétre `transformInput` en plus qui permet de changer le type de l'entré du **checker** avec une fonction interface.
+
+```ts
+import { createPresetChecker, NotFoundHttpResponse } from "@duplojs/core";
+
+export const iWantUserExist = createPresetChecker(
+	userExistCheck,
+	{
+		result: "user.exist",
+		catch: () => new NotFoundHttpResponse("user.notfound"),
+		indexing: "user",
+	},
+);
+
+export const iWantUserExistById = createPresetChecker(
+	userExistCheck,
+	{
+		result: "user.exist",
+		catch: () => new NotFoundHttpResponse("user.notfound"),
+		indexing: "user",
+		transformInput: (input: number) => ({
+			inputName: <const>"id",
+			value: input,
+		}),
+	},
+);
+
+export const iWantUserExistByEmail = createPresetChecker(
+	userExistCheck,
+	{
+		result: "user.exist",
+		catch: () => new NotFoundHttpResponse("user.notfound"),
+		transformInput: inputUserExist.email,
+	},
+);
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Des **presets Checkers** sont créer avec le checker `userExist` de cette [exemple](#multiple-entrés). (Checker avec entrés multiple)
+- Le **presets Checkers** `iWantUserExist` prédéfinit les 3 paramétre d'implémentation de base.
+- Le **presets Checkers** `iWantUserExistById` fait la même chose de `iWantUserExist` mais transform le type d'entré en `number`.
+- Le **presets Checkers** `iWantUserExistByEmail` fait la même chose de `iWantUserExist` mais utilise une methode d'un multi input pour transform le type d'entré en `string`.
+></div>
 
 ## Implémentation d'un preset checker dans une route
 
