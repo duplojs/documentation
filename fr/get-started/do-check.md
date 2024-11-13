@@ -470,6 +470,7 @@ useBuilder()
 Les **cuts** son des **étapes** (`CutStep`) au même titre que les **checker**. Dans le meilleur des monde, les **checker** suffise a faire toute les vérification. Cependant, dans la réaliter il arrive tout le temp de devoir produire du code qui est complaitement arbitraire a un cas unique. C'est donc pour ces exeptions que les **cuts** on étais dévloppé.
 
 ### Implémentation d'un cut dans une route
+{: .no_toc }
 Pour Implémenter un **cut** il suffit d'utilisais la method `cut` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. En premier argument la method `cut` prend une fonction et en seconde argument un tablau. La fonction prend en argument un objet contenant la method `pickup` du **floor** et la method `dropper`. La fonction doit contenir une vérification et doit renvoyer une **réponse** ou le resulta de la fonction `dropper`. Dans le cas de renvoi d'un objet **réponse**, l'éxécution de la route ce stoppera a cette étape. La méthode `dropper` permet d'indexé dans le **floor** des donner obtenu dans la `CutStep`. Cette méthode prend en argument le type `null | Record<string, unknown>`. Dans le cas d'un argument `null`, cela indique que rien ne veux étre indéxé. Mais dans le cas d'un argument `Record<string, unknown>`, chaque clef de l'objet pourrais étre indéxer dans le **floor**. Pour cela il suffit de les indiqué das le tableau passé en second argument de la method `cut` du **builder**.
 
 ```ts
