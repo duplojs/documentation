@@ -223,13 +223,12 @@ export const userExistCheck = createChecker("userExist")
 
 Implémentation du checker [ici](#utilisé-une-checker-avec-un-multi-input).
 
-
 ## Implémentation d'un checker dans une route
-Les **checkers** une fois créer peuvent étre implémenter dans des **routes** ou des **processes**. Pour cela, les **builder** propose la méthode `check`. Cette Méthode a pour effet direct d'ajouter une `CheckerStep` aux **étapes** de la **route** en cours de création. Elle prend en premier argument le **checker** que vous voulez implémenter et en seconde argument les paramétre contextuel. Les propriéter importante des paramétre sont :
-- `input`: fonction qui envoi la valeur d'entré du checker. elle a en premier argument la méthode `pickup` du **floor**.
-- `result`: `string` qui correspond a l'informations de sortie du checker attendu.
+Les **checkers** une fois créer peuvent étre implémenter dans des **routes** ou des **processes**. Pour cela, les **[builder](../../required/design-patern-builder)** propose la méthode `check`. Cette Méthode a pour effet direct d'ajouter une `CheckerStep` aux **étapes** de la **route** en cours de création. Elle prend en premier argument le **checker** que vous voulez implémenter et en seconde argument les paramétre contextuel. Les propriéter importante des paramétre sont :
+- `input`: fonction qui envoi la valeur d'entré du **checker**. Elle a en premier argument la méthode `pickup` du **floor**.
+- `result`: `string` qui correspond a l'informations de sortie du **checker** attendu.
 - `indexing`: clef d'indexation de la donner dans le **floor**.
-- `catch`: callback appler dans le cas ou le résulta du checker ne correspond pas au `result` indiqué.
+- `catch`: callback appler dans le cas ou le résulta du **checker** ne correspond pas au `result` indiqué.
 
 ```ts
 import { useBuilder, zod, OkHttpResponse, NotFoundHttpResponse } from "@duplojs/core";
@@ -428,13 +427,44 @@ export const iWantUserExistByEmail = createPresetChecker(
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Des **presets Checkers** sont créer avec le checker `userExist` de cette [exemple](#multiple-entrés). (Checker avec entrés multiple)
+- Des **presets Checkers** sont créer avec le **checker** `userExist` de cette [exemple](#multiple-entrés) (**checker** avec entrés multiple).
 - Le **presets Checkers** `iWantUserExist` prédéfinit les 3 paramétre d'implémentation de base.
 - Le **presets Checkers** `iWantUserExistById` fait la même chose de `iWantUserExist` mais transform le type d'entré en `number`.
 - Le **presets Checkers** `iWantUserExistByEmail` fait la même chose de `iWantUserExist` mais utilise une methode d'un multi input pour transform le type d'entré en `string`.
 ></div>
 
 ## Implémentation d'un preset checker dans une route
+L'implémentation des **preset checker** est trés simple, il suffit d'utilisé la méthode `presetCheck` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. Cette méthode prend 2 arguments, le premier argument doit étre un `presetCheck` et le seconde est une fonction qui renvois la valeur d'entré du **preset checker**. Cette fonction a en premier argument la méthode `pickup` du **floor**.
+
+```ts
+import { useBuilder, zod, OkHttpResponse } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("GET", "/user/{userId}")
+	.extract({
+		params: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		iWantUserExistById,
+		(pickup) => pickup("userId"),
+	)
+	.handler(
+		(pickup) => {
+			const user = pickup("user");
+
+			return new OkHttpResponse("user.found", user);
+		},
+	);
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Une route avec un **preset checker** implémenté a étais créer.
+- En survolant rapidement la déclaration de la **route** nous pouvont déduire qu'elle renvois la variable `user`. Cepandent, pour cela il faut que la **requéte** posséde un paramétre `userId` de type `number` et que a partire de ce paramétre il faut qu'un utilisateur éxiste.
+></div>
 
 ## Les cuts
 
