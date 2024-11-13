@@ -393,34 +393,34 @@ Pour simplifier l'implémentation des **checkers** vous pouvez en faire des **pr
 import { createPresetChecker, NotFoundHttpResponse } from "@duplojs/core";
 
 export const iWantUserExist = createPresetChecker(
-	userExistCheck,
-	{
-		result: "user.exist",
-		catch: () => new NotFoundHttpResponse("user.notfound"),
-		indexing: "user",
-	},
+    userExistCheck,
+    {
+        result: "user.exist",
+        catch: () => new NotFoundHttpResponse("user.notfound"),
+        indexing: "user",
+    },
 );
 
 export const iWantUserExistById = createPresetChecker(
-	userExistCheck,
-	{
-		result: "user.exist",
-		catch: () => new NotFoundHttpResponse("user.notfound"),
-		indexing: "user",
-		transformInput: (input: number) => ({
-			inputName: <const>"id",
-			value: input,
-		}),
-	},
+    userExistCheck,
+    {
+        result: "user.exist",
+        catch: () => new NotFoundHttpResponse("user.notfound"),
+        indexing: "user",
+        transformInput: (input: number) => ({
+            inputName: <const>"id",
+            value: input,
+        }),
+    },
 );
 
 export const iWantUserExistByEmail = createPresetChecker(
-	userExistCheck,
-	{
-		result: "user.exist",
-		catch: () => new NotFoundHttpResponse("user.notfound"),
-		transformInput: inputUserExist.email,
-	},
+    userExistCheck,
+    {
+        result: "user.exist",
+        catch: () => new NotFoundHttpResponse("user.notfound"),
+        transformInput: inputUserExist.email,
+    },
 );
 ```
 
@@ -440,23 +440,23 @@ L'implémentation des **preset checker** est trés simple, il suffit d'utilisé 
 import { useBuilder, zod, OkHttpResponse } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("GET", "/user/{userId}")
-	.extract({
-		params: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		iWantUserExistById,
-		(pickup) => pickup("userId"),
-	)
-	.handler(
-		(pickup) => {
-			const user = pickup("user");
+    .createRoute("GET", "/user/{userId}")
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        iWantUserExistById,
+        (pickup) => pickup("userId"),
+    )
+    .handler(
+        (pickup) => {
+            const user = pickup("user");
 
-			return new OkHttpResponse("user.found", user);
-		},
-	);
+            return new OkHttpResponse("user.found", user);
+        },
+    );
 ```
 
 {: .highlight }
@@ -477,37 +477,37 @@ Pour Implémenter un **cut** il suffit d'utilisais la method `cut` du **[builder
 import { useBuilder, zod, ForbiddenHttpResponse, NoContentHttpResponse } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("DELETE", "/users/{userId}")
-	.extract({
-		params: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		iWantUserExistById,
-		(pickup) => pickup("userId"),
-	)
-	.cut(
-		({ pickup, dropper }) => {
-			const { email } = pickup("user");
+    .createRoute("DELETE", "/users/{userId}")
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        iWantUserExistById,
+        (pickup) => pickup("userId"),
+    )
+    .cut(
+        ({ pickup, dropper }) => {
+            const { email } = pickup("user");
 
-			if (email === "admin@example.com") {
-				return new ForbiddenHttpResponse("userIsAdmin");
-			}
+            if (email === "admin@example.com") {
+                return new ForbiddenHttpResponse("userIsAdmin");
+            }
 
-			return dropper(null);
-		},
+            return dropper(null);
+        },
         []
-	)
-	.handler(
-		(pickup) => {
-			const { id } = pickup("user");
+    )
+    .handler(
+        (pickup) => {
+            const { id } = pickup("user");
 
-			// ...
+            // ...
 
-			return new NoContentHttpResponse("user.deleted");
-		},
-	);
+            return new NoContentHttpResponse("user.deleted");
+        },
+    );
 ```
 
 {: .highlight }
