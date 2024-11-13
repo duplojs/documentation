@@ -467,7 +467,46 @@ useBuilder()
 ></div>
 
 ## Les cuts
+Les **cuts** son des **étapes** au même titre que les **checker**. Dans le meilleur des monde, les **checker** suffise a faire toute les vérification. Cependant, dans la réaliter il arrive tout le temp de devoir produire du code qui est complaitement arbitraire a un cas unique. C'est donc pour ces exeptions que les **cuts** on étais dévloppé.
 
+### Implémentation d'un cut dans une route
+Pour Implémenter un **cut** il suffit d'utilisais la method `cut` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. En premier argument la method cut prend un fonction.
+
+```ts
+import { useBuilder, zod, ForbiddenHttpResponse, NoContentHttpResponse } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("DELETE", "/users/{userId}")
+	.extract({
+		params: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		iWantUserExistById,
+		(pickup) => pickup("userId"),
+	)
+	.cut(
+		({ pickup, dropper }) => {
+			const { email } = pickup("user");
+
+			if (email === "admin@example.com") {
+				return new ForbiddenHttpResponse("userIsAdmin");
+			}
+
+			return dropper(null);
+		},
+	)
+	.handler(
+		(pickup) => {
+			const { id } = pickup("user");
+
+			// ...
+
+			return new NoContentHttpResponse("user.deleted");
+		},
+	);
+```
 <br>
 
 [\<\< Obtenir de la donnée d'une requête](../getting-data-from-request){: .btn .mr-4 }
