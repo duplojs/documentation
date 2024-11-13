@@ -467,10 +467,10 @@ useBuilder()
 ></div>
 
 ## Les cuts
-Les **cuts** son des **étapes** au même titre que les **checker**. Dans le meilleur des monde, les **checker** suffise a faire toute les vérification. Cependant, dans la réaliter il arrive tout le temp de devoir produire du code qui est complaitement arbitraire a un cas unique. C'est donc pour ces exeptions que les **cuts** on étais dévloppé.
+Les **cuts** son des **étapes** (`CutStep`) au même titre que les **checker**. Dans le meilleur des monde, les **checker** suffise a faire toute les vérification. Cependant, dans la réaliter il arrive tout le temp de devoir produire du code qui est complaitement arbitraire a un cas unique. C'est donc pour ces exeptions que les **cuts** on étais dévloppé.
 
 ### Implémentation d'un cut dans une route
-Pour Implémenter un **cut** il suffit d'utilisais la method `cut` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. En premier argument la method cut prend un fonction.
+Pour Implémenter un **cut** il suffit d'utilisais la method `cut` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. En premier argument la method `cut` prend une fonction et en seconde argument un tablau. La fonction doit contenir une vérification puis doit sois renvoyer une **réponse négative** en cas d'echec, sois le resulta de la fonction `dropper`. Dans le cas de renvoi d'un objet **réponse**, l'éxécution de la route ce stoppera a cette étape.
 
 ```ts
 import { useBuilder, zod, ForbiddenHttpResponse, NoContentHttpResponse } from "@duplojs/core";
@@ -496,6 +496,7 @@ useBuilder()
 
 			return dropper(null);
 		},
+        []
 	)
 	.handler(
 		(pickup) => {
