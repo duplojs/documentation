@@ -26,8 +26,7 @@ has_toc: false
     - Les cuts
 4. [Définir une réponse](./define-response)
     - Les contrats de sortie
-    - Les schemas de documents
-    - Implémentations d'un schema dans une route
+    - Implémentations d'un contrat
 5. [Aborder une nouvelle route](./how-to-approach-new-road)
     - Outils à ma disposition
     - Par quoi commencer ?
