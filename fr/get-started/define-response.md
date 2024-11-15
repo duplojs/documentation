@@ -59,4 +59,4 @@ makeResponseContract(ForbiddenHttpResponse, ["token.expire", "token.invalide"]);
 <br>
 
 [\<\< Faire une vérification](../do-check){: .btn .mr-4 }
-[Définir une réponse >\>\>](../how-to-approach-new-road){: .btn .btn-yellow } 
+[Aborder une nouvelle route >\>\>](../how-to-approach-new-road){: .btn .btn-yellow } 
