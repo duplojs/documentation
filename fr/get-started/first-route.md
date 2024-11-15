@@ -293,7 +293,7 @@ export const myRoute = useBuilder()
 Le **floor** est un élément très important dans **duplo**. Chaque donnée insérée à l'intérieur provient d'une **étape** que vous avez implémentée dans votre **route**. Toute donnée disponible dans le **floor** est **typée**, ce qui rend son utilisation **robuste** et **fiable**. Cepandant, l'utilisation du type `any` sera toujours un **problème**. A vous de faire en sorte de ne **jamais** l'utiliser.
 
 ## Lancer le serveur web
-**Duplo** est un framework **agnostique** de la platforme ce qui signifie qu'il ne dépant d'aucune api externe au langage **javascript**. Dans les exemples qui seront présentés tout au long du cours, nous utiliseront **NodeJS**. Pour cela nous vous invitons à suivre la bonne [installation](../../installation/node-js). Le lancement du serveur web sur la platforme **NodeJS** se fait par l'importation du module `@duplojs/node` en haut de votre fichier principal.
+**Duplo** est un framework **agnostique** de la platforme ce qui signifie qu'il ne dépant d'aucune api externe au langage **javascript**. Dans les exemples qui seront présentés tout au long du cours, nous utiliseront **NodeJS**. Pour cela nous vous invitons à suivre la bonne [installation](../../installation/node-js). Pour accéder a la méthode `launch` qui permet de lancemer le serveur web, Il vous faut importé le module `@duplojs/node` en haut de votre fichier principal.
 
 ```ts
 import "@duplojs/node";
