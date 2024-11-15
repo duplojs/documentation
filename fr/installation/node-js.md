@@ -65,7 +65,7 @@ import "@duplojs/node";
 import { Duplo, useBuilder } from "@duplojs/core";
 
 const duplo = new Duplo({
-    environment: "TEST",
+    environment: "DEV",
     host: "localhost",
     port: 1506,
 });

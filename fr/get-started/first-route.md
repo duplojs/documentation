@@ -292,6 +292,33 @@ export const myRoute = useBuilder()
 {: note }
 Le **floor** est un élément très important dans **duplo**, chaque donnée insérée a l'intérieur provient d'une **étape** que vous avez implémentée dans votre **route**. Toute donnée disponible dans le **floor** est **typée**, ce qui rend son utilisation **robuste** et **fiable**. Cepandant, l'utilisation du type `any` sera toujours un **problème**. A vous de faire en sorte de ne **jamais** l'utiliser.
 
+## Lancer le serveur web
+**Duplo** est un framework **agnostique** de la platforme ce qui signifi qu'il ne depant d'aucune api externe au langage **javascript**. Dans les exempled qui seront présenter tout au long du cours nous utiliseront **NodeJS**. Pour cela je vous invite a suivre la bonne [installation](../../installation/node-js). Le lancement du serveur web sur la platforme **NodeJS** ce fait pars l'importation du module `@duplojs/node` en top de votre fichier principal.
+
+```ts
+import "@duplojs/node";
+import { Duplo, useBuilder } from "@duplojs/core";
+
+const duplo = new Duplo({
+    environment: "DEV",
+    host: "localhost",
+    port: 1506,
+});
+
+duplo.register(...useBuilder.getAllCreatedDuplose());
+
+const server = await duplo.launch();
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- L'importation du module `@duplojs/node` a étais mise au tout en haut.
+- L'insance de `Duplo` posséde maintenant plus de paramétre dont `host` et `port` qui devienne de properties obligatoire.
+- Toute les route créer avec la fonction `useBuilder` sont enregister dans l'instance de `Duplo` courante.
+- Le serveur ce lance sur le port `1506` en accesibiliter `localhost`.
+></div>
+
 <br>
 
 [Obtenir de la donnée d'une requête >\>\>](../getting-data-from-request){: .btn .btn-yellow }
