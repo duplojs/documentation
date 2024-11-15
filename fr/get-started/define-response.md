@@ -6,8 +6,12 @@ nav_order: 4
 ---
 
 # Définir une réponse
+{: .no_toc }
 Dans **Duplo** il est possiblde définier des réponse afain de créer des contrat de sorti pour les route. Cela ne ce fait pas via des interface typescripte mais pars le bier des schema zod, ça offre l'avantage de pourvoir étre interpréter au runtime en plus de pouvoir servire de contrat de type pour typescript. Par défaut **Duplo** éxécute les schema a chaque renvois d'une réponse. Cela permet de s'assuré de l'autenticité du type avand de répondre. Il est bien évidement possible de désactiver cette fonctionaliter en environement de production.
 Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/define-response).
+
+1. TOC
+{:toc}
 
 ## Les contrats de sortie
 Un contrat de sorti est un objet réponse avec comme body un schema zod. Les contrat s'applique uniquement pour 3 propriéter, le `code`, l'`information` et le `body`. Un contrat peut étre un objet réponse ou un tableau d'objet réponse. La fonction `makeResponseContract` optimise les contrats dans le cas d'un code et body similaire mais a information diférente.
