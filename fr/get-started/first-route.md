@@ -35,7 +35,7 @@ export const myRoute = useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- La méthode `createRoute` est utilisée pour créer un **builder** d’objet `Route`.
+- La méthode `createRoute` est utilisée pour créer un **builder** d'objet `Route`.
 - La **route** créée est une méthode `GET` avec le chemin `/hello-world`.
 - La méthode `handler` fait partie du **builder** de **route** et termine la création de celle-ci.
 - La méthode `handler` doit contenir l'action de la route et renvoyer une réponse positive.
@@ -46,7 +46,7 @@ La méthode `handler` fait partir du **builder** de l'objet `Route`. Elle a pour
 
 ### Cycle d'exécution
 {: .no_toc }
-Une **route** est constituée de d'objet `Step` implémentées à travers un **builder**. L'ordre d'implémentation est important car l'**exécution** d'une route est **séquentielle**, du **haut** vers le **bas**. Chaque `Step` a la possibilité d'**interrompre l'exécution** et de **renvoyer une réponse**.
+Une **route** est constituée d'objets `Step` implémentés à travers un **builder**. L'ordre d'implémentation est important car l'**exécution** d'une route est **séquentielle**, du **haut** vers le **bas**. Chaque `Step` a la possibilité d'**interrompre l'exécution** et de **renvoyer une réponse**.
 
 ```ts
 import { useBuilder, OkHttpResponse } from "@duplojs/core";
@@ -285,15 +285,15 @@ export const myRoute = useBuilder()
 >Dans cet exemple :
 ><div markdown="block">
 - La méthode `extract` est utilisée pour **enrichir** le **floor**, son utilisation sera précisée plus tard.
-- `pickup` est passé au **handler**, permettant d’accéder aux propriétés du **floor** comme `foo`.
+- `pickup` est passé au **handler**, permettant d'accéder aux propriétés du **floor** comme `foo`.
 - Le **typage** de la propriété `foo` est garanti.
 ></div>
 
 {: note }
-Le **floor** est un élément très important dans **duplo**, chaque donnée insérée a l'intérieur provient d'une **étape** que vous avez implémentée dans votre **route**. Toute donnée disponible dans le **floor** est **typée**, ce qui rend son utilisation **robuste** et **fiable**. Cepandant, l'utilisation du type `any` sera toujours un **problème**. A vous de faire en sorte de ne **jamais** l'utiliser.
+Le **floor** est un élément très important dans **duplo**. Chaque donnée insérée à l'intérieur provient d'une **étape** que vous avez implémentée dans votre **route**. Toute donnée disponible dans le **floor** est **typée**, ce qui rend son utilisation **robuste** et **fiable**. Cepandant, l'utilisation du type `any` sera toujours un **problème**. A vous de faire en sorte de ne **jamais** l'utiliser.
 
 ## Lancer le serveur web
-**Duplo** est un framework **agnostique** de la platforme ce qui signifi qu'il ne depant d'aucune api externe au langage **javascript**. Dans les exempled qui seront présenter tout au long du cours nous utiliseront **NodeJS**. Pour cela je vous invite a suivre la bonne [installation](../../installation/node-js). Le lancement du serveur web sur la platforme **NodeJS** ce fait pars l'importation du module `@duplojs/node` en top de votre fichier principal.
+**Duplo** est un framework **agnostique** de la platforme ce qui signifie qu'il ne dépant d'aucune api externe au langage **javascript**. Dans les exemples qui seront présentés tout au long du cours, nous utiliseront **NodeJS**. Pour cela nous vous invitons à suivre la bonne [installation](../../installation/node-js). Le lancement du serveur web sur la platforme **NodeJS** se fait par l'importation du module `@duplojs/node` en haut de votre fichier principal.
 
 ```ts
 import "@duplojs/node";
@@ -313,10 +313,10 @@ const server = await duplo.launch();
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- L'importation du module `@duplojs/node` a étais mise au tout en haut.
-- L'insance de `Duplo` posséde maintenant plus de paramétre dont `host` et `port` qui devienne de properties obligatoire.
-- Toute les route créer avec la fonction `useBuilder` sont enregister dans l'instance de `Duplo` courante.
-- Le serveur ce lance sur le port `1506` en accesibiliter `localhost`.
+- L'importation du module `@duplojs/node` a été mise tout en haut.
+- L'instance de `Duplo` possède maintenant plus de paramètre dont `host` et `port` qui deviennent des propriétés obligatoires.
+- Toutes les routes créées avec la fonction `useBuilder` sont enregistrées dans l'instance de `Duplo` courante.
+- Le serveur se lance sur le port `1506` en accessibilité `localhost`.
 ></div>
 
 <br>

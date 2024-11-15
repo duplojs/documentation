@@ -13,15 +13,15 @@ Cependant `Express` propose une liberté complète dans ses points d'entrée. Il
 
 ## Philosophie du framework
 
-`Duplo` met d’abord l’accent sur la lisibilité. Toutes les solutions que vous mettrez en place avec lui seront explicites et claires, dans le but de créer un code auto-documenté.
+`Duplo` met d'abord l'accent sur la lisibilité. Toutes les solutions que vous mettrez en place avec lui seront explicites et claires, dans le but de créer un code auto-documenté.
 
 Ensuite, `Duplo` est très opiniâtre. Si vous l'adoptez complètement, vous n'aurez plus à vous soucier des aspects techniques liés aux vérifications dans vos routes (authentification, validation des données de la requête, vérification en base de données, etc.). Une seule solution simple et précise se présentera à vous dès que vous créerez une nouvelle route.
 
 Toutes les ressources que vous créerez avec `Duplo` seront réutilisables. La construction de routes ressemblera à un assemblage de blocs de code, comme un grand jeu de briques pour enfants : `Duplo`.
 
-`Duplo` est entièrement typesafe[^4]. Tout le code que vous imbriquerez ensemble sera automatiquement compatible. Si vous modifiez quelque chose, `TypeScript` vous indiquera immédiatement l'impact de cette modification sur l’ensemble de votre application. Et cela, avec très peu de code supplémentaire en `TypeScript`, ce qui ne vous demandera pas plus de travail.
+`Duplo` est entièrement typesafe[^4]. Tout le code que vous imbriquerez ensemble sera automatiquement compatible. Si vous modifiez quelque chose, `TypeScript` vous indiquera immédiatement l'impact de cette modification sur l'ensemble de votre application. Et cela, avec très peu de code supplémentaire en `TypeScript`, ce qui ne vous demandera pas plus de travail.
 
-Enfin, `Duplo` se veut agnostique[^2]. Son core ne dépend d’aucune plateforme `JavaScript` spécifique et n'utilise que des APIs natives du langage. Cela le rend utilisable aussi bien avec `Node.js`, `Deno`, `Bun` qu'en environnement navigateur.
+Enfin, `Duplo` se veut agnostique[^2]. Son core ne dépend d'aucune plateforme `JavaScript` spécifique et n'utilise que des APIs natives du langage. Cela le rend utilisable aussi bien avec `Node.js`, `Deno`, `Bun` qu'en environnement navigateur.
 
 ## Le scope
 

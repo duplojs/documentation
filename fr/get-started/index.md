@@ -27,7 +27,7 @@ has_toc: false
     - Les cuts
 4. [Définir une réponse](./define-response)
     - Les contrats de sortie
-    - Implémentations d'un contrat
+    - Implémentation d'un contrat
 5. [Aborder une nouvelle route](./how-to-approach-new-road)
     - Outils à ma disposition
     - Par quoi commencer ?
