@@ -22,25 +22,25 @@ new OkHttpResponse("SuperInfo", zod.undefined());
 makeResponseContract(OkHttpResponse, "SuperInfo");
 
 new OkHttpResponse(
-	"SuperInfo",
-	zod.object({
-		id: zod.string(),
-		name: zod.string(),
-	}),
+    "SuperInfo",
+    zod.object({
+        id: zod.string(),
+        name: zod.string(),
+    }),
 );
 // same as
 makeResponseContract(
-	OkHttpResponse,
-	"SuperInfo",
-	zod.object({
-		id: zod.string(),
-		name: zod.string(),
-	}),
+    OkHttpResponse,
+    "SuperInfo",
+    zod.object({
+        id: zod.string(),
+        name: zod.string(),
+    }),
 );
 
 <const>[
-	new ForbiddenHttpResponse("token.expire", zod.undefined()),
-	new ForbiddenHttpResponse("token.invalide", zod.undefined()),
+    new ForbiddenHttpResponse("token.expire", zod.undefined()),
+    new ForbiddenHttpResponse("token.invalide", zod.undefined()),
 ];
 // same as
 makeResponseContract(ForbiddenHttpResponse, ["token.expire", "token.invalide"]);
