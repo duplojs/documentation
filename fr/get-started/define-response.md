@@ -67,45 +67,45 @@ L'implémentations d'un contrat permet son utilisation. Les étapes des **route*
 import { useBuilder, zod, ForbiddenHttpResponse, NoContentHttpResponse, NotFoundHttpResponse, makeResponseContract } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("DELETE", "/users/{userId}")
-	.extract({
-		params: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.check(
-		userExistCheck,
-		{
-			input: (pickup) => pickup("userId"),
-			result: "user.exist",
-			indexing: "user",
-			catch: () => new NotFoundHttpResponse("user.notfound"),
-		},
-		makeResponseContract(NotFoundHttpResponse, "user.notfound"),
-	)
-	.cut(
-		({ pickup, dropper }) => {
-			const { email } = pickup("user");
+    .createRoute("DELETE", "/users/{userId}")
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .check(
+        userExistCheck,
+        {
+            input: (pickup) => pickup("userId"),
+            result: "user.exist",
+            indexing: "user",
+            catch: () => new NotFoundHttpResponse("user.notfound"),
+        },
+        makeResponseContract(NotFoundHttpResponse, "user.notfound"),
+    )
+    .cut(
+        ({ pickup, dropper }) => {
+            const { email } = pickup("user");
 
-			if (email === "admin@example.com") {
-				return new ForbiddenHttpResponse("userIsAdmin");
-			}
+            if (email === "admin@example.com") {
+                return new ForbiddenHttpResponse("userIsAdmin");
+            }
 
-			return dropper(null);
-		},
-		[],
-		makeResponseContract(ForbiddenHttpResponse, "userIsAdmin"),
-	)
-	.handler(
-		(pickup) => {
-			const { id } = pickup("user");
+            return dropper(null);
+        },
+        [],
+        makeResponseContract(ForbiddenHttpResponse, "userIsAdmin"),
+    )
+    .handler(
+        (pickup) => {
+            const { id } = pickup("user");
 
-			// action to delete user
+            // action to delete user
 
-			return new NoContentHttpResponse("user.deleted");
-		},
-		makeResponseContract(NoContentHttpResponse, "user.deleted"),
-	);
+            return new NoContentHttpResponse("user.deleted");
+        },
+        makeResponseContract(NoContentHttpResponse, "user.deleted"),
+    );
 ```
 
 {: .highlight }
@@ -127,13 +127,13 @@ Les **preset checkers** peuvent également implémenter un contrat de sortie qui
 import { createPresetChecker, makeResponseContract, NotFoundHttpResponse } from "@duplojs/core";
 
 export const iWantUserExist = createPresetChecker(
-	userExistCheck,
-	{
-		result: "user.exist",
-		catch: () => new NotFoundHttpResponse("user.notfound"),
-		indexing: "user",
-	},
-	makeResponseContract(NotFoundHttpResponse, "user.notfound"),
+    userExistCheck,
+    {
+        result: "user.exist",
+        catch: () => new NotFoundHttpResponse("user.notfound"),
+        indexing: "user",
+    },
+    makeResponseContract(NotFoundHttpResponse, "user.notfound"),
 );
 ```
 {: .highlight }
