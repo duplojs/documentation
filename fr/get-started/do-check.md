@@ -465,8 +465,11 @@ useBuilder()
 - En survolant rapidement la déclaration de la **route** nous pouvont déduire qu'elle renvois la variable `user`. Cependant, pour cela il faut que la **requéte** possède un paramétre `userId` de type `number` et qu'à partir de ce paramétre il faut qu'un utilisateur existe.
 ></div>
 
+{: .note}
+La méthode `presetCheck` appel la méthode `check` en lui donnant touts les paramètres prés définit. Il n'éxiste donc pas d'étape spécifique pour les **preset checker**, il sont implémenter dans l'objet route comme les **checkers**.
+
 ## Les cuts
-Les **cuts** sont des **étapes** (`CutStep`) au même titre que les **checkers**. Dans le meilleur des mondes, les **checkers** suffisent à faire toutes les vérifications. Cependant dans la réalité, il arrive fréquemment de devoir écrire du code spécifique pour des cas uniques et particuliers. C'est précisément pour gérer ces exceptions que les **cuts** ont été développé.
+Les **cuts** sont des **étapes** (`CutStep`) au même titre que les **checkers**. Dans le meilleur des mondes, les **checkers** suffisent à faire toutes les vérifications. Cependant dans la réalité, il arrive fréquemment de devoir écrire du code spécifique pour des cas uniques. C'est précisément pour gérer ces exceptions que les **cuts** ont été développé.
 
 ### Implémentation d'un cut dans une route
 {: .no_toc }

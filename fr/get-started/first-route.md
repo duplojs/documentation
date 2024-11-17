@@ -289,7 +289,7 @@ export const myRoute = useBuilder()
 - Le **typage** de la propriété `foo` est garanti.
 ></div>
 
-{: note }
+{: .note }
 Le **floor** est un élément très important dans **duplo**. Chaque donnée insérée à l'intérieur provient d'une **étape** que vous avez implémentée dans votre **route**. Toute donnée disponible dans le **floor** est **typée**, ce qui rend son utilisation **robuste** et **fiable**. Cepandant, l'utilisation du type `any` sera toujours un **problème**. A vous de faire en sorte de ne **jamais** l'utiliser.
 
 ## Lancer le serveur web
