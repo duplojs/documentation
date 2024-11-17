@@ -136,6 +136,7 @@ export const iWantUserExist = createPresetChecker(
     makeResponseContract(NotFoundHttpResponse, "user.notfound"),
 );
 ```
+
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
