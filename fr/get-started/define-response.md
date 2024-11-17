@@ -120,6 +120,7 @@ useBuilder()
 Les contrat de sortie définisse le type que doit renvoyer les fonction concernés et pas l'inverse. L'erreur typescript en cas de non respect sera indiqué sur le retour de la fonction et non sur le contrat. Les contrat peuvent paraître comme étand du travaile en plus mais il vous aideront fortement dans le cadre de test unitaire/end to end, il pourront aussi aider a générer un swagger ou un client http 100% typé de façon automatique! 
 
 ### Implémentations un contrat sur un preset checker
+{: .no_toc }
 Les **preset checkers** peuvent également implémenter un contrat de sortie qui sera directement transmis a la **route** sans besoin de le re spésifier.
 
 ```ts
