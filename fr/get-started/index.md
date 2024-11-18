@@ -30,8 +30,7 @@ has_toc: false
     - Implémentation d'un contrat
 5. [Aborder une nouvelle route](./how-to-approach-new-road)
     - Outils à ma disposition
-    - Par quoi commencer ?
-    - Réalisation d'une route
+    - Comment procéder ?
 6. [Routine de vérification](./verification-routine)
     - Les process
     - Implémentation d'un process

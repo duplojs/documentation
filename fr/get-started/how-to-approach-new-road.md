@@ -25,9 +25,62 @@ En plus de jouer un role de **garde**, les étapes enrichie de manier typé le [
 
 Pour finir, il éxiste les [**contrat de sorti**](../define-response) qui permette explicitement d'indiqué ce qu'on renvoi. C'est un aspect trés important qui garanti un retoure correct.
 
-## Par quoi commencer ?
+## Comment procéder ?
+Pour commencer, il vous faut établir un bute. 
+A quoi votre route vas t'elle servir :
+- a récupéré des info d'un utilisateur ?
+- a poster un message dans une conversation ?
+- a ajouter un utilisateur a une organization ?
+- a créer un utilisateur ?
 
-## Réalisation d'une route
+Aprés avoir établir ce que vous voulez, vous pouvé commencer a déclaré votre route.
+Dans l'exemple, le bute choisit est de poster un message dans une conversation entre deux utilisateur.
+
+```ts
+import { useBuilder } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("POST", "/messages")
+	.handler(
+		(pickup) => {
+			// action pour poster un message.
+		},
+	);
+```
+
+Ensuite créer le zod schema du body qui sera utilisais dans le contrat de sortie pour établire ce que vous aller renvoyer.
+
+```ts
+import { zod } from "@duplojs/core";
+
+export const messageSchema = zod.object({
+	senderId: zod.number(),
+	receiverId: zod.number(),
+	content: zod.string(),
+	postedAt: zod.date(),
+});
+```
+
+{: .note }
+Quand le body de votre contrat est on object, il est préférable de le déclaré dans un autre fichier. Dans une architecture simple, créer un dossier `src/schemas` et enregister vos schema dans des fichier différent suivant le document qu'il représente.
+
+```ts
+import { makeResponseContract, OkHttpResponse, useBuilder } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("POST", "/messages")
+	.handler(
+		(pickup) => {
+			// action to post message
+			
+			return new OkHttpResponse("message.posted", {...});
+		},
+		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
+	);
+```
+
+{: .note }
+L'information décris ce sur quoi la route c'est arréter. Ici, si `message.posted` est reçue cela signif que la route c'est arréter aprés avoir poster le message.
 
 <br>
 

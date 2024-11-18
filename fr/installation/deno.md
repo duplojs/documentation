@@ -5,4 +5,5 @@ title: Deno
 nav_order: 2
 ---
 
-# Plateforme non supportée pour le moment.
+## La librairie de portage pour Deno n'a pas encore été faite.
+Si vous souhaitez la faire vous-même, vous pouvez vous inspirer de [@duplojs/node](https://github.com/duplojs/node).
