@@ -33,22 +33,9 @@ A quoi votre route vas t'elle servir :
 - a ajouter un utilisateur a une organization ?
 - a créer un utilisateur ?
 
-Aprés avoir établir ce que vous voulez, vous pouvé commencer a déclaré votre route.
-Dans l'exemple, le bute choisit est de poster un message dans une conversation entre deux utilisateur.
+Pour ilustré la méthodologie, le bute choisit sera d'envoyer un message a utilisateur.
 
-```ts
-import { useBuilder } from "@duplojs/core";
-
-useBuilder()
-	.createRoute("POST", "/messages")
-	.handler(
-		(pickup) => {
-			// action pour poster un message.
-		},
-	);
-```
-
-Ensuite créer le zod schema du body qui sera utilisais dans le contrat de sortie pour établire ce que vous aller renvoyer.
+Aprés avoir établir ce que nous voulons, nous pouvons commencé pars définir le document que notre route renvera. Cela  nous permetera de mettre en place le contrat de sorti.
 
 ```ts
 import { zod } from "@duplojs/core";
@@ -64,16 +51,21 @@ export const messageSchema = zod.object({
 {: .note }
 Quand le body de votre contrat est on object, il est préférable de le déclaré dans un autre fichier. Dans une architecture simple, créer un dossier `src/schemas` et enregister vos schema dans des fichier différent suivant le document qu'il représente.
 
+
+Ensuite nous pouvont commencer a déclaré notre route. Nous utiliserons la méthode `POST` et le chemain `/users/{receiverId}/messages` car c'est un envois de donnés dans les messages d'un utilisateur.
+
 ```ts
-import { makeResponseContract, OkHttpResponse, useBuilder } from "@duplojs/core";
+import { makeResponseContract, OkHttpResponse, useBuilder, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("POST", "/messages")
+	.createRoute("POST", "/users/{receiverId}/messages")
 	.handler(
 		(pickup) => {
-			// action to post message
-			
-			return new OkHttpResponse("message.posted", {...});
+			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+				/* ... */
+			};
+
+			return new OkHttpResponse("message.posted", postedMessage);
 		},
 		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
 	);
