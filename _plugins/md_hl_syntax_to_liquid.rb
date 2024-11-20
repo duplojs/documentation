@@ -7,6 +7,6 @@ Jekyll::Hooks.register :documents, :pre_render do |document, payload|
   
     # only process if we deal with a markdown file
     if payload['site']['markdown_ext'].include? docExt
-      document.content.gsub!(/^\`\`\`([A-z]+){([\d\s]+)}$(.*?)^\`\`\`$/im, '{% highlight \1 highlight_lines="\2" %}\3{% endhighlight %}')
+      document.content.gsub!(/^{([\d\s]+)}\`\`\`([A-Za-z]+)$(.*?)^\`\`\`$/im, '{% highlight \2 highlight_lines="\1" %}\3{% endhighlight %}')
     end
   end
