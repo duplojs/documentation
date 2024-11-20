@@ -37,7 +37,7 @@ Pour ilustré la méthodologie, le bute choisit sera d'envoyer un message a util
 
 Aprés avoir établir ce que nous voulons, nous pouvons commencé pars définir le document que notre route renvera. Cela  nous permetera de mettre en place le contrat de sorti.
 
-```ts
+```ts 1
 import { zod } from "@duplojs/core";
 
 export const messageSchema = zod.object({
@@ -62,6 +62,7 @@ useBuilder()
 	.handler(
 		(pickup) => {
 			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+				postedAt: new Date(),
 				/* ... */
 			};
 
@@ -73,6 +74,167 @@ useBuilder()
 
 {: .note }
 L'information décris ce sur quoi la route c'est arréter. Ici, si `message.posted` est reçue cela signif que la route c'est arréter aprés avoir poster le message.
+
+Dans notre cas, pour envoyer un message nous voulons étre sur que l'utilisateur qui le reçois éxiste avant de stocker son message. Ici il sera nomé `receiver` et son `id` est présent dans les paramétre du path (`/users/{receiverId}/messages`) de notre route. La prochainbe étape sera donc de l'extraire, afain d'avoir le `receiverId` indéxé dans le floor.
+
+```ts
+import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("POST", "/users/{receiverId}/messages")
+	.extract({
+		params: {
+			receiverId: zod.coerce.number(),
+		},
+	})
+	.handler(
+		(pickup) => {
+			const { receiverId } = pickup(["receiverId"]);
+
+			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+				receiverId,
+				postedAt: new Date(),
+				/* ... */
+			};
+
+			return new OkHttpResponse("message.posted", postedMessage);
+		},
+		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
+	);
+```
+
+{: .note }
+Les paramétes de path sont toujours des `string`. C'est pour cela qu'on utilise le `coerce` de zod pour le convertir en `number`.
+
+Ensuite, pour vérifier que notre receveur éxiste. Nous allez utilisé le checker `userExist` provenant de cette [exmple](../do-check#création-dun-checker) et en faire un preset Checker.
+
+```ts
+import { createPresetChecker, makeResponseContract, NotFoundHttpResponse } from "@duplojs/core";
+
+export const iWantUserExist = createPresetChecker(
+	userExistCheck,
+	{
+		result: "user.exist",
+		catch: () => new NotFoundHttpResponse("user.notfound"),
+		indexing: "user",
+	},
+	makeResponseContract(NotFoundHttpResponse, "user.notfound"),
+);
+```
+
+Une fois devenu un preset checker, son implémentation sera bq plus explicite et rapide.
+
+```ts
+import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("POST", "/users/{receiverId}/messages")
+	.extract({
+		params: {
+			receiverId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		iWantUserExist,
+		(pickup) => pickup("receiverId"),
+	)
+	.handler(
+		(pickup) => {
+			const { user } = pickup(["user"]);
+
+			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+				receiverId: user.id,
+				postedAt: new Date(),
+				/* ... */
+			};
+
+			return new OkHttpResponse("message.posted", postedMessage);
+		},
+		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
+	);
+```
+
+Pour obtenir le contenue du message il nous faut égalment l'extraire.
+
+```ts
+import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("POST", "/users/{receiverId}/messages")
+	.extract({
+		params: {
+			receiverId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		iWantUserExist,
+		(pickup) => pickup("receiverId"),
+	)
+	.extract({
+		body: zod.object({
+			content: zod.string(),
+		}).strip(),
+	})
+	.handler(
+		(pickup) => {
+			const { user, body } = pickup(["user", "body"]);
+
+			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+				receiverId: user.id,
+				content: body.content,
+				postedAt: new Date(),
+				/* ... */
+			};
+
+			return new OkHttpResponse("message.posted", postedMessage);
+		},
+		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
+	);
+```
+
+{: .note }
+Il est totalment possible d'utilisais la premiere `ExtractStep` pour obtenir le body. Mais imaginon que pars soucie de performace, nous ne voulont pas extraiter le contenu du body avant.
+
+Mais noubliont pas, si qu'elle qu'un reçoi un message c'est que qu'elle qu'un la envoyer. C'est moi en temp qu'utilisateur qui est appeler la route pour poster un message dans la pile d'un autre utilisateur. Pour cela, imaginon que notre `userId` (ou `senderId`) sois stoker dans un header `userId`. habituelment il aurait du s'obtenire a traver token qu'il aurait fallu validé en amond mais pour notre exemple, ont vas faire simple.
+
+```ts
+import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("POST", "/users/{receiverId}/messages")
+	.extract({
+		params: {
+			receiverId: zod.coerce.number(),
+		},
+		headers: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		iWantUserExist,
+		(pickup) => pickup("receiverId"),
+	)
+	.extract({
+		body: zod.object({
+			content: zod.string(),
+		}).strip(),
+	})
+	.handler(
+		(pickup) => {
+			const { user, body } = pickup(["user", "body"]);
+
+			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+				receiverId: user.id,
+				content: body.content,
+				postedAt: new Date(),
+				/* ... */
+			};
+
+			return new OkHttpResponse("message.posted", postedMessage);
+		},
+		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
+	);
+```
 
 <br>
 
