@@ -303,7 +303,7 @@ useBuilder()
 	);
 {% endhighlight %}
 
-La déclaration de la route s'arréte ici, toute vos vérification son explicite
+La déclaration de la route s'arréte ici, toute vos vérification son explicite et votre code est robuste est sans erreur grace au typage de bout en bout !
 
 <br>
 
