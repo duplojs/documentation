@@ -47,6 +47,7 @@ export const messageSchema = zod.object({
     postedAt: zod.date(),
 });
 ```
+
 {: .note }
 Quand le body de votre contrat est on object, il est préférable de le déclaré dans un autre fichier. Dans une architecture simple, créer un dossier `src/schemas` et enregister vos schema dans des fichier différent suivant le document qu'il représente.
 
