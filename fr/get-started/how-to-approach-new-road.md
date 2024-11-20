@@ -41,10 +41,10 @@ Aprés avoir établir ce que nous voulons, nous pouvons commencé pars définir 
 import { zod } from "@duplojs/core";
 
 export const messageSchema = zod.object({
-	senderId: zod.number(),
-	receiverId: zod.number(),
-	content: zod.string(),
-	postedAt: zod.date(),
+    senderId: zod.number(),
+    receiverId: zod.number(),
+    content: zod.string(),
+    postedAt: zod.date(),
 });
 ```
 {: .note }
@@ -57,18 +57,18 @@ Ensuite nous pouvont commencer a déclaré notre route. Nous utiliserons la mét
 import { makeResponseContract, OkHttpResponse, useBuilder, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("POST", "/users/{receiverId}/messages")
-	.handler(
-		(pickup) => {
-			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
-				postedAt: new Date(),
-				/* ... */
-			};
+    .createRoute("POST", "/users/{receiverId}/messages")
+    .handler(
+        (pickup) => {
+            const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+                postedAt: new Date(),
+                /* ... */
+            };
 
-			return new OkHttpResponse("message.posted", postedMessage);
-		},
-		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
-	);
+            return new OkHttpResponse("message.posted", postedMessage);
+        },
+        makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
+    );
 ```
 
 {: .note }
@@ -80,26 +80,26 @@ Dans notre cas, pour envoyer un message nous voulons étre sur que l'utilisateur
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("POST", "/users/{receiverId}/messages")
-	.extract({
-		params: {
-			receiverId: zod.coerce.number(),
-		},
-	})
-	.handler(
-		(pickup) => {
-			const { receiverId } = pickup(["receiverId"]);
+    .createRoute("POST", "/users/{receiverId}/messages")
+    .extract({
+        params: {
+            receiverId: zod.coerce.number(),
+        },
+    })
+    .handler(
+        (pickup) => {
+            const { receiverId } = pickup(["receiverId"]);
 
-			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
-				receiverId,
-				postedAt: new Date(),
-				/* ... */
-			};
+            const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+                receiverId,
+                postedAt: new Date(),
+                /* ... */
+            };
 
-			return new OkHttpResponse("message.posted", postedMessage);
-		},
-		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
-	);
+            return new OkHttpResponse("message.posted", postedMessage);
+        },
+        makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
+    );
 {% endhighlight %}
 
 {: .note }
@@ -111,13 +111,13 @@ Ensuite, pour vérifier que notre receveur éxiste. Nous allez utilisé le check
 import { createPresetChecker, makeResponseContract, NotFoundHttpResponse } from "@duplojs/core";
 
 export const iWantUserExist = createPresetChecker(
-	userExistCheck,
-	{
-		result: "user.exist",
-		catch: () => new NotFoundHttpResponse("user.notfound"),
-		indexing: "user",
-	},
-	makeResponseContract(NotFoundHttpResponse, "user.notfound"),
+    userExistCheck,
+    {
+        result: "user.exist",
+        catch: () => new NotFoundHttpResponse("user.notfound"),
+        indexing: "user",
+    },
+    makeResponseContract(NotFoundHttpResponse, "user.notfound"),
 );
 ```
 
@@ -127,30 +127,30 @@ Une fois devenu un preset checker, son implémentation sera bq plus explicite et
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("POST", "/users/{receiverId}/messages")
-	.extract({
-		params: {
-			receiverId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		iWantUserExist,
-		(pickup) => pickup("receiverId"),
-	)
-	.handler(
-		(pickup) => {
-			const { user } = pickup(["user"]);
+    .createRoute("POST", "/users/{receiverId}/messages")
+    .extract({
+        params: {
+            receiverId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        iWantUserExist,
+        (pickup) => pickup("receiverId"),
+    )
+    .handler(
+        (pickup) => {
+            const { user } = pickup(["user"]);
 
-			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
-				receiverId: user.id,
-				postedAt: new Date(),
-				/* ... */
-			};
+            const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+                receiverId: user.id,
+                postedAt: new Date(),
+                /* ... */
+            };
 
-			return new OkHttpResponse("message.posted", postedMessage);
-		},
-		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
-	);
+            return new OkHttpResponse("message.posted", postedMessage);
+        },
+        makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
+    );
 {% endhighlight %}
 
 Pour obtenir le contenue du message il nous faut égalment l'extraire.
@@ -159,36 +159,36 @@ Pour obtenir le contenue du message il nous faut égalment l'extraire.
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("POST", "/users/{receiverId}/messages")
-	.extract({
-		params: {
-			receiverId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		iWantUserExist,
-		(pickup) => pickup("receiverId"),
-	)
-	.extract({
-		body: zod.object({
-			content: zod.string(),
-		}).strip(),
-	})
-	.handler(
-		(pickup) => {
-			const { user, body } = pickup(["user", "body"]);
+    .createRoute("POST", "/users/{receiverId}/messages")
+    .extract({
+        params: {
+            receiverId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        iWantUserExist,
+        (pickup) => pickup("receiverId"),
+    )
+    .extract({
+        body: zod.object({
+            content: zod.string(),
+        }).strip(),
+    })
+    .handler(
+        (pickup) => {
+            const { user, body } = pickup(["user", "body"]);
 
-			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
-				receiverId: user.id,
-				content: body.content,
-				postedAt: new Date(),
-				/* ... */
-			};
+            const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+                receiverId: user.id,
+                content: body.content,
+                postedAt: new Date(),
+                /* ... */
+            };
 
-			return new OkHttpResponse("message.posted", postedMessage);
-		},
-		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
-	);
+            return new OkHttpResponse("message.posted", postedMessage);
+        },
+        makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
+    );
 {% endhighlight %}
 
 {: .note }
@@ -200,39 +200,39 @@ Mais noubliont pas, si qu'elle qu'un reçoi un message c'est que qu'elle qu'un l
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("POST", "/users/{receiverId}/messages")
-	.extract({
-		params: {
-			receiverId: zod.coerce.number(),
-		},
-		headers: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		iWantUserExist,
-		(pickup) => pickup("receiverId"),
-	)
-	.extract({
-		body: zod.object({
-			content: zod.string(),
-		}).strip(),
-	})
-	.handler(
-		(pickup) => {
-			const { user, body } = pickup(["user", "body"]);
+    .createRoute("POST", "/users/{receiverId}/messages")
+    .extract({
+        params: {
+            receiverId: zod.coerce.number(),
+        },
+        headers: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        iWantUserExist,
+        (pickup) => pickup("receiverId"),
+    )
+    .extract({
+        body: zod.object({
+            content: zod.string(),
+        }).strip(),
+    })
+    .handler(
+        (pickup) => {
+            const { user, body } = pickup(["user", "body"]);
 
-			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
-				receiverId: user.id,
-				content: body.content,
-				postedAt: new Date(),
-				/* ... */
-			};
+            const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+                receiverId: user.id,
+                content: body.content,
+                postedAt: new Date(),
+                /* ... */
+            };
 
-			return new OkHttpResponse("message.posted", postedMessage);
-		},
-		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
-	);
+            return new OkHttpResponse("message.posted", postedMessage);
+        },
+        makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
+    );
 {% endhighlight %}
 
 <br>
