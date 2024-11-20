@@ -7,35 +7,35 @@ nav_order: 5
 
 # Aborder une nouvelle route
 {: .no_toc }
-Cette parite aborde la méthodologie de travaille a adopter quand vous utilisez **DuploJS**.
-Tous les exemples présenté dans ce cours sont disponible en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/how-to-approach-new-road).
+Cette partie aborde la méthodologie de travail a adopter lors de l'utilisation du framework **DuploJS**.
+Tous les exemples présentés dans ce cours sont disponible en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/how-to-approach-new-road).
 
 1. TOC
 {:toc}
 
 ## Outils à ma disposition
-Pour rappel, dans **DuploJS** une route est constituer d'étape a franchir avand d'éfféctuer une action. Chaque étape est une vérification qui peux mettre fin a l'éxécution de la route en renvoyen une réponse. Les différente étape aborder précédement sont :
-- les [`ExtractStep`](../getting-data-from-request) qui permette de d'extraire de la donné de la requéte courante.
-- les [`CheckerStep`](../do-check#les-checkers) qui effectute une vérification a partire d'une valeur d'entrés.
-- les [`CutStep`](../do-check#les-cuts) qui effectute une vérification directement au saint de la route pour des cas unique.
+Pour rappel, dans **DuploJS** une route est constituée d'étape à franchir avant d'effectuer une action. Chaque étape est une vérification qui peux mettre fin à l'exécution de la route en renvoyant une réponse. Les différentes étapes abordées précédement sont :
+- les [`ExtractStep`](../getting-data-from-request) qui permettent d'extraire de la donnée de la requéte courante.
+- les [`CheckerStep`](../do-check#les-checkers) qui effectuent une vérification a partir d'une valeur d'entrée.
+- les [`CutStep`](../do-check#les-cuts) qui effectuent une vérification directement au sein de la route pour des cas unique.
 
-> La [`HandlerStep`](../first-route#créer-une-route-simple) fait exception car elle doit contenir l'action d'une route, elle sera donc la dernier étape et devra renvoyer une réponse positive.
+> La [`HandlerStep`](../first-route#créer-une-route-simple) fait exception car elle doit contenir l'action d'une route, elle sera donc la dernière étape et devra renvoyer une réponse positive.
 
-En plus de jouer un role de **garde**, les étapes enrichie de manier typé le [**floor**](../first-route#le-floor) qui est un accumulateur de donnés.
+En plus de jouer un role de **garde**, les étapes enrichie de manière typées le [**floor**](../first-route#le-floor) qui est un accumulateur de données.
 
-Pour finir, il éxiste les [**contrat de sorti**](../define-response) qui permette explicitement d'indiqué ce qu'on renvoi. C'est un aspect trés important qui garanti un retoure correct.
+Pour finir, il existe les [**contrat de sortie**](../define-response) qui permettent explicitement d'indiquer ce qu'on renvoie. C'est un aspect très important qui garanti un retour correct.
 
 ## Comment procéder ?
-Pour commencer, il vous faut établir un bute. 
-A quoi votre route vas t'elle servir :
-- a récupéré des info d'un utilisateur ?
-- a poster un message dans une conversation ?
-- a ajouter un utilisateur a une organization ?
-- a créer un utilisateur ?
+Pour commencer, il vous faut établir un but. 
+À quoi votre route va-t-elle servir :
+- A récupérer des informations d'un utilisateur ?
+- A poster un message dans une conversation ?
+- A ajouter un utilisateur à une organisation ?
+- A créer un utilisateur ?
 
-Pour ilustré la méthodologie, le bute choisit sera d'envoyer un message a utilisateur.
+Pour illustrer la méthodologie, le but choisit sera d'envoyer un message a un utilisateur.
 
-Aprés avoir établir ce que nous voulons, nous pouvons commencé pars définir le document que notre route renvera. Cela  nous permetera de mettre en place le contrat de sorti.
+Après avoir établis ce que nous voulons, nous pouvons commencer par définir le document que notre route renverra. Cela nous permettera de mettre en place le contrat de sortie.
 
 ```ts
 import { zod } from "@duplojs/core";
@@ -49,10 +49,10 @@ export const messageSchema = zod.object({
 ```
 
 {: .note }
-Quand le body de votre contrat est on object, il est préférable de le déclaré dans un autre fichier. Dans une architecture simple, créer un dossier `src/schemas` et enregister vos schema dans des fichier différent suivant le document qu'il représente.
+Quand le body de votre contrat est un objet, il est préférable de le déclarer dans un autre fichier. Dans une architecture simple, créer un dossier `src/schemas` et enregister vos schéma dans des fichiers différents suivant le document qu'il représente.
 
 
-Ensuite nous pouvont commencer a déclaré notre route. Nous utiliserons la méthode `POST` et le chemain `/users/{receiverId}/messages` car c'est un envois de donnés dans les messages d'un utilisateur.
+Ensuite nous pouvont commencer à déclarer notre route. Nous utiliserons la méthode `POST` et le chemin `/users/{receiverId}/messages` car c'est un envoi de données dans les messages d'un utilisateur.
 
 ```ts
 import { makeResponseContract, OkHttpResponse, useBuilder, type ZodSpace } from "@duplojs/core";
@@ -73,9 +73,9 @@ useBuilder()
 ```
 
 {: .note }
-L'information décris ce sur quoi la route c'est arréter. Ici, si `message.posted` est reçue cela signif que la route c'est arréter aprés avoir poster le message.
+L'information décrit comment la route s'est arrêtée. Ici, si `message.posted` est reçue cela signifie que la route s'est arrêtée après avoir posté le message.
 
-Dans notre cas, pour envoyer un message nous voulons étre sur que l'utilisateur qui le reçois éxiste avant de stocker son message. Ici il sera nomé `receiver` et son `id` est présent dans les paramétre du path (`/users/{receiverId}/messages`) de notre route. La prochainbe étape sera donc de l'extraire, afain d'avoir le `receiverId` indéxé dans le floor.
+Dans notre cas, pour envoyer un message nous voulons être sûr que l'utilisateur qui le reçois existe avant de stocker son message. Ici il sera nommé `receiver` et son `id` est présent dans les paramètres du path `/users/{receiverId}/messages` de notre route. La prochaine étape sera donc de l'extraire, afin d'avoir le `receiverId` indéxé dans le floor.
 
 {% highlight ts mark_lines="5 6 7 8 9 12 15" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
@@ -104,9 +104,9 @@ useBuilder()
 {% endhighlight %}
 
 {: .note }
-Les paramétes de path sont toujours des `string`. C'est pour cela qu'on utilise le `coerce` de zod pour le convertir en `number`.
+Les paramètres de path sont toujours des `string`. C'est pour cela qu'on utilise le `coerce` de zod pour le convertir en `number`.
 
-Ensuite, pour vérifier que notre receveur éxiste. Nous allez utilisé le checker `userExist` provenant de cette [exmple](../do-check#création-dun-checker) et en faire un preset Checker.
+Ensuite, pour vérifier que notre receveur existe. Nous allons utiliser le checker `userExist` provenant de cette [exemple](../do-check#création-dun-checker) et en faire un preset checker.
 
 ```ts
 import { createPresetChecker, makeResponseContract, NotFoundHttpResponse } from "@duplojs/core";
@@ -122,7 +122,7 @@ export const iWantUserExist = createPresetChecker(
 );
 ```
 
-Une fois devenu un preset checker, son implémentation sera bq plus explicite et rapide.
+Une fois devenu un preset checker, son implémentation sera beaucoup plus explicite et rapide.
 
 {% highlight ts mark_lines="10 11 12 13 16 19" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
@@ -154,7 +154,7 @@ useBuilder()
     );
 {% endhighlight %}
 
-Pour obtenir le contenue du message il nous faut égalment l'extraire.
+Pour obtenir le contenu du message il nous faut également l'extraire.
 
 {% highlight ts mark_lines="14 15 16 17 18 21 25" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
@@ -193,9 +193,9 @@ useBuilder()
 {% endhighlight %}
 
 {: .note }
-Il est totalment possible d'utilisais la premiere `ExtractStep` pour obtenir le body. Mais imaginon que pars soucie de performace, nous ne voulont pas extraiter le contenu du body avant.
+Il est totalement possible d'utiliser la première `ExtractStep` pour obtenir le body. Mais imaginons que par soucis de performance, nous ne voulont pas extraire le contenu du body avant.
 
-Mais noubliont pas, si qu'elle qu'un reçoi un message c'est que qu'elle qu'un la envoyer. C'est moi en temp qu'utilisateur qui est appeler la route pour poster un message dans la pile d'un autre utilisateur. Pour cela, imaginon que notre `userId` (ou `senderId`) sois stoker dans un header `userId`. habituelment il aurait du s'obtenire a traver token qu'il aurait fallu validé en amond mais pour notre exemple, ont vas faire simple.
+Mais n'oublions pas, si quelqu'un reçoit un message c'est que quelqu'un l'a envoyé. C'est moi en temps qu'utilisateur qui ai appelé la route pour poster un message dans la pile d'un autre utilisateur. Pour cela, imaginons que notre `userId` (ou `senderId`) sois stocké dans un header `userId`. Habituellement il aurait du s'obtenir à travers un token qu'il aurait fallu valider en amont mais pour notre exemple, on fera plus simple.
 
 {% highlight ts mark_lines="9 10 11" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
@@ -236,7 +236,7 @@ useBuilder()
     );
 {% endhighlight %}
 
-Nous rencontrons ici un petit probléme. Il a 2 utilisateur différent dans la route, le `sender` et le `receiver`. Dans le cas actuel si je reutilise mon preset checker `iWantUserExist` mais en y envoyent mon `userId` a la place de `receiverId`, le preset checker vas re indexer l'utilisateur trouver a l'index `user` dans le floor. Cela écrasera la valeur indéxer du présédant preset checker. De plus un second probléme arrive, si le preset checker est re-implémenter t'elle qu'elle, la route peux renvoyer deux fois la même information `user.notfound` pour 2 raison différente. La solution a tout nos problême est de créer un seconde preset checker a partir du premier.
+Nous rencontrons ici un petit problème. Il y a 2 utilisateurs différent dans la route, le `sender` et le `receiver`. Dans le cas actuel si je réutilise mon preset checker `iWantUserExist` mais en y envoyant mon `userId` à la place de `receiverId`, le preset checker vas re-indexer l'utilisateur trouvé à l'index `user` dans le floor. Cela écrasera la valeur indéxée du précédant preset checker. De plus un second problème arrive, si le preset checker est re-implémenter tel quel, la route peut renvoyer deux fois la même information `user.notfound` pour 2 raisons différentes. La solution a tout nos problêmes est de créer un second preset checker à partir du premier.
 
 {% highlight ts mark_lines="13 14 15 16 17 18" %}
 import { createPresetChecker, makeResponseContract, NotFoundHttpResponse } from "@duplojs/core";
@@ -259,7 +259,7 @@ export const iWantReceiverExist = iWantUserExist
     );
 {% endhighlight %}
 
-Avec cela, le preset checker `iWantReceiverExist` indexera la donné a `receiver` dans le floor et en plus en cas d'echec, ce sera l'information `receiver.notfound` qui sera renvoyer. Il ne reset plus qu'a l'implémenter.
+Avec cela, le preset checker `iWantReceiverExist` indexera la donnée a `receiver` dans le floor et en plus en cas d'echec, ce sera l'information `receiver.notfound` qui sera renvoyée. Il ne reste plus qu'à l'implémenter.
 
 {% highlight ts mark_lines="13 14 15 16 17 18 19 20 28 31 32" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
@@ -304,7 +304,7 @@ useBuilder()
     );
 {% endhighlight %}
 
-La déclaration de la route s'arréte ici, toute vos vérification son explicite et votre code est robuste et sans erreur grace au typage de bout en bout !
+La déclaration de la route s'arrête ici, toutes vos vérifications son explicite et votre code est robuste et sans erreur grâce au typage de bout en bout !
 
 <br>
 
