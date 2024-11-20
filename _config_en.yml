@@ -29,5 +29,6 @@ destination: _site
 theme: just-the-docs
 plugins:
   - jekyll-feed
+  - md_hl_syntax_to_liquid
 exclude: 
   - fr/
