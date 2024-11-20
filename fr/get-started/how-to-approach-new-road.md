@@ -76,7 +76,7 @@ L'information décris ce sur quoi la route c'est arréter. Ici, si `message.post
 
 Dans notre cas, pour envoyer un message nous voulons étre sur que l'utilisateur qui le reçois éxiste avant de stocker son message. Ici il sera nomé `receiver` et son `id` est présent dans les paramétre du path (`/users/{receiverId}/messages`) de notre route. La prochainbe étape sera donc de l'extraire, afain d'avoir le `receiverId` indéxé dans le floor.
 
-{% highlight ts mark_lines="5 6 7 8 9 12" %}
+{% highlight ts mark_lines="5 6 7 8 9 12 14" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
@@ -123,7 +123,7 @@ export const iWantUserExist = createPresetChecker(
 
 Une fois devenu un preset checker, son implémentation sera bq plus explicite et rapide.
 
-```ts
+{% highlight ts mark_lines="10 11 12 13 16 19" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
@@ -151,11 +151,11 @@ useBuilder()
 		},
 		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
 	);
-```
+{% endhighlight %}
 
 Pour obtenir le contenue du message il nous faut égalment l'extraire.
 
-```ts
+{% highlight ts mark_lines="14 15 16 17 18 21 25" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
@@ -189,14 +189,14 @@ useBuilder()
 		},
 		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
 	);
-```
+{% endhighlight %}
 
 {: .note }
 Il est totalment possible d'utilisais la premiere `ExtractStep` pour obtenir le body. Mais imaginon que pars soucie de performace, nous ne voulont pas extraiter le contenu du body avant.
 
 Mais noubliont pas, si qu'elle qu'un reçoi un message c'est que qu'elle qu'un la envoyer. C'est moi en temp qu'utilisateur qui est appeler la route pour poster un message dans la pile d'un autre utilisateur. Pour cela, imaginon que notre `userId` (ou `senderId`) sois stoker dans un header `userId`. habituelment il aurait du s'obtenire a traver token qu'il aurait fallu validé en amond mais pour notre exemple, ont vas faire simple.
 
-```ts
+{% highlight ts mark_lines="9 10 11" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
@@ -233,7 +233,7 @@ useBuilder()
 		},
 		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
 	);
-```
+{% endhighlight %}
 
 <br>
 
