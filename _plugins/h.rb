@@ -13,7 +13,8 @@ module Jekyll
         def line_highlighter_formatter(formatter)
           Rouge::Formatters::HTMLLineHighlighter.new(
             formatter,
-            :highlight_lines => mark_lines
+            :highlight_lines => mark_lines,
+            :highlight_line_class => hllp
           )
         end
   
