@@ -35,4 +35,3 @@ plugins:
   - jekyll-feed
 exclude: 
   - en/
-frozen_string_literal: true
