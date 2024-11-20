@@ -37,7 +37,7 @@ Pour ilustré la méthodologie, le bute choisit sera d'envoyer un message a util
 
 Aprés avoir établir ce que nous voulons, nous pouvons commencé pars définir le document que notre route renvera. Cela  nous permetera de mettre en place le contrat de sorti.
 
-```ts{1 2}
+```ts{1-2}
 import { zod } from "@duplojs/core";
 
 export const messageSchema = zod.object({
