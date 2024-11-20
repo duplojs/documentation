@@ -37,7 +37,7 @@ Pour ilustré la méthodologie, le bute choisit sera d'envoyer un message a util
 
 Aprés avoir établir ce que nous voulons, nous pouvons commencé pars définir le document que notre route renvera. Cela  nous permetera de mettre en place le contrat de sorti.
 
-{% highlight ts mark_lines="1 2 3 4 5 6 7 8" %}
+```ts
 import { zod } from "@duplojs/core";
 
 export const messageSchema = zod.object({
@@ -46,8 +46,7 @@ export const messageSchema = zod.object({
 	content: zod.string(),
 	postedAt: zod.date(),
 });
-{% endhighlight %}
-
+```
 {: .note }
 Quand le body de votre contrat est on object, il est préférable de le déclaré dans un autre fichier. Dans une architecture simple, créer un dossier `src/schemas` et enregister vos schema dans des fichier différent suivant le document qu'il représente.
 
@@ -77,7 +76,7 @@ L'information décris ce sur quoi la route c'est arréter. Ici, si `message.post
 
 Dans notre cas, pour envoyer un message nous voulons étre sur que l'utilisateur qui le reçois éxiste avant de stocker son message. Ici il sera nomé `receiver` et son `id` est présent dans les paramétre du path (`/users/{receiverId}/messages`) de notre route. La prochainbe étape sera donc de l'extraire, afain d'avoir le `receiverId` indéxé dans le floor.
 
-```ts
+{% highlight ts mark_lines="5 6 7 8 9 12" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
@@ -101,7 +100,7 @@ useBuilder()
 		},
 		makeResponseContract(OkHttpResponse, "message.posted", messageSchema)
 	);
-```
+{% endhighlight %}
 
 {: .note }
 Les paramétes de path sont toujours des `string`. C'est pour cela qu'on utilise le `coerce` de zod pour le convertir en `number`.
