@@ -76,7 +76,7 @@ L'information décris ce sur quoi la route c'est arréter. Ici, si `message.post
 
 Dans notre cas, pour envoyer un message nous voulons étre sur que l'utilisateur qui le reçois éxiste avant de stocker son message. Ici il sera nomé `receiver` et son `id` est présent dans les paramétre du path (`/users/{receiverId}/messages`) de notre route. La prochainbe étape sera donc de l'extraire, afain d'avoir le `receiverId` indéxé dans le floor.
 
-{% highlight ts mark_lines="5 6 7 8 9 12 14" %}
+{% highlight ts mark_lines="5 6 7 8 9 12 15" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()

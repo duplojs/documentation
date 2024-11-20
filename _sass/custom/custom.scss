@@ -1,6 +1,7 @@
-.highlighter-rouge {
+.highlighter-rouge, .highlighter {
     line-height: 1;
 }
+
 
 .btn-yellow {
     @include btn-color($white, $yellow-300);
