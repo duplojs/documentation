@@ -37,8 +37,7 @@ Pour ilustré la méthodologie, le bute choisit sera d'envoyer un message a util
 
 Aprés avoir établir ce que nous voulons, nous pouvons commencé pars définir le document que notre route renvera. Cela  nous permetera de mettre en place le contrat de sorti.
 
-{1-2}
-```ts
+{% highlight ts mark_lines="1 2" %}
 import { zod } from "@duplojs/core";
 
 export const messageSchema = zod.object({
@@ -47,7 +46,7 @@ export const messageSchema = zod.object({
 	content: zod.string(),
 	postedAt: zod.date(),
 });
-```
+{% endhighlight %}
 
 {: .note }
 Quand le body de votre contrat est on object, il est préférable de le déclaré dans un autre fichier. Dans une architecture simple, créer un dossier `src/schemas` et enregister vos schema dans des fichier différent suivant le document qu'il représente.
