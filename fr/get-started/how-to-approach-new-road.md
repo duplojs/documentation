@@ -235,6 +235,74 @@ useBuilder()
     );
 {% endhighlight %}
 
+Nous rencontrons ici un petit probléme. Il a 2 utilisateur différent dans la route, le `sender` et le `receiver`. Dans le cas actuel si je reutilise mon preset checker `iWantUserExist` mais en y envoyent mon `userId` a la place de `receiverId`, le preset checker vas re indexer l'utilisateur trouver a l'index `user` dasn les floor. Cela écrasera la valeur indéxer du présédant preset checker. De plus un second probléme arrive, le preset checker est implémenter t'elle qu'elle, route peux renvoyer deux fois la même information `user.notfound` pour 2 raison différente. La solution a tout nos problême est de créer un seconde preset checker a partir du premier.
+
+{% highlight ts mark_lines="13 14 15 16 17 18" %}
+import { createPresetChecker, makeResponseContract, NotFoundHttpResponse } from "@duplojs/core";
+
+export const iWantUserExist = createPresetChecker(
+	userExistCheck,
+	{
+		result: "user.exist",
+		catch: () => new NotFoundHttpResponse("user.notfound"),
+		indexing: "user",
+	},
+	makeResponseContract(NotFoundHttpResponse, "user.notfound"),
+);
+
+export const iWantReceiverExist = iWantUserExist
+	.rewriteIndexing("receiver")
+	.redefineCatch(
+		() => new NotFoundHttpResponse("receiver.notfound"),
+		makeResponseContract(NotFoundHttpResponse, "receiver.notfound"),
+	);
+{% endhighlight %}
+
+Avec cela, le preset checker `iWantReceiverExist` indexera la donné a `receiver` dans le floor et en plus en cas d'echec, ce sera l'information `receiver.notfound` qui sera renvoyer. Il ne reset plus qu'a l'implémenter.
+
+{% highlight ts mark_lines="13 14 15 16 17 18 19 20 28 31 32" %}
+import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("POST", "/users/{receiverId}/messages")
+	.extract({
+		params: {
+			receiverId: zod.coerce.number(),
+		},
+		headers: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		iWantUserExist,
+		(pickup) => pickup("userId"),
+	)
+	.presetCheck(
+		iWantReceiverExist,
+		(pickup) => pickup("receiverId"),
+	)
+	.extract({
+		body: zod.object({
+			content: zod.string(),
+		}).strip(),
+	})
+	.handler(
+		(pickup) => {
+			const { user, receiver, body } = pickup(["user", "receiver", "body"]);
+
+			const postedMessage: ZodSpace.infer<typeof messageSchema> = {
+				senderId: user.id,
+				receiverId: receiver.id,
+				content: body.content,
+				postedAt: new Date(),
+			};
+
+			return new OkHttpResponse("message.posted", postedMessage);
+		},
+		makeResponseContract(OkHttpResponse, "message.posted", messageSchema),
+	);
+{% endhighlight %}
+
 <br>
 
 [\<\< Définir une réponse](../define-response){: .btn .mr-4 }
