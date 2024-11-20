@@ -37,7 +37,7 @@ Pour ilustré la méthodologie, le bute choisit sera d'envoyer un message a util
 
 Aprés avoir établir ce que nous voulons, nous pouvons commencé pars définir le document que notre route renvera. Cela  nous permetera de mettre en place le contrat de sorti.
 
-{% highlight ruby highlight_lines="1 2" %}
+{% highlight ts highlight_lines="1 2" %}
 import { zod } from "@duplojs/core";
 
 export const messageSchema = zod.object({
