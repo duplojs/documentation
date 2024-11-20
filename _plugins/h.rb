@@ -14,7 +14,7 @@ module Jekyll
           Rouge::Formatters::HTMLLineHighlighter.new(
             formatter,
             :highlight_lines => mark_lines,
-            :highlight_line_class => hllp
+            :highlight_line_class => "hllp"
           )
         end
   
