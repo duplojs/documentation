@@ -38,5 +38,5 @@ end
 Jekyll::Hooks.register :documents, :post_init do |document, payload|
   docExt = document.extname.tr('.', '')
 
-  document.content.gsub!(/^{([\d\s]+)}\s*^\`\`\`([A-z0-9]+)$(.*?)^\`\`\`$/im, '{% highlight \2 mark_lines="\1" %}\3{% endhighlight %}')
+  document.content.gsub!(/^{([\d\s]+)}\s*^\"\"\"([A-z0-9]+)$(.*?)^\"\"\"$/im, '{% highlight \2 mark_lines="\1" %}\3{% endhighlight %}')
 end
