@@ -11,28 +11,38 @@ nav_order: 1
 - [tsx v4 ou +](https://www.npmjs.com/package/tsx)
 
 # Installation manuelle
-Pour utiliser `Duplo` sur `NodeJS`, vous devez installer le package [@duplojs/core](https://github.com/duplojs/core) et la librairie de portage [@duplojs/node](https://github.com/duplojs/node).
+Si vous partez d'un projet vierge, comencer par l'initialiser.
+```bash
+npm init -y
+```
+
+Ensuite pour utiliser `Duplo` sur `NodeJS`, vous devez installer le package [@duplojs/core](https://github.com/duplojs/core) et la librairie de portage [@duplojs/node](https://github.com/duplojs/node).
 ```bash
 npm install @duplojs/core @duplojs/node
+```
+
+Installer égalemnt les packages [typescript](https://www.npmjs.com/package/typescript) et [tsx](https://www.npmjs.com/package/tsx) en dépendance de développement.
+```bash
+npm install --save-dev typescript tsx
 ```
 
 ## Configuration package.json
 Définissez le paramètre `type` sur la valeur `module` dans le `package.json`.
 
-```js
+{% highlight js mark_lines="5 8" %}
 {
     "name": "...",
     "version": "...",
     ...,
-++  "type": "module",
+    "type": "module",
     "scripts": {
         /* permet de lancer le fichier src/main.ts avec la command npm run dev */
-++      "dev": "tsx src/main.ts", 
+        "dev": "tsx --watch src/main.ts", 
         ...
     },
     ...
 }
-```
+{% endhighlight %}
 
 ## Configuration tsconfig.json
 Les paramètres suivants sont fortement conseillés à inclure dans votre fichier `tsconfig.json` pour une compatibilité optimale avec la plupart des packages.
