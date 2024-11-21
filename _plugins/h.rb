@@ -34,3 +34,11 @@ module Jekyll
     end
   end
 end
+
+Jekyll::Hooks.register :documents, :pre_render do |document, payload|
+  docExt = document.extname.tr('.', '')
+
+  if payload['site']['markdown_ext'].include? docExt
+    document.content.gsub!(/^{([\d\s]+)}\s*^\`\`\`([A-z0-9]+)$(.*?)^\`\`\`$/im, '{% highlight \2 mark_lines="\1" %}\3{% endhighlight %}')
+  end
+end

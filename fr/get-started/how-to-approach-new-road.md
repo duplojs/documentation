@@ -261,7 +261,8 @@ export const iWantReceiverExist = iWantUserExist
 
 Avec cela, le preset checker `iWantReceiverExist` indexera la donnée a `receiver` dans le floor et en plus en cas d'echec, ce sera l'information `receiver.notfound` qui sera renvoyée. Il ne reste plus qu'à l'implémenter.
 
-{% highlight ts mark_lines="13 14 15 16 17 18 19 20 28 31 32" %}
+{13 14 15 16 17 18 19 20 28 31 32}
+```ts
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";
 
 useBuilder()
@@ -302,7 +303,7 @@ useBuilder()
         },
         makeResponseContract(OkHttpResponse, "message.posted", messageSchema),
     );
-{% endhighlight %}
+```
 
 La déclaration de la route s'arrête ici, toutes vos vérifications son explicite et votre code est robuste et sans erreur grâce au typage de bout en bout !
 
