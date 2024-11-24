@@ -14,7 +14,7 @@ Tous les exemples présentés dans ce cours sont disponibles en entier [ici](htt
 {:toc}
 
 ## Les checkers
-Les **checkers** sont des interfaces. Ils utilisent du code **impératif** pour le transformer en code **déclaratif**. Leur utilisation doit permettre de faire une **vérification**. Les **checkers** ne doivent pas être pensé pour un usage unique, ils doivent pouvoir être réutilisables en étant le plus neutre possible. Une fois créé, un **checker** peut être implémenté dans des **routes** ou des **processes**. Les **checkers** vous permettent de créer une **vérification explicite** aux endroits où vous les implémentez. En plus de cela ils vont **normaliser** votre code, ce qui le rendra **robuste** au passage de différents dévelopeurs.
+Les **checkers** sont des interfaces. Ils utilisent du code **impératif** pour le transformer en code **déclaratif**. Leur utilisation doit permettre de faire une **vérification**. Les **checkers** ne doivent pas être pensés pour un usage unique, ils doivent pouvoir être réutilisables en étant le plus neutres possibles. Une fois créé, un **checker** peut être implémenté dans des **routes** ou des **processes**. Les **checkers** vous permettent de créer une **vérification explicite** aux endroits où vous les implémentez. En plus de cela ils vont **normaliser** votre code, ce qui le rendra **robuste** au passage de différents dévelopeurs.
 
 ### Exemple rapide
 {: .no_toc }
@@ -64,12 +64,12 @@ useBuilder()
 >Dans cet exemple :
 ><div markdown="block">
 - Un **checker** a été créé avec le nom `userExist`, sa valeur d'entrée est de type `number` et ses informations de sortie sont `user.exist` et `user.notfound`.
-- Le **checker** `userExist` a été implémenté dans une **route**. La valeur d'entrée passé au **checker** corespond à la valeur `userId` du **floor**. L'information de sortie attendue pour passer à la suite est `user.exist`. La donnée renvoyé par le **checker** sera indéxé dans le **floor** à la clé `user`. Dans le cas où une information différente de `user.exist` est renvoyé par le **checker**, une réponse `NotFoundHttpResponse` sera renvoyé avec l'information `user.notfound`.
+- Le **checker** `userExist` a été implémenté dans une **route**. La valeur d'entrée passée au **checker** corespond à la valeur `userId` du **floor**. L'information de sortie attendue pour passer à la suite est `user.exist`. La donnée renvoyée par le **checker** sera indéxée dans le **floor** à la clé `user`. Dans le cas où une information différente de `user.exist` est renvoyée par le **checker**, une réponse `NotFoundHttpResponse` sera renvoyée avec l'information `user.notfound`.
 - En survolant rapidement la déclaration de la **route** nous pouvont déduire qu'elle renvoie la variable `user`. Cependant, pour cela, la **requête** doit inclure un paramètre `userId` de type `number`, et un utilisateur correspondant à ce paramètre doit exister.
 ></div>
 
 ## Création d'un checker
-Le **checker** fait partie des objets complexes qui nécessitent un **[builder](../../required/design-patern-builder)**. Pour cela, on utilise la fonction `createChecker` qui prend en premier argument le nom du **checker**. Le **builder** ne renverra que la méthode `handler` qui, après avoir été appelé, clôturera la création du **checker**. La fonction passée en argument à la méthode `handler` sert à interfacer une opération. Cette fonction prend en premier argument une valeur d'entrée avec un type que vous devez définir. Cette valeur sera généralement nommée `input`. En second argument, la fonction vous donne une fonction `output`. Elle permet que construire un retour correct avec ce que vous lui donner. La fonction `output` prend en premier argument une `string` qui donne un sens explicite à votre vérification. Elle prend en second argument une valeur qui peut être transmise. Le type de cette valeur est associée à la `string` passée en premier argument.
+Le **checker** fait partie des objets complexes qui nécessitent un **[builder](../../required/design-patern-builder)**. Pour cela, on utilise la fonction `createChecker` qui prend en premier argument le nom du **checker**. Le **builder** ne renverra que la méthode `handler` qui, après avoir été appelée, clôturera la création du **checker**. La fonction passée en argument à la méthode `handler` sert à interfacer une opération. Cette fonction prend en premier argument une valeur d'entrée avec un type que vous devez définir. Cette valeur sera généralement nommée `input`. En second argument, la fonction vous donne une fonction `output`. Elle permet que construire un retour correct avec ce que vous lui donnez. La fonction `output` prend en premier argument une `string` qui donne un sens explicite à votre vérification. Elle prend en second argument une valeur qui peut être transmise. Le type de cette valeur est associé à la `string` passée en premier argument.
 
 ```ts
 import { createChecker } from "@duplojs/core";
@@ -380,7 +380,7 @@ useBuilder()
 >Dans cet exemple :
 ><div markdown="block">
 - Le checker `userExist` a été implémenté dans deux **routes**.
-- Les méthodes `email` et `id` de l'objet `inputUserExist` sont utilisées dans les fonctions input aux endroits où sont implémenté le checker `userExist`.
+- Les méthodes `email` et `id` de l'objet `inputUserExist` sont utilisées dans les fonctions input a l'endroit où est implémenté le checker `userExist`.
 - l'utilisation de `inputUserExist.email` permettra de chercher un utilisateur par son adresse email.
 - l'utilisation de `inputUserExist.id` permettra de chercher un utilisateur par son indentifant.
 ></div>
@@ -461,19 +461,19 @@ useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Une route avec un **preset checker** implémenté à été créée.
-- En survolant rapidement la déclaration de la **route** nous pouvont déduire qu'elle renvois la variable `user`. Cependant, pour cela il faut que la **requéte** possède un paramétre `userId` de type `number` et qu'à partir de ce paramétre il faut qu'un utilisateur existe.
+- Une route avec un **preset checker** implémenté a été créée.
+- En survolant rapidement la déclaration de la **route**, nous pouvons déduire qu'elle renvoie la variable `user`. Cependant, il est nécessaire que la **requête** possède un paramètre `userId` de type `number` et qu'un utilisateur correspondant à ce paramètre existe.
 ></div>
 
 {: .note}
-La méthode `presetCheck` appel la méthode `check` en lui donnant touts les paramètres prés définit. Il n'éxiste donc pas d'étape spécifique pour les **preset checker**, il sont implémenter dans l'objet route comme les **checkers**.
+La méthode `presetCheck` appelle la méthode `check` en lui donnant touts les paramètres prédéfinis. Il n'éxiste donc pas d'étape spécifique pour les **preset checkers**, ils sont implémentés dans l'objet route comme les **checkers**.
 
 ## Les cuts
-Les **cuts** sont des **étapes** (`CutStep`) au même titre que les **checkers**. Dans le meilleur des mondes, les **checkers** suffisent à faire toutes les vérifications. Cependant dans la réalité, il arrive fréquemment de devoir écrire du code spécifique pour des cas uniques. C'est précisément pour gérer ces exceptions que les **cuts** ont été développé.
+Les **cuts** sont des **étapes** (`CutStep`) au même titre que les **checkers**. Dans le meilleur des mondes, les **checkers** suffisent à faire toutes les vérifications. Cependant dans la réalité, il arrive fréquemment de devoir écrire du code spécifique pour des cas uniques. C'est précisément pour gérer ces exceptions que les **cuts** ont été développés.
 
 ### Implémentation d'un cut dans une route
 {: .no_toc }
-Pour implémenter un **cut**, il suffit d'utiliser la méthode `cut` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. En premier argument, la méthode `cut` prend une fonction et en seconde argument un tableau. La fonction prend en argument un objet contenant la méthode `pickup` du **floor** et la méthode `dropper`. La fonction doit contenir une vérification et doit renvoyer une **réponse** ou le résultat de la fonction `dropper`. Dans le cas de renvoie d'un objet **réponse**, l'exécution de la route se stoppera à cette étape. La méthode `dropper` permet d'indexer dans le **floor** des données obtenues dans la `CutStep`. Cette méthode prend en argument le type `null | Record<string, unknown>`. Dans le cas d'un argument `null`, cela indique que rien ne veut être indéxé. Mais dans le cas d'un argument `Record<string, unknown>`, chaque clé de l'objet pourrait être indéxée dans le **floor**. Pour cela il suffit de les indiquer dans le tableau passé en second argument de la méthode `cut` du **builder**.
+Pour implémenter un **cut**, il suffit d'utiliser la méthode `cut` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. En premier argument, la méthode `cut` prend une fonction et en seconde argument un tableau. La fonction prend en argument un objet contenant la méthode `pickup` du **floor** et la méthode `dropper`. La fonction doit contenir une vérification et doit renvoyer une **réponse** ou le résultat de la fonction `dropper`. Dans le cas de renvoi d'un objet **réponse**, l'exécution de la route se stoppera à cette étape. La méthode `dropper` permet d'indexer dans le **floor** des données obtenues dans la `CutStep`. Cette méthode prend en argument le type `null | Record<string, unknown>`. Dans le cas d'un argument `null`, cela indique que rien ne veut être indéxé. Mais dans le cas d'un argument `Record<string, unknown>`, chaque clé de l'objet pourrait être indéxée dans le **floor**. Pour cela il suffit de les indiquer dans le tableau passé en second argument de la méthode `cut` du **builder**.
 
 ```ts
 import { useBuilder, zod, ForbiddenHttpResponse, NoContentHttpResponse } from "@duplojs/core";
@@ -516,8 +516,8 @@ useBuilder()
 >Dans cet exemple :
 ><div markdown="block">
 - Une route avec un **cut** implémenté a été créée.
-- Le **cut** vérifie un cas particulié avant la suppression d'un utilisateur.
-- Le **cut** ne renvoie pas de donnée car il appel la fonction `dropper` avec `null`.
+- Le **cut** vérifie un cas particulier avant la suppression d'un utilisateur.
+- Le **cut** ne renvoie pas de donnée car il appelle la fonction `dropper` avec `null`.
 - Aucune clé n'est indéxée dans le **floor** à la suite de ce **cut**.
 ></div>
 

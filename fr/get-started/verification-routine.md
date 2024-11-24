@@ -7,7 +7,7 @@ nav_order: 6
 
 # Routine de vérification
 {: .no_toc }
-Tous les exemples présentés dans ce cours sont disponible en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/verification-routine).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/verification-routine).
 
 1. TOC
 {:toc}

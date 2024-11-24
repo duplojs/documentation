@@ -11,7 +11,7 @@ nav_order: 1
 - [tsx v4 ou +](https://www.npmjs.com/package/tsx)
 
 # Installation manuelle
-Si vous partez d'un projet vierge, comencer par l'initialiser.
+Si vous partez d'un projet vierge, commencez par l'initialiser.
 ```bash
 npm init -y
 ```
@@ -21,7 +21,7 @@ Ensuite pour utiliser `Duplo` sur `NodeJS`, vous devez installer le package [@du
 npm install @duplojs/core @duplojs/node
 ```
 
-Installer égalemnt les packages [typescript](https://www.npmjs.com/package/typescript) et [tsx](https://www.npmjs.com/package/tsx) en dépendance de développement.
+Installer également les packages [typescript](https://www.npmjs.com/package/typescript) et [tsx](https://www.npmjs.com/package/tsx) en dépendances de développement.
 ```bash
 npm install --save-dev typescript tsx
 ```
