@@ -33,6 +33,7 @@ has_toc: false
     - Comment procéder ?
 6. [Routine de vérification](./verification-routine)
     - Les process
+    - Créer un process
     - Implémentation d'un process
     - Créer ses propres builders
 
