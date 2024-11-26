@@ -79,7 +79,7 @@ export const mustBeConnectedProcess = useBuilder()
 - Le process a étais créer avec l'option `role` qui a pour valer pas défaut `user`. 
 ></div>
 
-{ .note }
+{: .note }
 Les process peuvent ont les même step disponible que les route (saufe la `HandlerStep`). il n'y a aucune diférence d'utilisation.
 
 ## Implémentation d'un process
