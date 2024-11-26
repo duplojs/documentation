@@ -19,7 +19,68 @@ Les processes font partie des objet complexe de DuploJS. Leurs création passe a
 - factoriser quelconque suite de vérification.
 
 ## Créer un process
-La créaction d'un **Process** est semblable a c'elle d'une **Route**. Il faut applé la fonction `useBuiler` pour utilisé la méthode `createProcess`. La méthode prend en première argument une `string` qui correspond au nom du process.
+La créaction d'un **Process** est semblable a c'elle d'une **Route**. Il faut applé la fonction `useBuiler` pour utilisé la méthode `createProcess` qui donne accés en suite au **[builder](../../required/design-patern-builder)** de l'objet `Process`. La méthode `createProcess` prends en première argument une `string` qui correspond au nom du **Process**. La créations d'un process ce cloture par l'appel de la méthode `exportation` du **[builder](../../required/design-patern-builder)**. Cette méthode prend en argument un tableau de clef qui index des donné dans le **floor** du **process**. Chanque clef spécifier pourras étre utilisé afin d'importer des donner du process dans le floor des **routes**/**processes** qui l'implémente. Les **processes** peuvent être créés avec des options qui pourront étre override lore de leurs implémentation. Pour cela il suffit de définir a la propriété `options` dans l'objet en deuxième argument de la méthode `createProcess`.
+
+```ts
+import { ForbiddenHttpResponse, makeResponseContract, useBuilder, zod } from "@duplojs/core";
+
+interface MustBeConnectedOptions {
+	role: "user" | "admin";
+}
+
+export const mustBeConnectedProcess = useBuilder()
+	.createProcess(
+		"mustBeConnected",
+		{
+			options: <MustBeConnectedOptions>{
+				role: "user",
+			},
+		},
+	)
+	.extract(
+		{
+			headers: {
+				authorization: zod.string(),
+			},
+		},
+		() => new ForbiddenHttpResponse("authorization.missing"),
+	)
+	.check(
+		valideTokenCheck,
+		{
+			input: (pickup) => pickup("authorization"),
+			result: "token.valide",
+			catch: () => new ForbiddenHttpResponse("authorization.invalide"),
+			indexing: "contentAuthorization",
+		},
+		makeResponseContract(ForbiddenHttpResponse, "authorization.invalide"),
+	)
+	.cut(
+		({ pickup, dropper }) => {
+			const { contentAuthorization, options } = pickup(["contentAuthorization", "options"]);
+
+			if (contentAuthorization.role !== options.role) {
+				return new ForbiddenHttpResponse("authorization.wrongRole");
+			}
+
+			return dropper(null);
+		},
+		[],
+		makeResponseContract(ForbiddenHttpResponse, "authorization.wrongRole"),
+	)
+	.exportation(["contentAuthorization"]);
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Un process portant le nom de `mustBeConnected` a étais créer.
+- Le process créer export la donné indéxer a `contentAuthorization`, pour permettre au route/process qu'il l'implémente d'utilisé cette donné.
+- Le process a étais créer avec l'option `role` qui a pour valer pas défaut `user`. 
+></div>
+
+{ .note }
+Les process peuvent ont les même step disponible que les route (saufe la `HandlerStep`). il n'y a aucune diférence d'utilisation.
 
 ## Implémentation d'un process
 
