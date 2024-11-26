@@ -19,7 +19,7 @@ Les processes font partie des objet complexe de DuploJS. Leurs création passe a
 - factoriser quelconque suite de vérification.
 
 ## Créer un process
-La créaction d'un **Process** est semblable a c'elle d'une **Route**. Il faut applé la fonction `useBuiler` pour utilisé la méthode `createProcess`.
+La créaction d'un **Process** est semblable a c'elle d'une **Route**. Il faut applé la fonction `useBuiler` pour utilisé la méthode `createProcess`. La méthode prend en première argument une `string` qui correspond au nom du process.
 
 ## Implémentation d'un process
 
