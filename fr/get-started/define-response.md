@@ -145,7 +145,7 @@ export const iWantUserExist = createPresetChecker(
 ></div>
 
 ### Echec d'un contrat implémenter 
-Pour rappel les contrat implémenter sont éxécuter au run time pour s'assurer de la validité de la réponse. Cette fonctionnalité peut être désactivée en définissent l'option `disabledRuntimeEndPointCheck` de l'instance **Duplo** sur `true`. Si cette options n'est pas spécifier, chaque réponse renvoyer sera dabore comparé avec le contrat de sortie qui est accosier a la step répondante. Le code HTTP, l'information et le body sont les seul chose qui seront vérifier. En cas d'echec par le non repect d'un contrat, une erreur `ContractResponseError` sera `throw` par la route.
+Pour rappel les contrat implémenter sont éxécuter au run time pour s'assurer de la validité de la réponse. Cette fonctionnalité peut être désactivée en définissent l'option `disabledRuntimeEndPointCheck` de l'instance **Duplo** sur `true`. Si cette options n'est pas spécifier, chaque réponse renvoyer sera dabore comparé avec le contrat de sortie qui est accosier a la step répondante. Le code HTTP, l'information et le body sont les seul chose qui seront vérifier. En cas d'echec par le non repect d'un contrat, une erreur `ContractResponseError` sera `throw` par la route et ça getsion ce fera a travet le **hook** `onError`.
 
 <br>
 
