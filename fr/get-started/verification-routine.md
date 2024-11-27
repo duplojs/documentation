@@ -25,50 +25,50 @@ La créaction d'un **Process** est semblable a c'elle d'une **Route**. Il faut a
 import { ForbiddenHttpResponse, makeResponseContract, useBuilder, zod } from "@duplojs/core";
 
 interface MustBeConnectedOptions {
-	role: "user" | "admin";
+    role: "user" | "admin";
 }
 
 export const mustBeConnectedProcess = useBuilder()
-	.createProcess(
-		"mustBeConnected",
-		{
-			options: <MustBeConnectedOptions>{
-				role: "user",
-			},
-		},
-	)
-	.extract(
-		{
-			headers: {
-				authorization: zod.string(),
-			},
-		},
-		() => new ForbiddenHttpResponse("authorization.missing"),
-	)
-	.check(
-		valideTokenCheck,
-		{
-			input: (pickup) => pickup("authorization"),
-			result: "token.valide",
-			catch: () => new ForbiddenHttpResponse("authorization.invalide"),
-			indexing: "contentAuthorization",
-		},
-		makeResponseContract(ForbiddenHttpResponse, "authorization.invalide"),
-	)
-	.cut(
-		({ pickup, dropper }) => {
-			const { contentAuthorization, options } = pickup(["contentAuthorization", "options"]);
+    .createProcess(
+        "mustBeConnected",
+        {
+            options: <MustBeConnectedOptions>{
+                role: "user",
+            },
+        },
+    )
+    .extract(
+        {
+            headers: {
+                authorization: zod.string(),
+            },
+        },
+        () => new ForbiddenHttpResponse("authorization.missing"),
+    )
+    .check(
+        valideTokenCheck,
+        {
+            input: (pickup) => pickup("authorization"),
+            result: "token.valide",
+            catch: () => new ForbiddenHttpResponse("authorization.invalide"),
+            indexing: "contentAuthorization",
+        },
+        makeResponseContract(ForbiddenHttpResponse, "authorization.invalide"),
+    )
+    .cut(
+        ({ pickup, dropper }) => {
+            const { contentAuthorization, options } = pickup(["contentAuthorization", "options"]);
 
-			if (contentAuthorization.role !== options.role) {
-				return new ForbiddenHttpResponse("authorization.wrongRole");
-			}
+            if (contentAuthorization.role !== options.role) {
+                return new ForbiddenHttpResponse("authorization.wrongRole");
+            }
 
-			return dropper(null);
-		},
-		[],
-		makeResponseContract(ForbiddenHttpResponse, "authorization.wrongRole"),
-	)
-	.exportation(["contentAuthorization"]);
+            return dropper(null);
+        },
+        [],
+        makeResponseContract(ForbiddenHttpResponse, "authorization.wrongRole"),
+    )
+    .exportation(["contentAuthorization"]);
 ```
 
 {: .highlight }
@@ -94,26 +94,26 @@ Pour implémenter un process dans une route ou un process, il faut utilisé la m
 import { makeResponseContract, OkHttpResponse, useBuilder } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("GET", "/user")
-	.execute(
-		mustBeConnectedProcess,
-		{
-			options: { role: "user" },
-			pickup: ["contentAuthorization"],
-		},
-	)
-	.presetCheck(
-		iWantUserExistById,
-		(pickup) => pickup("contentAuthorization").id,
-	)
-	.handler(
-		(pickup) => {
-			const { user } = pickup(["user"]);
+    .createRoute("GET", "/user")
+    .execute(
+        mustBeConnectedProcess,
+        {
+            options: { role: "user" },
+            pickup: ["contentAuthorization"],
+        },
+    )
+    .presetCheck(
+        iWantUserExistById,
+        (pickup) => pickup("contentAuthorization").id,
+    )
+    .handler(
+        (pickup) => {
+            const { user } = pickup(["user"]);
 
-			return new OkHttpResponse("user.getSelf", user);
-		},
-		makeResponseContract(OkHttpResponse, "user.getSelf", userSchema),
-	);
+            return new OkHttpResponse("user.getSelf", user);
+        },
+        makeResponseContract(OkHttpResponse, "user.getSelf", userSchema),
+    );
 ```
 
 {: .highlight }
@@ -132,32 +132,33 @@ il est possible d'implémenter un process avant la création d'une route/process
 import { makeResponseContract, OkHttpResponse, useBuilder, zod } from "@duplojs/core";
 
 useBuilder()
-	.preflight(
-		mustBeConnectedProcess,
-		{
-			options: { role: "admin" },
-		},
-	)
-	.createRoute("GET", "/users/{userId}")
-	.extract({
-		params: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		iWantUserExistById,
-		(pickup) => pickup("userId"),
-	)
-	.handler(
-		(pickup) => {
-			const { user } = pickup(["user"]);
+    .preflight(
+        mustBeConnectedProcess,
+        {
+            options: { role: "admin" },
+        },
+    )
+    .createRoute("GET", "/users/{userId}")
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        iWantUserExistById,
+        (pickup) => pickup("userId"),
+    )
+    .handler(
+        (pickup) => {
+            const { user } = pickup(["user"]);
 
-			return new OkHttpResponse("user.get", user);
-		},
-		makeResponseContract(OkHttpResponse, "user.get", userSchema),
-	);
+            return new OkHttpResponse("user.get", user);
+        },
+        makeResponseContract(OkHttpResponse, "user.get", userSchema),
+    );
 ```
 
+{: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
 - Le process `mustBeConnected` a étais implémenter en temp que preflight.
@@ -174,39 +175,40 @@ comme vue précédement, un process implémenter en preflight est complétement 
 import { makeResponseContract, NoContentHttpResponse, useBuilder, zod } from "@duplojs/core";
 
 export function mustBeConnectedBuilder(options: MustBeConnectedOptions) {
-	return useBuilder()
-		.preflight(
-			mustBeConnectedProcess,
-			{
-				options,
-				pickup: ["contentAuthorization"],
-			},
-		);
+    return useBuilder()
+        .preflight(
+            mustBeConnectedProcess,
+            {
+                options,
+                pickup: ["contentAuthorization"],
+            },
+        );
 }
 
 mustBeConnectedBuilder({ role: "admin" })
-	.createRoute("DELETE", "/users/{userId}")
-	.extract({
-		params: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		iWantUserExistById,
-		(pickup) => pickup("userId"),
-	)
-	.handler(
-		(pickup) => {
-			const { user } = pickup(["user"]);
+    .createRoute("DELETE", "/users/{userId}")
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        iWantUserExistById,
+        (pickup) => pickup("userId"),
+    )
+    .handler(
+        (pickup) => {
+            const { user } = pickup(["user"]);
 
-			// action
+            // action
 
-			return new NoContentHttpResponse("user.delete");
-		},
-		makeResponseContract(NoContentHttpResponse, "user.delete"),
-	);
+            return new NoContentHttpResponse("user.delete");
+        },
+        makeResponseContract(NoContentHttpResponse, "user.delete"),
+    );
 ```
 
+{: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
 - Un builder nomé `mustBeConnectedBuilder` a étais créer.
