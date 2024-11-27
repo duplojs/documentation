@@ -76,15 +76,144 @@ export const mustBeConnectedProcess = useBuilder()
 ><div markdown="block">
 - Un process portant le nom de `mustBeConnected` a étais créer.
 - Le process créer export la donné indéxer a `contentAuthorization`, pour permettre au route/process qu'il l'implémente d'utilisé cette donné.
-- Le process a étais créer avec l'option `role` qui a pour valer pas défaut `user`. 
+- Le process a étais créer avec l'option `role` qui a pour valer pas défaut `user`.
+- En survolant le code nous pouvont déduire que le demande une `authorization` présente dans les headers, qui contien un token qui doit valide. Aprés la vérification du token, on obtien sont contenue ce qui permet de comparé le role de l'utilisateur avec le role paramétré. Ce process permet donc l'authentifacation d'un uitilisateur.
 ></div>
 
 {: .note }
 Les process peuvent ont les même step disponible que les route (saufe la `HandlerStep`). il n'y a aucune diférence d'utilisation.
 
 ## Implémentation d'un process
+Les processes peuvent ce faire implémenter a dans des route, dans des proccesses mais aussi avand des routes et avand des processes.
+
+### Implémentation basic
+{: .no_toc }
+Pour implémenter un process dans une route ou un process, il faut utilisé la méthode `execute` des **[builders](../../required/design-patern-builder)**. Cette méthode prend en premier argument un process et en seconde les paramétres d'implémentation. Deux propriéter importante a retenir de des paramétre d'implémentation, `options` qui permet d'override les options pars défaut et `pickup` qui permet de récupérer dans la route des donnés exporter provenant du floor du process.
+
+```ts
+import { makeResponseContract, OkHttpResponse, useBuilder } from "@duplojs/core";
+
+useBuilder()
+	.createRoute("GET", "/user")
+	.execute(
+		mustBeConnectedProcess,
+		{
+			options: { role: "user" },
+			pickup: ["contentAuthorization"],
+		},
+	)
+	.presetCheck(
+		iWantUserExistById,
+		(pickup) => pickup("contentAuthorization").id,
+	)
+	.handler(
+		(pickup) => {
+			const { user } = pickup(["user"]);
+
+			return new OkHttpResponse("user.getSelf", user);
+		},
+		makeResponseContract(OkHttpResponse, "user.getSelf", userSchema),
+	);
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Le process `mustBeConnected` a étais implémenter dans un route.
+- L'options `role` du process est définit sur `user`.
+- Le paramétre `pickup` rapatrie la donner `contentAuthorization` dans le floor de la route.
+></div>
+
+### Implémentation preflight
+{: .no_toc }
+il est possible d'implémenter un process avant la création d'une route/process. Le process devient un **preflight**. Les **preflight** s'éxécute avant l'interprétation du body. Il est conseiller de les utilisais pour faire des routine d'autentification.
+
+```ts
+import { makeResponseContract, OkHttpResponse, useBuilder, zod } from "@duplojs/core";
+
+useBuilder()
+	.preflight(
+		mustBeConnectedProcess,
+		{
+			options: { role: "admin" },
+		},
+	)
+	.createRoute("GET", "/users/{userId}")
+	.extract({
+		params: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		iWantUserExistById,
+		(pickup) => pickup("userId"),
+	)
+	.handler(
+		(pickup) => {
+			const { user } = pickup(["user"]);
+
+			return new OkHttpResponse("user.get", user);
+		},
+		makeResponseContract(OkHttpResponse, "user.get", userSchema),
+	);
+```
+
+>Dans cet exemple :
+><div markdown="block">
+- Le process `mustBeConnected` a étais implémenter en temp que preflight.
+- L'options `role` du process est définit sur `admin`.
+></div>
+
+{: .note }
+Il possible d'implémenter autent de preflight que vous voulez. Vous pouvez trés bien ajouter localment un preflight avant la déclaration d'une route, cela d'effet de bord.
 
 ## Créer ses propres builders
+comme vue précédement, un process implémenter en preflight est complétement indépendent. Cela nous permet de crer nos propre **[builders](../../required/design-patern-builder)** avec des preflight déja intégrés.
+
+```ts
+import { makeResponseContract, NoContentHttpResponse, useBuilder, zod } from "@duplojs/core";
+
+export function mustBeConnectedBuilder(options: MustBeConnectedOptions) {
+	return useBuilder()
+		.preflight(
+			mustBeConnectedProcess,
+			{
+				options,
+				pickup: ["contentAuthorization"],
+			},
+		);
+}
+
+mustBeConnectedBuilder({ role: "admin" })
+	.createRoute("DELETE", "/users/{userId}")
+	.extract({
+		params: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		iWantUserExistById,
+		(pickup) => pickup("userId"),
+	)
+	.handler(
+		(pickup) => {
+			const { user } = pickup(["user"]);
+
+			// action
+
+			return new NoContentHttpResponse("user.delete");
+		},
+		makeResponseContract(NoContentHttpResponse, "user.delete"),
+	);
+```
+
+>Dans cet exemple :
+><div markdown="block">
+- Un builder nomé `mustBeConnectedBuilder` a étais créer.
+- Le builder prend le options du process `mustBeConnected` en agrument, ce qui permet d'étre fléxible sur qu'elle rolle éxiger pour la connexion.
+- Il est possible d'utilisé `mustBeConnectedBuilder` pour déclarer autent de route/process que nous voulont.
+- Une route `DELETE : /users/{userId}` a étais créer avec `mustBeConnectedBuilder`.
+></div>
 
 <br>
 
