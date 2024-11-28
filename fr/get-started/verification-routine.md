@@ -7,6 +7,7 @@ nav_order: 6
 
 # Routine de vérification
 {: .no_toc }
+Dans cette nous allont voir comment créer des routine de vérification.
 Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/verification-routine).
 
 1. TOC
@@ -19,7 +20,7 @@ Les processes font partie des objet complexe de DuploJS. Leurs création passe a
 - factoriser quelconque suite de vérification.
 
 ## Créer un process
-La créaction d'un **Process** est semblable a c'elle d'une **Route**. Il faut applé la fonction `useBuiler` pour utilisé la méthode `createProcess` qui donne accés en suite au **[builder](../../required/design-patern-builder)** de l'objet `Process`. La méthode `createProcess` prends en première argument une `string` qui correspond au nom du **Process**. La créations d'un process ce cloture par l'appel de la méthode `exportation` du **[builder](../../required/design-patern-builder)**. Cette méthode prend en argument un tableau de clef qui index des donné dans le **floor** du **process**. Chanque clef spécifier pourras étre utilisé afin d'importer des donner du process dans le floor des **routes**/**processes** qui l'implémente. Les **processes** peuvent être créés avec des options qui pourront étre override lore de leurs implémentation. Pour cela il suffit de définir a la propriété `options` dans l'objet en deuxième argument de la méthode `createProcess`.
+La créaction d'un **Process** est semblable a c'elle d'une **Route**. Il faut applé la fonction `useBuiler` pour utilisé la méthode `createProcess` qui donne accés en suite au **[builder](../../required/design-patern-builder)** de l'objet `Process`. La méthode `createProcess` prends en première argument une `string` qui correspond au nom du **Process**. La créations d'un process ce cloture par l'appel de la méthode `exportation` du **[builder](../../required/design-patern-builder)**. Cette méthode prend en argument un tableau de `string` qui correspond aux index des donnés dans le **floor** du **process**. Chanque clef spécifier pourras étre utilisé afin d'importer des donner du process dans le floor des **routes**/**processes** qui l'implémente. Les **processes** peuvent être créés avec des options qui pourront étre override lore de leurs implémentation. Pour cela il suffit de définir a la propriété `options` dans l'objet en deuxième argument de la méthode `createProcess`.
 
 ```ts
 import { ForbiddenHttpResponse, makeResponseContract, useBuilder, zod } from "@duplojs/core";
@@ -76,8 +77,8 @@ export const mustBeConnectedProcess = useBuilder()
 ><div markdown="block">
 - Un process portant le nom de `mustBeConnected` a étais créer.
 - Le process créer export la donné indéxer a `contentAuthorization`, pour permettre au route/process qu'il l'implémente d'utilisé cette donné.
-- Le process a étais créer avec l'option `role` qui a pour valer pas défaut `user`.
-- En survolant le code nous pouvont déduire que le demande une `authorization` présente dans les headers, qui contien un token qui doit valide. Aprés la vérification du token, on obtien sont contenue ce qui permet de comparé le role de l'utilisateur avec le role paramétré. Ce process permet donc l'authentifacation d'un uitilisateur.
+- Le process a étais créer avec l'option `role` qui a pour valeur pas défaut `user`.
+- En survolant le code, nous pouvont déduire que le process demande un header `authorization` qui contien un token. Ce token contient des informations sur l'utilisateur. Avec ces informations, on interdit l'accer a l'utilisateur suivant le role spécifier en options. 
 ></div>
 
 {: .note }
