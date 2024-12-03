@@ -7,20 +7,29 @@ nav_order: 6
 
 # Routine de vérification
 {: .no_toc }
-Dans cette nous allont voir comment créer des routine de vérification.
+Dans cette partie, nous allons voir comment créer des routines de vérification.
 Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/verification-routine).
 
 1. TOC
 {:toc}
 
 ## Les process
-Les processes font partie des objet complexe de DuploJS. Leurs création passe aussi par le bier d'un **[builder](../../required/design-patern-builder)**. L'objet `Route` et l'objet `Process` sont tout les deux étendu de l'objet `Duplose`. Un **process** n'est donc pas diférent dans ça structure est ça déclaration pars rapport a une route. Cependant, le builder des **process** ne propose pas de method `handler` car ceux-ci ne doivent pas avoir de d'étape `HandlerStep`. Les `HandlerStep` pour les **Routes**, ont pour role de contenire l'actions de la route. Dans le cas des **Process**, il ne doivent pas avoir d'action car ils sont uniquement la pour faire des vérification routiniére. Les **Process** son parfait pour :
-- l’authentification
-- la vérificarion de role
-- factoriser quelconque suite de vérification.
+Les **processes** font partie des objets complexes de DuploJS. Leur création passe aussi par le biais d'un **[builder](../../required/design-patern-builder)**. Les objets `Route` et `Process` sont tous deux des extensions de l'objet `Duplose`. Un **process** n'est donc pas fondamentalement différent dans sa structure et sa déclaration. Cependant, le builder des **processes** ne propose pas de méthode `handler`, car ceux-ci ne doivent pas inclure d'étape `HandlerStep`.
+
+Les `HandlerStep`, utilisés pour les **Routes**, ont pour rôle de contenir l'action associée à la route. Dans le cas des **processes**, ils ne doivent pas inclure d'actions, car leur but est uniquement de réaliser des vérifications routinières. Les **processes** sont particulièrement adaptés pour :
+
+- l’authentification,
+- la vérification des rôles,
+- la factorisation d'utilisations récurrentes.
+
 
 ## Créer un process
-La créaction d'un **Process** est semblable a c'elle d'une **Route**. Il faut applé la fonction `useBuiler` pour utilisé la méthode `createProcess` qui donne accés en suite au **[builder](../../required/design-patern-builder)** de l'objet `Process`. La méthode `createProcess` prends en première argument une `string` qui correspond au nom du **Process**. La créations d'un process ce cloture par l'appel de la méthode `exportation` du **[builder](../../required/design-patern-builder)**. Cette méthode prend en argument un tableau de `string` qui correspond aux index des donnés dans le **floor** du **process**. Chanque clef spécifier pourras étre utilisé afin d'importer des donner du process dans le floor des **routes**/**processes** qui l'implémente. Les **processes** peuvent être créés avec des options qui pourront étre override lore de leurs implémentation. Pour cela il suffit de définir a la propriété `options` dans l'objet en deuxième argument de la méthode `createProcess`.
+La création d'un **Process** est semblable à celle d'une **Route**. Il faut appeler la fonction `useBuilder` pour utiliser la méthode `createProcess`, qui donne ensuite accès au **[builder](../../required/design-patern-builder)** de l'objet `Process`. 
+
+La méthode `createProcess` prend comme premier argument une `string` correspondant au nom du **Process**. La création d'un process se clôture par l'appel de la méthode `exportation` du **[builder](../../required/design-patern-builder)**. Cette méthode prend en argument un tableau de `string`, qui représente les index des données présentes dans le **floor** du **Process**. Chaque clé spécifiée pourra être utilisée pour importer des données du **Process** dans le floor des **Routes** ou des **Processes** qui l'implémentent.
+
+Les **Processes** peuvent être créés avec des options pouvant être surchargées lors de leur implémentation. Pour cela, il suffit de définir la propriété `options` dans l'objet passé en deuxième argument de la méthode `createProcess`.
+
 
 ```ts
 import { ForbiddenHttpResponse, makeResponseContract, useBuilder, zod } from "@duplojs/core";
@@ -75,21 +84,27 @@ export const mustBeConnectedProcess = useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Un process portant le nom de `mustBeConnected` a étais créer.
-- Le process créer export la donné indéxer a `contentAuthorization`, pour permettre au route/process qu'il l'implémente d'utilisé cette donné.
-- Le process a étais créer avec l'option `role` qui a pour valeur pas défaut `user`.
-- En survolant le code, nous pouvont déduire que le process demande un header `authorization` qui contien un token. Ce token contient des informations sur l'utilisateur. Avec ces informations, on interdit l'accer a l'utilisateur suivant le role spécifier en options. 
+- Un process nommé `mustBeConnected` a été créé.  
+- Le process exporte la donnée indexée sous `contentAuthorization`, permettant aux routes/processes qui l'implémentent d'utiliser cette donnée.  
+- Le process a été créé avec l'option `role`, dont la valeur par défaut est `user`.  
+- En survolant le code, nous pouvons déduire que le process exige un header `authorization` contenant un token. Ce token inclut des informations sur l'utilisateur. Grâce à ces informations, l'accès est interdit à l'utilisateur si son rôle ne correspond pas au rôle spécifié dans les options.  
+
 ></div>
 
 {: .note }
-Les process peuvent ont les même step disponible que les route (saufe la `HandlerStep`). il n'y a aucune diférence d'utilisation.
+Les processes ont les mêmes steps disponibles que les routes (saufe la `HandlerStep`). Il n'y a aucune diférence d'utilisation.
 
 ## Implémentation d'un process
-Les processes peuvent ce faire implémenter a dans des route, dans des proccesses mais aussi avand des routes et avand des processes.
+Les **processes** peuvent être implémentés dans des routes, dans d'autres processes, mais aussi avant des routes et avant des processes.
 
 ### Implémentation basic
 {: .no_toc }
-Pour implémenter un process dans une route ou un process, il faut utilisé la méthode `execute` des **[builders](../../required/design-patern-builder)**. Cette méthode prend en premier argument un process et en seconde les paramétres d'implémentation. Deux propriéter importante a retenir de des paramétre d'implémentation, `options` qui permet d'override les options pars défaut et `pickup` qui permet de récupérer dans la route des donnés exporter provenant du floor du process.
+Pour implémenter un **process** dans une route ou un autre process, il faut utiliser la méthode `execute` des **[builders](../../required/design-patern-builder)**. Cette méthode prend en premier argument un process et en second les paramètres d'implémentation. 
+
+Deux propriétés importantes sont à retenir dans les paramètres d'implémentation :  
+- `options` : permet de surcharger les options par défaut du process.  
+- `pickup` : permet de récupérer dans la route les données exportées depuis le **floor** du process.  
+
 
 ```ts
 import { makeResponseContract, OkHttpResponse, useBuilder } from "@duplojs/core";
@@ -120,14 +135,14 @@ useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Le process `mustBeConnected` a étais implémenter dans un route.
-- L'options `role` du process est définit sur `user`.
-- Le paramétre `pickup` rapatrie la donner `contentAuthorization` dans le floor de la route.
+- Le process `mustBeConnected` a été implémenté dans une route.  
+- L'option `role` du process est définie sur `user`.  
+- Le paramètre `pickup` rapatrie la donnée `contentAuthorization` dans le **floor** de la route.
 ></div>
 
 ### Implémentation preflight
 {: .no_toc }
-il est possible d'implémenter un process avant la création d'une route/process. Le process devient un **preflight**. Les **preflight** s'éxécute avant l'interprétation du body. Il est conseiller de les utilisais pour faire des routine d'autentification.
+il est possible d'implémenter un process avant la création d'une route/d'un process. Le process devient un **preflight**. Les **preflights** s'éxécutent avant l'interprétation du body. Il est conseillé de les utiliser pour faire des routines d'autentification.
 
 ```ts
 import { makeResponseContract, OkHttpResponse, useBuilder, zod } from "@duplojs/core";
@@ -162,15 +177,15 @@ useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Le process `mustBeConnected` a étais implémenter en temp que preflight.
-- L'options `role` du process est définit sur `admin`.
+- Le process `mustBeConnected` a été implémenté en tant que preflight.
+- L'options `role` du process est définie sur `admin`.
 ></div>
 
 {: .note }
-Il possible d'implémenter autent de preflight que vous voulez. Vous pouvez trés bien ajouter localment un preflight avant la déclaration d'une route, cela d'effet de bord.
+Il est possible d'implémenter autant de **preflights** que vous le souhaitez. Vous pouvez très bien ajouter localement un **preflight** avant la déclaration d'une route, sans effets de bord.
 
 ## Créer ses propres builders
-comme vue précédement, un process implémenter en preflight est complétement indépendent. Cela nous permet de crer nos propre **[builders](../../required/design-patern-builder)** avec des preflight déja intégrés.
+Comme vu précédemment, un **process** implémenté en **preflight** est complètement indépendant. Cela nous permet de créer nos propres **[builders](../../required/design-patern-builder)** avec des **preflights** déjà intégrés.
 
 ```ts
 import { makeResponseContract, NoContentHttpResponse, useBuilder, zod } from "@duplojs/core";
@@ -212,10 +227,10 @@ mustBeConnectedBuilder({ role: "admin" })
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Un builder nomé `mustBeConnectedBuilder` a étais créer.
-- Le builder prend le options du process `mustBeConnected` en agrument, ce qui permet d'étre fléxible sur qu'elle rolle éxiger pour la connexion.
-- Il est possible d'utilisé `mustBeConnectedBuilder` pour déclarer autent de route/process que nous voulont.
-- Une route `DELETE : /users/{userId}` a étais créer avec `mustBeConnectedBuilder`.
+- Un builder nommé `mustBeConnectedBuilder` a été créé.  
+- Le builder prend les options du process `mustBeConnected` en argument, ce qui permet d'être flexible sur le rôle exigé pour la connexion.  
+- Il est possible d'utiliser `mustBeConnectedBuilder` pour déclarer autant de routes/processes que nous le souhaitons.  
+- Une route `DELETE : /users/{userId}` a été créée avec `mustBeConnectedBuilder`.
 ></div>
 
 <br>
