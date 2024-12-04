@@ -32,4 +32,5 @@ title: Références
 5. [Comment aborder une nouvelle route](./get-started/how-to-approach-new-road)
 6. [Routine de vérification](./get-started/verification-routine)
 
-## Examples [▶](./examples/)
+## Exercises [▶](./exercises/)
+1. [To do](./exercises/to-do)
