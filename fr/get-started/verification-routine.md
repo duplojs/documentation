@@ -87,8 +87,7 @@ export const mustBeConnectedProcess = useBuilder()
 - Un process nommé `mustBeConnected` a été créé.  
 - Le process exporte la donnée indexée sous `contentAuthorization`, permettant aux routes/processes qui l'implémentent d'utiliser cette donnée.  
 - Le process a été créé avec l'option `role`, dont la valeur par défaut est `user`.  
-- En survolant le code, nous pouvons déduire que le process exige un header `authorization` contenant un token. Ce token inclut des informations sur l'utilisateur. Grâce à ces informations, l'accès est interdit à l'utilisateur si son rôle ne correspond pas au rôle spécifié dans les options.  
-
+- En survolant le code, nous pouvons déduire que le process exige un header `authorization` contenant un token. Ce token inclut des informations sur l'utilisateur. Grâce à ces informations, l'accès est interdit à l'utilisateur si son rôle ne correspond pas au rôle spécifié dans les options.
 ></div>
 
 {: .note }
@@ -103,8 +102,7 @@ Pour implémenter un **process** dans une route ou un autre process, il faut uti
 
 Deux propriétés importantes sont à retenir dans les paramètres d'implémentation :  
 - `options` : permet de surcharger les options par défaut du process.  
-- `pickup` : permet de récupérer dans la route les données exportées depuis le **floor** du process.  
-
+- `pickup` : permet de récupérer dans la route les données exportées depuis le **floor** du process. 
 
 ```ts
 import { makeResponseContract, OkHttpResponse, useBuilder } from "@duplojs/core";
