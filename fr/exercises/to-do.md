@@ -11,6 +11,7 @@ Une réalisation de cette exercie est disponible [ici](https://github.com/duploj
 
 ## Cachier des charges 
 Le Petit Jean veut pouvoir s’organisait de manier stylé. Il souhaite créer des listes de tache a faire via une API grasse a des commande curl (qu'elle beau gosse). Il faut donc lui fournir une API robuste qui lui indiquera des erreur précise en cas maladresse. 
+
 Pour répondre a sont besoin il faut : 
 - Pouvoir créer des listes et les modifier. 
 - Pouvoir créer des tache lier a des lists et les modifier.
