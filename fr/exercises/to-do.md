@@ -1,4 +1,5 @@
 ---
+parent: Exercises
 nav_order: 1
 layout: default
 title: To Do
