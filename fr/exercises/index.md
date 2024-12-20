@@ -1,7 +1,7 @@
 ---
 nav_order: 6
 layout: default
-title: Exercises
+title: Exercices
 ---
 
 [Retour au Références](..)
