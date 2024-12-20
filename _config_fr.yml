@@ -1,6 +1,5 @@
 title: DuploJS
-url: https://duplojs.github.io
-baseurl: /documentation
+url: https://docs.duplojs.dev
 email: campani.mathieu@gmail.com
 github_username: mathcovax
 permalink: pretty
@@ -34,4 +33,4 @@ theme: just-the-docs
 plugins:
   - jekyll-feed
 exclude: 
-  - en/
+  - /en/

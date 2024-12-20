@@ -1,10 +1,11 @@
 title: DuploJS
-url: https://duplojs.github.io
-baseurl: /documentation
+url: https://docs.duplojs.dev
 email: campani.mathieu@gmail.com
 github_username: mathcovax
 permalink: pretty
 logo: "/assets/images/logo.svg"
+favicon_ico: "/assets/images/logo.ico"
+color_scheme: yellow_light
 
 callouts_level: quiet # or loud
 callouts:
