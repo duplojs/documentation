@@ -21,7 +21,7 @@ Pour rappel, dans **DuploJS**, une route est constituée d'étapes à franchir a
 
 > La [`HandlerStep`](../first-route#créer-une-route-simple) fait exception car elle doit contenir l'action d'une route, elle sera donc la dernière étape et devra renvoyer une réponse positive.
 
-En plus de jouer un role de **garde**, les étapes enrichient de manière typées le [**floor**](../first-route#le-floor) qui est un accumulateur de données.
+En plus de jouer un role de **garde**, les étapes enrichissent de manière typées le [**floor**](../first-route#le-floor) qui est un accumulateur de données.
 
 Pour finir, il existe les [**contrats de sortie**](../define-response) qui permettent explicitement d'indiquer ce que l'on renvoie. C'est un aspect très important qui garantit un retour correct.
 
@@ -33,7 +33,7 @@ Pour commencer, il vous faut établir un but.
 - À ajouter un utilisateur à une organisation ?
 - À créer un utilisateur ?
 
-Pour illustrer la méthodologie, le but choisi sera d'envoyer un message a un utilisateur.
+Pour illustrer la méthodologie, le but choisi sera d'envoyer un message à un utilisateur.
 
 Après avoir établi ce que nous voulons, nous pouvons commencer par définir le document que notre route renverra. Cela nous permettera de mettre en place le contrat de sortie.
 
@@ -49,7 +49,7 @@ export const messageSchema = zod.object({
 ```
 
 {: .note }
-Quand le body de votre contrat est un objet, il est préférable de le déclarer dans un autre fichier. Dans une architecture simple, créez un dossier `src/schemas` et enregistez vos schémas dans des fichiers différents suivant le document qu'il représente.
+Quand le body de votre contrat est un objet, il est préférable de le déclarer dans un autre fichier. Dans une architecture simple, créez un dossier `src/schemas` et enregistez vos schémas dans des fichiers différents suivant le document qu'ils représentent.
 
 
 Ensuite nous pouvons commencer à déclarer notre route. Nous utiliserons la méthode `POST` et le chemin `/users/{receiverId}/messages`, car il s'agit d'un envoi de données dans les messages d'un utilisateur.
@@ -193,9 +193,9 @@ useBuilder()
 {% endhighlight %}
 
 {: .note }
-Il est tout à fait possible d'utiliser la première `ExtractStep` pour obtenir le body. Mais imaginons que, par souci de performance, nous ne souhaitions pas extraire le contenu du body immédiatement.
+Il est tout à fait possible d'utiliser la première `ExtractStep` pour obtenir le body. Mais imaginons que, par soucis de performance, nous ne souhaitions pas extraire le contenu du body immédiatement.
 
-N'oublions pas que si quelqu'un reçoit un message, 'est qu'une autre personne l'a envoyé. C'est moi, en temps qu'utilisateur qui ai appelé la route pour poster un message dans la pile d'un autre utilisateur. Pour cela, imaginons que notre `userId` (ou `senderId`) soit stocké dans un header `userId`. Habituellement, il aurait dû être obtenu via un token qu'il aurait fallu valider en amont, mais pour notre exemple, nous ferons plus simple.
+N'oublions pas que si quelqu'un reçoit un message, c'est qu'une autre personne l'a envoyé. C'est moi, en temps qu'utilisateur qui ai appelé la route pour poster un message dans la pile d'un autre utilisateur. Pour cela, imaginons que notre `userId` (ou `senderId`) soit stocké dans un header `userId`. Habituellement, il aurait dû être obtenu via un token qu'il aurait fallu valider en amont, mais pour notre exemple, nous ferons plus simple.
 
 {% highlight ts mark_lines="9 10 11" %}
 import { makeResponseContract, OkHttpResponse, useBuilder, zod, type ZodSpace } from "@duplojs/core";

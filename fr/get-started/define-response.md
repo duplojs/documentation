@@ -7,7 +7,7 @@ nav_order: 4
 
 # Définir une réponse
 {: .no_toc }
-Dans **Duplo**, il est possible de définir des réponses afin de créer des contrats de sortie pour les **routes**. Cela ne se fait pas via des interfaces Typescript mais part le biais des schémas Zod. Cela offre l'avantage de pouvoir être interprêté au runtime en plus de pouvoir servir de contrat de type pour Typescript. Par défaut, **Duplo** exécute les schémas à chaque renvoi d'une réponse. Cela permet de s'assurer de l'authenticité du type avant de répondre. Il est bien évidemment possible de désactiver cette fonctionalité en environnement de production.
+Dans **Duplo**, il est possible de définir des réponses afin de créer des contrats de sortie pour les **routes**. Cela ne se fait pas via des interfaces Typescript mais par le biais des schémas Zod. Cela offre l'avantage de pouvoir être interprêté au runtime en plus de pouvoir servir de contrat de type pour Typescript. Par défaut, **Duplo** exécute les schémas à chaque renvoi d'une réponse. Cela permet de s'assurer de l'authenticité du type avant de répondre. Il est bien évidemment possible de désactiver cette fonctionalité en environnement de production.
 Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/define-response).
 
 1. TOC
@@ -53,7 +53,7 @@ makeResponseContract(ForbiddenHttpResponse, ["token.expire", "token.invalid"]);
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Plusieurs contrats de sortie ont été créés. On les reconnait car le body de ces objets réponse ont été définis sur des schémas Zod.
+- Plusieurs contrats de sortie ont été créés. On les reconnait car le body de ces objets réponse a été défini sur des schémas Zod.
 - Les contrats de sortie peuvent être des tableaux.
 - Il est préférable d'utiliser la fonction `makeResponseContract` pour bien différencier une réponse d'un contrat de sortie.
 - La fonction `makeResponseContract` renvoie un tableau de contrat de sortie.
@@ -111,15 +111,15 @@ useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- La `CheckerStep` implémente un contrat et l'applique à la méthode `catch` des paramètre du **checker**.
-- La `CutStep` implémente un contrat de sortie dans le cas où la fonction renverait un objet réponse.
+- La `CheckerStep` implémente un contrat et l'applique à la méthode `catch` des paramètres du **checker**.
+- La `CutStep` implémente un contrat de sortie dans le cas où la fonction renverrait un objet réponse.
 - La `HandlerStep` implémente un contrat de sortie pour sa réponse.
 ></div>
 
 {: .note}
 Les contrats de sortie définissent le type que doivent renvoyer les fonctions concernées, et non l'inverse. En cas de non-respect, TypeScript indiquera une erreur sur le retour de la fonction et non sur le contrat lui-même. Bien que les contrats puissent sembler représenter un travail supplémentaire, ils vous seront d'une grande aide pour les tests unitaires ou end-to-end. Ils pourront également faciliter la génération automatique d'une documentation Swagger ou d'un client HTTP 100 % typé.
 
-### Implémentations un contrat sur un preset checker
+### Implémentations d'un contrat sur un preset checker
 {: .no_toc }
 Les **preset checkers** peuvent également implémenter un contrat de sortie qui sera directement transmis à la **route**, sans qu'il soit nécessaire de le spécifier à nouveau.
 
@@ -140,7 +140,7 @@ export const iWantUserExist = createPresetChecker(
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Le **preset checker** porte un contrat de sotie et l'applique à la méthode `catch` des paramètres du **checker**.
+- Le **preset checker** porte un contrat de sortie et l'applique à la méthode `catch` des paramètres du **checker**.
 - Si le **preset checker** est implémenté sur une **route**, le contrat sera transmis aussi. 
 ></div>
 

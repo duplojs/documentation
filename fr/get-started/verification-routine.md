@@ -91,7 +91,7 @@ export const mustBeConnectedProcess = useBuilder()
 ></div>
 
 {: .note }
-Les processes ont les mêmes steps disponibles que les routes (saufe la `HandlerStep`). Il n'y a aucune diférence d'utilisation.
+Les processes ont les mêmes steps disponibles que les routes (sauf la `HandlerStep`). Il n'y a aucune différence d'utilisation.
 
 ## Implémentation d'un process
 Les **processes** peuvent être implémentés dans des routes, dans d'autres processes, mais aussi avant des routes et avant des processes.
@@ -140,7 +140,7 @@ useBuilder()
 
 ### Implémentation preflight
 {: .no_toc }
-il est possible d'implémenter un process avant la création d'une route/d'un process. Le process devient un **preflight**. Les **preflights** s'éxécutent avant l'interprétation du body. Il est conseillé de les utiliser pour faire des routines d'autentification.
+Il est possible d'implémenter un process avant la création d'une route/d'un process. Le process devient un **preflight**. Les **preflights** s'éxécutent avant l'interprétation du body. Il est conseillé de les utiliser pour faire des routines d'autentification.
 
 ```ts
 import { makeResponseContract, OkHttpResponse, useBuilder, zod } from "@duplojs/core";
@@ -176,7 +176,7 @@ useBuilder()
 >Dans cet exemple :
 ><div markdown="block">
 - Le process `mustBeConnected` a été implémenté en tant que preflight.
-- L'options `role` du process est définie sur `admin`.
+- L'option `role` du process est définie sur `admin`.
 ></div>
 
 {: .note }

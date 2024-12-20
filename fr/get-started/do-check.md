@@ -14,7 +14,7 @@ Tous les exemples présentés dans ce cours sont disponibles en entier [ici](htt
 {:toc}
 
 ## Les checkers
-Les **checkers** sont des interfaces. Ils utilisent du code **impératif** pour le transformer en code **déclaratif**. Leur utilisation doit permettre de faire une **vérification**. Les **checkers** ne doivent pas être pensés pour un usage unique, ils doivent pouvoir être réutilisables en étant le plus neutres possibles. Une fois créé, un **checker** peut être implémenté dans des **routes** ou des **processes**. Les **checkers** vous permettent de créer une **vérification explicite** aux endroits où vous les implémentez. En plus de cela ils vont **normaliser** votre code, ce qui le rendra **robuste** au passage de différents dévelopeurs.
+Les **checkers** sont des interfaces. Ils utilisent du code **impératif** pour le transformer en code **déclaratif**. Leur utilisation doit permettre de faire une **vérification**. Les **checkers** ne doivent pas être pensés pour un usage unique, ils doivent pouvoir être réutilisables en étant le plus neutres possibles. Une fois créé, un **checker** peut être implémenté dans des **routes** ou des **processes**. Les **checkers** vous permettent de créer une **vérification explicite** aux endroits où vous les implémentez. En plus de cela ils vont **normaliser** votre code, ce qui le rendra **robuste** au passage de différents développeurs.
 
 ### Exemple rapide
 {: .no_toc }
@@ -65,11 +65,11 @@ useBuilder()
 ><div markdown="block">
 - Un **checker** a été créé avec le nom `userExist`, sa valeur d'entrée est de type `number` et ses informations de sortie sont `user.exist` et `user.notfound`.
 - Le **checker** `userExist` a été implémenté dans une **route**. La valeur d'entrée passée au **checker** corespond à la valeur `userId` du **floor**. L'information de sortie attendue pour passer à la suite est `user.exist`. La donnée renvoyée par le **checker** sera indéxée dans le **floor** à la clé `user`. Dans le cas où une information différente de `user.exist` est renvoyée par le **checker**, une réponse `NotFoundHttpResponse` sera renvoyée avec l'information `user.notfound`.
-- En survolant rapidement la déclaration de la **route** nous pouvont déduire qu'elle renvoie la variable `user`. Cependant, pour cela, la **requête** doit inclure un paramètre `userId` de type `number`, et un utilisateur correspondant à ce paramètre doit exister.
+- En survolant rapidement la déclaration de la **route** nous pouvons déduire qu'elle renvoie la variable `user`. Cependant, pour cela, la **requête** doit inclure un paramètre `userId` de type `number`, et un utilisateur correspondant à ce paramètre doit exister.
 ></div>
 
 ## Création d'un checker
-Le **checker** fait partie des objets complexes qui nécessitent un **[builder](../../required/design-patern-builder)**. Pour cela, on utilise la fonction `createChecker` qui prend en premier argument le nom du **checker**. Le **builder** ne renverra que la méthode `handler` qui, après avoir été appelée, clôturera la création du **checker**. La fonction passée en argument à la méthode `handler` sert à interfacer une opération. Cette fonction prend en premier argument une valeur d'entrée avec un type que vous devez définir. Cette valeur sera généralement nommée `input`. En second argument, la fonction vous donne une fonction `output`. Elle permet que construire un retour correct avec ce que vous lui donnez. La fonction `output` prend en premier argument une `string` qui donne un sens explicite à votre vérification. Elle prend en second argument une valeur qui peut être transmise. Le type de cette valeur est associé à la `string` passée en premier argument.
+Le **checker** fait partie des objets complexes qui nécessitent un **[builder](../../required/design-patern-builder)**. Pour cela, on utilise la fonction `createChecker` qui prend en premier argument le nom du **checker**. Le **builder** ne renverra que la méthode `handler` qui, après avoir été appelée, clôturera la création du **checker**. La fonction passée en argument à la méthode `handler` sert à interfacer une opération. Cette fonction prend en premier argument une valeur d'entrée avec un type que vous devez définir. Cette valeur sera généralement nommée `input`. En second argument, la fonction vous donne une fonction `output`. Elle permet de construire un retour correct avec ce que vous lui donnez. La fonction `output` prend en premier argument une `string` qui donne un sens explicite à votre vérification. Elle prend en second argument une valeur qui peut être transmise. Le type de cette valeur est associé à la `string` passée en premier argument.
 
 ```ts
 import { createChecker } from "@duplojs/core";
@@ -96,8 +96,8 @@ export const userExistCheck = createChecker("userExist")
 - La methode `handler` clôture la **création** de l'objet `Checker` et le renvoie.
 - La **valeur d'entrée** nommée `input` a été définie sur `number`.
 - Le **checker** renvoie 2 **informations**, `user.exist` et `user.notfound`.
-- l'**information** `user.exist` est associée au **type** de la variable `user`.
-- l'**information** `user.notfound` est associée au **type** `null`.
+- L'**information** `user.exist` est associée au **type** de la variable `user`.
+- L'**information** `user.notfound` est associée au **type** `null`.
 ></div>
 
 Implémentation du checker [ici](#implémentation-dun-checker-dans-une-route).
@@ -175,10 +175,10 @@ inputUserExist.email("foo"); // { inputName: "email", value: "foo" };
 >Dans cet exemple :
 ><div markdown="block">
 - Un input a été créé avec les méthodes `id` et `email`.
-- la méthode `id` a comme premier argument un `number`.
-- la méthode `id` renvoie un objet de type `{ inputName: "id", value: number }`.
-- la méthode `email` a comme premier argument une `string`.
-- la méthode `email` renvoie un objet de type `{ inputName: "email", value: string }`.
+- La méthode `id` a comme premier argument un `number`.
+- La méthode `id` renvoie un objet de type `{ inputName: "id", value: number }`.
+- La méthode `email` a comme premier argument une `string`.
+- La méthode `email` renvoie un objet de type `{ inputName: "email", value: string }`.
 ></div>
 
 Pour utiliser l'input, il suffit d'utiliser l'interface `GetTypeInput` et lui donner votre input.
@@ -216,14 +216,14 @@ export const userExistCheck = createChecker("userExist")
 >Dans cet exemple :
 ><div markdown="block">
 - L'input `inputUserExist` est utilisé comme **input** de la fonction passe plat.
-- si `inputName` est égal à `id`, la recherche se fera par l'id.
-- si `inputName` est égal à `email`, la recherche se fera par l'email.
+- Si `inputName` est égal à `id`, la recherche se fera par l'id.
+- Si `inputName` est égal à `email`, la recherche se fera par l'email.
 ></div>
 
 Implémentation du checker [ici](#utilisé-une-checker-avec-un-multi-input).
 
 ## Implémentation d'un checker dans une route
-Les **checkers** une fois créés peuvent être implémentés dans des **routes** ou des **processes**. Pour cela, les **[builder](../../required/design-patern-builder)** proposent la méthode `check`. Cette méthode a pour effet direct d'ajouter une `CheckerStep` aux **étapes** de la **route** en cours de création. Elle prend en premier argument le **checker** que vous voulez implémenter et en seconde argument les paramètres contextuels. Les propriétés importantes des paramètres sont :
+Les **checkers** une fois créés peuvent être implémentés dans des **routes** ou des **processes**. Pour cela, les **[builders](../../required/design-patern-builder)** proposent la méthode `check`. Cette méthode a pour effet direct d'ajouter une `CheckerStep` aux **étapes** de la **route** en cours de création. Elle prend en premier argument le **checker** que vous voulez implémenter et en second argument les paramètres contextuels. Les propriétés importantes des paramètres sont :
 - `input`: fonction qui envoie la valeur d'entrée du **checker**. Elle a en premier argument la méthode `pickup` du **floor**.
 - `result`: `string` qui correspond à l'information de sortie du **checker** attendu.
 - `indexing`: clé d'indexation de la donnée dans le **floor**.
@@ -262,13 +262,13 @@ useBuilder()
 ><div markdown="block">
 - Le checker `userExist` est implémenté dans la **route**.
 - Le resultat attendu pour passer à l'**étape** suivante est `user.exist`.
-- Si Le resultat de `userExist` correspond au resultat attendu, les données renvoyées par le **chekcer** seront indéxées dans le **floor** à la clé `user`, et la **route** passera à l'étape **suivante**.
+- Si Le resultat de `userExist` correspond au resultat attendu, les données renvoyées par le **checker** seront indexées dans le **floor** à la clé `user`, et la **route** passera à l'étape **suivante**.
 - Si le resultat ne correspond pas, l'exécution s'arrêtera ici et la **route** renverra la réponse retournée par la fonction `catch`.
 ></div>
 
 ### Implémentation d'un checker avec options
 {: .no_toc }
-Dans les paramètres d'implémentation d'un **checker**, il existe une propriété `options`. Cette propriété permet de modifier les options par défaut d'un **checker** de façon **local**.
+Dans les paramètres d'implémentation d'un **checker**, il existe une propriété `options`. Cette propriété permet de modifier les options par défaut d'un **checker** de façon **locale**.
 
 ```ts
 import { ConflictHttpResponse, CreatedHttpResponse, useBuilder, zod } from "@duplojs/core";
@@ -311,7 +311,7 @@ useBuilder()
 - Le checker `compareDate` est implémenté dans la **route**.
 - L'option `compareType` du checker a été définie sur `greater`
 - Le resultat attendu pour passer à l'**étape** suivante est `valid`.
-- Si Le resultat de `compareDate` correspond au resultat attendu, la **route** passera à l'étape **suivante** et aucune donnée ne sera indéxée dans le floor car la clé `indexing` n'a pas été spécifiée.
+- Si Le resultat de `compareDate` correspond au resultat attendu, la **route** passera à l'étape **suivante** et aucune donnée ne sera indexée dans le floor car la clé `indexing` n'a pas été spécifiée.
 - Si le resultat ne correspond pas, l'exécution s'arrêtera ici et la **route** renverra la réponse retournée par la fonction `catch`.
 ></div>
 
@@ -380,13 +380,13 @@ useBuilder()
 >Dans cet exemple :
 ><div markdown="block">
 - Le checker `userExist` a été implémenté dans deux **routes**.
-- Les méthodes `email` et `id` de l'objet `inputUserExist` sont utilisées dans les fonctions input a l'endroit où est implémenté le checker `userExist`.
-- l'utilisation de `inputUserExist.email` permettra de chercher un utilisateur par son adresse email.
-- l'utilisation de `inputUserExist.id` permettra de chercher un utilisateur par son indentifant.
+- Les méthodes `email` et `id` de l'objet `inputUserExist` sont utilisées dans les fonctions input à l'endroit où est implémenté le checker `userExist`.
+- L'utilisation de `inputUserExist.email` permettra de chercher un utilisateur par son adresse email.
+- L'utilisation de `inputUserExist.id` permettra de chercher un utilisateur par son identifiant.
 ></div>
 
 ## Les presets checkers
-Pour simplifier l'implémentation des **checkers**, vous pouvez en faire des **presets checkers**. Les **presets checkers** sont tout simplement des **checker** avec des paramètres d'implémentation pré-configurés. Pour créer des **presets checkers**, il vous suffit d'utiliser la fonction `createPresetChecker`. Cette fonction prend en premier argument un **checker** et en second ses paramètres d'implémentation. Les paramètres sont similaires à ceux vus précédement. Vous y trouverez le praramètre `transformInput` en plus qui permet de changer le type de l'entrée du **checker** avec une fonction interface.
+Pour simplifier l'implémentation des **checkers**, vous pouvez en faire des **presets checkers**. Les **presets checkers** sont tout simplement des **checkers** avec des paramètres d'implémentation pré-configurés. Pour créer des **presets checkers**, il vous suffit d'utiliser la fonction `createPresetChecker`. Cette fonction prend en premier argument un **checker** et en second ses paramètres d'implémentation. Les paramètres sont similaires à ceux vus précédement. Vous y trouverez le paramètre `transformInput` en plus qui permet de changer le type de l'entrée du **checker** avec une fonction interface.
 
 ```ts
 import { createPresetChecker, NotFoundHttpResponse } from "@duplojs/core";
@@ -426,14 +426,14 @@ export const iWantUserExistByEmail = createPresetChecker(
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Des **presets Checkers** sont créés avec le **checker** `userExist` de cette [exemple](#multiple-entrés) (**checker** avec entrées multiples).
-- Le **presets Checkers** `iWantUserExist` prédéfinit les 3 paramètres d'implémentation de base.
-- Le **presets Checkers** `iWantUserExistById` fait la même chose que `iWantUserExist` mais transforme le type d'entrée en `number`.
-- Le **presets Checkers** `iWantUserExistByEmail` fait la même chose que `iWantUserExist` mais utilise une methode d'un multi-input pour transformer le type d'entrée en `string`.
+- Des **presets Checkers** sont créés avec le **checker** `userExist` de cet [exemple](#multiple-entrés) (**checker** avec entrées multiples).
+- Le **preset Checker** `iWantUserExist` prédéfinit les 3 paramètres d'implémentation de base.
+- Le **preset Checker** `iWantUserExistById` fait la même chose que `iWantUserExist` mais transforme le type d'entrée en `number`.
+- Le **preset Checker** `iWantUserExistByEmail` fait la même chose que `iWantUserExist` mais utilise une méthode d'un multi-input pour transformer le type d'entrée en `string`.
 ></div>
 
 ## Implémentation d'un preset checker dans une route
-L'implémentation des **preset checker** est trés simple, il suffit d'utiliser la méthode `presetCheck` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. Cette méthode prend 2 arguments, le premier argument doit être un `presetCheck` et le seconde est une fonction qui renvois la valeur d'entré du **preset checker**. Cette fonction a en premier argument la méthode `pickup` du **floor**.
+L'implémentation des **presets Checkers** est très simple, il suffit d'utiliser la méthode `presetCheck` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. Cette méthode prend 2 arguments, le premier argument doit être un `presetCheck` et le second est une fonction qui renvoit la valeur d'entrée du **preset Checker**. Cette fonction a en premier argument la méthode `pickup` du **floor**.
 
 ```ts
 import { useBuilder, zod, OkHttpResponse } from "@duplojs/core";
@@ -461,19 +461,19 @@ useBuilder()
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Une route avec un **preset checker** implémenté a été créée.
+- Une route avec un **preset Checker** implémenté a été créée.
 - En survolant rapidement la déclaration de la **route**, nous pouvons déduire qu'elle renvoie la variable `user`. Cependant, il est nécessaire que la **requête** possède un paramètre `userId` de type `number` et qu'un utilisateur correspondant à ce paramètre existe.
 ></div>
 
 {: .note}
-La méthode `presetCheck` appelle la méthode `check` en lui donnant touts les paramètres prédéfinis. Il n'éxiste donc pas d'étape spécifique pour les **preset checkers**, ils sont implémentés dans l'objet route comme les **checkers**.
+La méthode `presetCheck` appelle la méthode `check` en lui donnant tous les paramètres prédéfinis. Il n'existe donc pas d'étape spécifique pour les **presets Checkers**, ils sont implémentés dans l'objet route comme les **checkers**.
 
 ## Les cuts
 Les **cuts** sont des **étapes** (`CutStep`) au même titre que les **checkers**. Dans le meilleur des mondes, les **checkers** suffisent à faire toutes les vérifications. Cependant dans la réalité, il arrive fréquemment de devoir écrire du code spécifique pour des cas uniques. C'est précisément pour gérer ces exceptions que les **cuts** ont été développés.
 
 ### Implémentation d'un cut dans une route
 {: .no_toc }
-Pour implémenter un **cut**, il suffit d'utiliser la méthode `cut` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. En premier argument, la méthode `cut` prend une fonction et en seconde argument un tableau. La fonction prend en argument un objet contenant la méthode `pickup` du **floor** et la méthode `dropper`. La fonction doit contenir une vérification et doit renvoyer une **réponse** ou le résultat de la fonction `dropper`. Dans le cas de renvoi d'un objet **réponse**, l'exécution de la route se stoppera à cette étape. La méthode `dropper` permet d'indexer dans le **floor** des données obtenues dans la `CutStep`. Cette méthode prend en argument le type `null | Record<string, unknown>`. Dans le cas d'un argument `null`, cela indique que rien ne veut être indéxé. Mais dans le cas d'un argument `Record<string, unknown>`, chaque clé de l'objet pourrait être indéxée dans le **floor**. Pour cela il suffit de les indiquer dans le tableau passé en second argument de la méthode `cut` du **builder**.
+Pour implémenter un **cut**, il suffit d'utiliser la méthode `cut` du **[builder](../../required/design-patern-builder)** des **Routes** ou des **Processes**. En premier argument, la méthode `cut` prend une fonction et en second argument un tableau. La fonction prend en argument un objet contenant la méthode `pickup` du **floor** et la méthode `dropper`. La fonction doit contenir une vérification. Elle doit renvoyer une **réponse** ou le résultat de la fonction `dropper`. Dans le cas de renvoi d'un objet **réponse**, l'exécution de la route se stoppera à cette étape. La méthode `dropper` permet d'indexer dans le **floor** des données obtenues dans la `CutStep`. Cette méthode prend en argument le type `null | Record<string, unknown>`. Dans le cas d'un argument `null`, rien ne sera indexé. Mais dans le cas d'un argument `Record<string, unknown>`, chaque clé de l'objet pourrait être indéxée dans le **floor**. Pour cela il suffit de les indiquer dans le tableau passé en second argument de la méthode `cut` du **builder**.
 
 ```ts
 import { useBuilder, zod, ForbiddenHttpResponse, NoContentHttpResponse } from "@duplojs/core";
@@ -517,7 +517,7 @@ useBuilder()
 ><div markdown="block">
 - Une route avec un **cut** implémenté a été créée.
 - Le **cut** vérifie un cas particulier avant la suppression d'un utilisateur.
-- Le **cut** ne renvoie pas de donnée car il appelle la fonction `dropper` avec `null`.
+- Le **cut** ne renvoie pas de données car il appelle la fonction `dropper` avec `null`.
 - Aucune clé n'est indéxée dans le **floor** à la suite de ce **cut**.
 ></div>
 
