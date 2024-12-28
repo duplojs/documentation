@@ -1,4 +1,9 @@
 _site
+src/**/_includes
+src/**/_layouts
+src/**/_plugins
+src/**/_sass
+src/**/assets
 .sass-cache
 .jekyll-cache
 .jekyll-metadata

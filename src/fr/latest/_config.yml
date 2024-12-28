@@ -1,13 +1,13 @@
 title: DuploJS
 url: https://docs.duplojs.dev
+baseurl: /fr/latest
 email: campani.mathieu@gmail.com
 github_username: mathcovax
-permalink: pretty
 logo: "/assets/images/logo.svg"
 favicon_ico: "/assets/images/logo.ico"
 color_scheme: yellow_light
 
-callouts_level: quiet # or loud
+callouts_level: quiet
 callouts:
   highlight:
     color: yellow
@@ -24,13 +24,8 @@ callouts:
     title: Warning
     color: red
 
-# Build settings
-keep_files: 
-  - en
+permalink: pretty
 source: .
-destination: _site
 theme: just-the-docs
 plugins:
   - jekyll-feed
-exclude: 
-  - /en/
