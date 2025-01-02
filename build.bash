@@ -9,11 +9,17 @@ for CURRENT_PATH in $ALL_WORKING_DIRECTORY; do
 
     cd $FULL_PATH
 
-    cp -r "$CURRENT_DIRECTORY/_includes" "_includes" 
-    cp -r "$CURRENT_DIRECTORY/_layouts" "_layouts" 
-    cp -r "$CURRENT_DIRECTORY/_plugins" "_plugins" 
-    cp -r "$CURRENT_DIRECTORY/_sass" "_sass" 
-    cp -r "$CURRENT_DIRECTORY/assets" "assets"
+    rm -rf "_includes" 
+    rm -rf "_layouts" 
+    rm -rf "_plugins" 
+    rm -rf "_sass" 
+    rm -rf "assets"
+
+    cp -rf "$CURRENT_DIRECTORY/_includes" "_includes" 
+    cp -rf "$CURRENT_DIRECTORY/_layouts" "_layouts" 
+    cp -rf "$CURRENT_DIRECTORY/_plugins" "_plugins" 
+    cp -rf "$CURRENT_DIRECTORY/_sass" "_sass" 
+    cp -rf "$CURRENT_DIRECTORY/assets" "assets"
 
     bundle exec jekyll build --destination "../../../_site/$CURRENT_PATH" --baseurl "/$CURRENT_PATH"
 done

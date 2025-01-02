@@ -1,4 +1,4 @@
-<script>
+<script type="module">
     if(location.search.includes("moodle")) {
         const sideBar = document.querySelector(".side-bar");
 
@@ -15,5 +15,59 @@
         document.body.querySelectorAll('[href]').forEach((element) => {
             element.href = "#"
         });
+
+        for(const linkElement of document.querySelectorAll('link[rel="stylesheet"]')) {
+            linkElement.remove();
+
+            if(!linkElement.href) {
+                continue;
+            }
+
+            await fetch(linkElement.href)
+                .then(response => response.text())
+                .then(text => {
+                    text = text.replace(/@media *\([^)]*\) *{([^}]*)}/g, "$1");
+
+                    text.matchAll(/}?([^}{\/:;@)]*){([^}]*)}/g).forEach((match) => {
+                        const [_, selector, styles] = match;
+                        const formattedSelector = selector.trim().replace(/\n/g, "");
+
+                        if(!formattedSelector){
+                            return;
+                        }
+
+                        try {
+                            const elements = document.querySelectorAll(formattedSelector);
+
+                            if(!elements.length) {
+                                return;
+                            }
+
+                            for(const element of elements) {
+                                element.style.cssText += styles.trim();
+                            }
+                        } catch (error) {
+                            
+                        }
+                    });
+                });
+        }
+
+        for(const listElement of document.querySelectorAll('ul')) {
+            listElement.style.listStyleType = "auto";
+        }
+
+        for(const listElement of document.querySelectorAll('ol')) {
+            listElement.style.listStyleType = "disc";
+        }
+
+        for(const parasitElement of document.querySelectorAll('script, style')) {
+            parasitElement.remove();
+        }
+
+        document.querySelector('[aria-label="Breadcrumb"]')?.remove();
+
+        document.head.remove();
+        document.body.nodeName = "div";
     }
 </script>
