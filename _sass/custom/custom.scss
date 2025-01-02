@@ -70,6 +70,7 @@
         height: 100%;
         border-right: 1px solid #eeebee;
         align-items: flex-end;
+        flex-shrink: 0;
 
         .site-header {
             width: 100%

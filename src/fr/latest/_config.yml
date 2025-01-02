@@ -29,3 +29,12 @@ source: .
 theme: just-the-docs
 plugins:
   - jekyll-feed
+
+collections:
+  resources:
+    output: true
+
+just_the_docs:
+  collections:
+    resources:
+      name: Ressources
