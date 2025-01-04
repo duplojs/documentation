@@ -34,3 +34,4 @@ title: Références
 
 ## Exercises [▶](./exercises/)
 1. [To do](./exercises/to-do)
+2. [Authentification](./exercises/auth)
