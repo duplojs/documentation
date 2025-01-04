@@ -2,7 +2,7 @@
 parent: Exercices
 nav_order: 2
 layout: default
-title: Authentification
+title: Authentication
 ---
 
 # Création d'un service d'authentification
@@ -10,25 +10,25 @@ L'objectif de cet exercice est de créer une API d’authentification.
 Une réalisation de cet exercice est disponible [ici](https://github.com/duplojs/examples/tree/main/exercises/to-do).
 
 ## Cachier des charges 
-Le grand Georges souhaite avoir une application qui permet de stocker des information personnel. Il veut partager son application avec toute sa famille pour qu'il puisse eux aussi enregistrer ce qu'il souhaite. Cependant, il ne veut pas  que les un est accès aux informations des autres.
+Le grand Georges souhaite avoir une application qui permet de stocker des informations personnelles. Il veut partager son application avec toute sa famille pour qu'ils puissent eux aussi enregistrer ce qu'ils souhaitent. Cependant, il ne veut pas que les un ai accès aux informations des autres.
 
 Pour répondre à son besoin il faut :
 - Pouvoir s’inscrire. 
-- Pouvoir ce connecter. 
-- Pouvoir récupérer ses informations personel.
-- Pouvoir modifier ses informations personel.
+- Pouvoir se connecter. 
+- Pouvoir récupérer ses informations personelles.
+- Pouvoir modifier ses informations personelles.
 
 Pour la base de donnée, vous utiliserez ce [fichier](https://github.com/duplojs/examples/blob/main/exercises/auth/src/providers/myDataBase.ts).
-Le mots de passe ne doit pas étre stocker en claire dans la base de donner, vous utiliserez la libraire [bcrypt](https://www.npmjs.com/package/bcrypt) pour cela.
-L'authentification ce fera via un JWT obtenue lors de la conexion, vous utiliserez la libraire [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) pour cela.
+Le mot de passe ne doit pas être stocké en claire dans la base de donnée, vous utiliserez la libraire [bcrypt](https://www.npmjs.com/package/bcrypt) pour cela.
+L'authentification ce fera via un JWT obtenu lors de la connexion, vous utiliserez la libraire [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) pour cela.
 
 ## Tâche à réaliser
-Les tâches a réaliser sont les suivantes :
+Les tâches à réaliser sont les suivantes :
 - Initialiser un projet Duplo et installer les librairies `jsonwebtoken` et `bcrypt`.
 - Créer la route d'inscription.
 - Créer le checker pour vérifier la validité d'un token.
-- Créer le proccces qui permet l'autentification.
-- Créer les schémas des documents des information personel.
-- Créer le crude pour les information personel
+- Créer le process qui permet l'autentification.
+- Créer les schémas des documents des informations personelles.
+- Créer le CRUD pour les informations personelles.
 
 [Retour au Références](../..)
