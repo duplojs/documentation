@@ -67,7 +67,8 @@
 
         document.querySelector('[aria-label="Breadcrumb"]')?.remove();
 
+        document.querySelectorAll("*").forEach(el => el.setAttribute("class", ""))
+
         document.head.remove();
-        document.body.nodeName = "div";
     }
 </script>
