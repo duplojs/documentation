@@ -2,7 +2,7 @@
 parent: Exercices
 nav_order: 2
 layout: default
-title: Authentication
+title: Authentification
 ---
 
 # Création d'un service d'authentification
