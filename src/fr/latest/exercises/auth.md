@@ -26,7 +26,7 @@ L'authentification ce fera via un JWT obtenu lors de la connexion, vous utiliser
 Les tâches à réaliser sont les suivantes :
 - Initialiser un projet Duplo et installer les librairies `jsonwebtoken` et `bcrypt`.
 - Créer la route d'inscription.
-- Créer le checker pour vérifier la validité d'un token.
+- Créer le checker pour vérifier l'existence d'un utilisateur.
 - Créer le process qui permet l'autentification.
 - Créer les schémas des documents des informations personelles.
 - Créer le CRUD pour les informations personelles.
