@@ -173,7 +173,7 @@ useBuilder()
     .extract({
         body: zod.object({
             content: zod.string(),
-        }).strip(),
+        }),
     })
     .handler(
         (pickup) => {
@@ -217,7 +217,7 @@ useBuilder()
     .extract({
         body: zod.object({
             content: zod.string(),
-        }).strip(),
+        }),
     })
     .handler(
         (pickup) => {
@@ -285,7 +285,7 @@ useBuilder()
     .extract({
         body: zod.object({
             content: zod.string(),
-        }).strip(),
+        }),
     })
     .handler(
         (pickup) => {

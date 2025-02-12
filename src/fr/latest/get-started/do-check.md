@@ -279,7 +279,7 @@ useBuilder()
         body: zod.object({
             name: zod.string(),
             date: zod.coerce.date(),
-        }).strip(),
+        }),
     })
     .check(
         compareDateCheck,
@@ -351,7 +351,7 @@ useBuilder()
         body: zod.object({
             email: zod.string().email(),
             password: zod.string(),
-        }).strip(),
+        }),
     })
     .check(
         userExistCheck,

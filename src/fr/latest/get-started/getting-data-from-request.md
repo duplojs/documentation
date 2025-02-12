@@ -25,8 +25,8 @@ useBuilder()
         body: zod.object({
             userName: zod.string(),
             email: zod.string(),
-            age: zod.coerce.string(),
-        }).strip(),
+            age: zod.number(),
+        }),
     })
     .handler(
         (pickup) => {
@@ -55,7 +55,6 @@ useBuilder()
 - Le schéma `zod` défini pour la **clé** `body` de l'objet sera **appliqué à la valeur** contenue dans `Request.body`.
 - La **clé** `body` est ajoutée au `floor` et aura le **type défini** par le schéma `zod`.
 - En cas d'échec du parsing, la **route** renverra une **réponse** d'erreur et **l'exécution s'arrêtera** à l'**étape** `ExtractStep`. Toutes les **étapes** déclarées derrière ne seront donc **pas éxécutées**.
-- La méthode `strip` du schéma `zod` permet d'éviter une erreur TypeScript `ts(2589)`.
 ></div>
 
 ## Niveau d'extraction de la donnée
@@ -69,7 +68,7 @@ useBuilder()
     .extract({
         params: zod.object({
             userId: zod.string(),
-        }).strip(),
+        }),
     })
     .handler(
         (pickup) => {
