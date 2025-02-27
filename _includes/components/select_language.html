@@ -14,6 +14,6 @@
 
         const [_none, _currentlanguage, currentVersion, ...paths] = window.location.pathname.split("/");
 
-        window.location.href = `/${selectedlanguage}/${currentVersion}/${paths.join()}`;
+        window.location.href = `/${selectedlanguage}/${currentVersion}/${paths.join("/")}`;
     });
 </script>
