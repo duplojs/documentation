@@ -9,6 +9,8 @@
 
 .site-header {
     border-bottom: 1px solid #eeebee;
+    display: flex;
+    justify-content: space-between;
 }
 
 @mixin nav-flex {
@@ -73,7 +75,17 @@
         flex-shrink: 0;
 
         .site-header {
-            width: 100%
+            width: 100%;
+            padding-left: 32px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+
+            .site-title {
+                flex-grow: 0;
+                display: block;
+                padding: 0;
+            
+            }
         }
 
         .site-nav {
@@ -131,4 +143,34 @@
 
 .highlight .hll {
     background: #b1b74d47 !important;
+}
+
+.site-title {
+    flex-grow: 0;
+    display: block;
+    padding-left: 14px;
+    padding-bottom: 10.5px;
+    padding-top: 10.5px;
+
+}
+
+.site-logo {
+    aspect-ratio: 1 / 1;
+}
+
+.selector-container {
+    display: flex;
+    gap: 16px;
+    padding-right: 12px;
+}
+
+.selector {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #333;
+    transition: all 0.3s ease-in-out;
 }

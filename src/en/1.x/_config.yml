@@ -1,6 +1,6 @@
 title: DuploJS
 url: https://docs.duplojs.dev
-baseurl: /fr/latest
+baseurl: /en/latest
 email: campani.mathieu@gmail.com
 github_username: mathcovax
 logo: "/assets/images/logo.svg"
@@ -26,6 +26,7 @@ callouts:
 
 permalink: pretty
 source: .
+destination: ../../dist/en/latest
 theme: just-the-docs
 plugins:
   - jekyll-feed

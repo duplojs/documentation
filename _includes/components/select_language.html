@@ -1,0 +1,19 @@
+<select class="selector" id="language-selector">
+    <option value="fr">FR 🇫🇷</option>
+    <option value="en">EN 🇺🇸</option>
+</select>
+
+<script>
+    const languageSelector = document.getElementById("language-selector");
+
+    const currentlanguage = window.location.pathname.split("/")[1];
+    languageSelector.value = currentlanguage;
+
+    languageSelector.addEventListener("change", (event) => {
+        const selectedlanguage = event.target.value;
+
+        const [_none, _currentlanguage, currentVersion] = window.location.pathname.split("/");
+
+        window.location.href = `/${selectedlanguage}/${currentVersion}/`;
+    });
+</script>

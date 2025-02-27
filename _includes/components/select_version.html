@@ -1,0 +1,19 @@
+<select class="selector" id="version-selector">
+    <option value="1.x">1.x (beta)</option>
+    <option value="latest">0.x (latest)</option>
+</select>
+
+<script>
+    const versionSelector = document.getElementById("version-selector");
+
+    const currentVersion = window.location.pathname.split("/")[2];
+    versionSelector.value = currentVersion;
+
+    versionSelector.addEventListener("change", (event) => {
+        const selectedVersion = event.target.value;
+
+        const [_none, currentlanguage] = window.location.pathname.split("/");
+
+        window.location.href = `/${currentlanguage}/${selectedVersion}/`;
+    });
+</script>
