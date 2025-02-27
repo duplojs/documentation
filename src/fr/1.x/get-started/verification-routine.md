@@ -39,45 +39,45 @@ interface MustBeConnectedOptions {
 }
 
 export const mustBeConnectedProcess = createProcess(
-	"mustBeConnected",
-	{
-		options: <MustBeConnectedOptions>{
-			role: "user",
-		},
-	},
+    "mustBeConnected",
+    {
+        options: <MustBeConnectedOptions>{
+            role: "user",
+        },
+    },
 )
-	.extract(
-		{
-			headers: {
-				authorization: zod.string(),
-			},
-		},
-		() => new ForbiddenHttpResponse("authorization.missing"),
-	)
-	.check(
-		valideTokenCheck,
-		{
-			input: (pickup) => pickup("authorization"),
-			result: "token.valide",
-			catch: () => new ForbiddenHttpResponse("authorization.invalide"),
-			indexing: "contentAuthorization",
-		},
-		makeResponseContract(ForbiddenHttpResponse, "authorization.invalide"),
-	)
-	.cut(
-		({ pickup, dropper }) => {
-			const { contentAuthorization, options } = pickup(["contentAuthorization", "options"]);
+    .extract(
+        {
+            headers: {
+                authorization: zod.string(),
+            },
+        },
+        () => new ForbiddenHttpResponse("authorization.missing"),
+    )
+    .check(
+        valideTokenCheck,
+        {
+            input: (pickup) => pickup("authorization"),
+            result: "token.valide",
+            catch: () => new ForbiddenHttpResponse("authorization.invalide"),
+            indexing: "contentAuthorization",
+        },
+        makeResponseContract(ForbiddenHttpResponse, "authorization.invalide"),
+    )
+    .cut(
+        ({ pickup, dropper }) => {
+            const { contentAuthorization, options } = pickup(["contentAuthorization", "options"]);
 
-			if (contentAuthorization.role !== options.role) {
-				return new ForbiddenHttpResponse("authorization.wrongRole");
-			}
+            if (contentAuthorization.role !== options.role) {
+                return new ForbiddenHttpResponse("authorization.wrongRole");
+            }
 
-			return dropper(null);
-		},
-		[],
-		makeResponseContract(ForbiddenHttpResponse, "authorization.wrongRole"),
-	)
-	.exportation(["contentAuthorization"]);
+            return dropper(null);
+        },
+        [],
+        makeResponseContract(ForbiddenHttpResponse, "authorization.wrongRole"),
+    )
+    .exportation(["contentAuthorization"]);
 ```
 
 {: .highlight }
@@ -98,7 +98,7 @@ Comme les route, Les **processes** on besoins d'étre enregister dans une **inst
 import { Duplo, useProcessBuilder } from "@duplojs/core";
 
 const duplo = new Duplo({
-	environment: "DEV",
+    environment: "DEV",
 });
 
 duplo.register(mustBeConnectedProcess);
@@ -128,25 +128,25 @@ Deux propriétés importantes sont à retenir dans les paramètres d'implémenta
 import { makeResponseContract, OkHttpResponse, useBuilder } from "@duplojs/core";
 
 useBuilder()
-	.createRoute("GET", "/user")
-	.execute(
-		mustBeConnectedProcess,
-		{
-			pickup: ["contentAuthorization"],
-		},
-	)
-	.presetCheck(
-		iWantUserExistById,
-		(pickup) => pickup("contentAuthorization").id,
-	)
-	.handler(
-		(pickup) => {
-			const { user } = pickup(["user"]);
+    .createRoute("GET", "/user")
+    .execute(
+        mustBeConnectedProcess,
+        {
+            pickup: ["contentAuthorization"],
+        },
+    )
+    .presetCheck(
+        iWantUserExistById,
+        (pickup) => pickup("contentAuthorization").id,
+    )
+    .handler(
+        (pickup) => {
+            const { user } = pickup(["user"]);
 
-			return new OkHttpResponse("user.getSelf", user);
-		},
-		makeResponseContract(OkHttpResponse, "user.getSelf", userSchema),
-	);
+            return new OkHttpResponse("user.getSelf", user);
+        },
+        makeResponseContract(OkHttpResponse, "user.getSelf", userSchema),
+    );
 ```
 
 {: .highlight }
@@ -165,30 +165,30 @@ Il est possible d'implémenter un process avant la création d'une route/d'un pr
 import { makeResponseContract, OkHttpResponse, useBuilder, zod } from "@duplojs/core";
 
 useBuilder()
-	.preflight(
-		mustBeConnectedProcess,
-		{
-			options: { role: "admin" },
-		},
-	)
-	.createRoute("GET", "/users/{userId}")
-	.extract({
-		params: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		iWantUserExistById,
-		(pickup) => pickup("userId"),
-	)
-	.handler(
-		(pickup) => {
-			const { user } = pickup(["user"]);
+    .preflight(
+        mustBeConnectedProcess,
+        {
+            options: { role: "admin" },
+        },
+    )
+    .createRoute("GET", "/users/{userId}")
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        iWantUserExistById,
+        (pickup) => pickup("userId"),
+    )
+    .handler(
+        (pickup) => {
+            const { user } = pickup(["user"]);
 
-			return new OkHttpResponse("user.get", user);
-		},
-		makeResponseContract(OkHttpResponse, "user.get", userSchema),
-	);
+            return new OkHttpResponse("user.get", user);
+        },
+        makeResponseContract(OkHttpResponse, "user.get", userSchema),
+    );
 ```
 
 {: .highlight }
