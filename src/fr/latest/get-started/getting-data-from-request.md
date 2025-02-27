@@ -8,7 +8,7 @@ nav_order: 2
 # Obtenir de la donnée d'une requête
 {: .no_toc }
 Dans cette section, nous allons voir comment **obtenir** de la **donnée typée** d'une **requête**, de manière **robuste** et **100% fiable**.
-Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/getting-data-from-request).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/0.x/get-started/getting-data-from-request).
 
 1. TOC
 {:toc}

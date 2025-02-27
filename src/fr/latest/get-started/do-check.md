@@ -8,7 +8,7 @@ nav_order: 3
 # Faire une vérification
 {: .no_toc }
 Dans cette section, nous allons voir comment faire des **vérifications explicites**.
-Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/do-check).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/0.x/get-started/do-check).
 
 1. TOC
 {:toc}

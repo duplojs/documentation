@@ -9,7 +9,7 @@ nav_order: 1
 {: .no_toc }
 
 Dans cette section, nous allons voir la **base** de la **création** et du **fonctionnement** des **routes**.
-Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/first-route).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/0.x/get-started/first-route).
 
 1. TOC
 {:toc}

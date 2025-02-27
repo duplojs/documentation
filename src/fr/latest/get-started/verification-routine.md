@@ -8,7 +8,7 @@ nav_order: 6
 # Routine de vérification
 {: .no_toc }
 Dans cette partie, nous allons voir comment créer des routines de vérification.
-Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/verification-routine).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/0.x/get-started/verification-routine).
 
 1. TOC
 {:toc}
