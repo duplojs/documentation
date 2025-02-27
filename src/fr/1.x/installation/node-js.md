@@ -18,12 +18,12 @@ npm init -y
 
 Ensuite pour utiliser `Duplo` sur `NodeJS`, vous devez installer le package [@duplojs/core](https://github.com/duplojs/core) et la librairie de portage [@duplojs/node](https://github.com/duplojs/node).
 ```bash
-npm install @duplojs/core @duplojs/node
+npm install "@duplojs/core@>=1.0.0" "@duplojs/node@>=1.0.0"
 ```
 
 Installer également les packages [typescript](https://www.npmjs.com/package/typescript) et [tsx](https://www.npmjs.com/package/tsx) en dépendances de développement.
 ```bash
-npm install --save-dev typescript tsx
+npm install --save-dev "typescript@>5.5" tsx
 ```
 
 ## Configuration package.json
@@ -72,7 +72,7 @@ Créez le fichier `src/main.ts` avec le contenu suivant.
 
 ```ts
 import "@duplojs/node";
-import { Duplo, useBuilder } from "@duplojs/core";
+import { Duplo } from "@duplojs/core";
 
 const duplo = new Duplo({
     environment: "DEV",

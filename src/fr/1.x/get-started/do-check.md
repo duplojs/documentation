@@ -8,7 +8,7 @@ nav_order: 3
 # Faire une vérification
 {: .no_toc }
 Dans cette section, nous allons voir comment faire des **vérifications explicites**.
-Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/main/get-started/do-check).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/1.x/get-started/do-check).
 
 1. TOC
 {:toc}
@@ -477,39 +477,40 @@ Pour implémenter un **cut**, il suffit d'utiliser la méthode `cut` du **[build
 
 ```ts
 import { useBuilder, zod, ForbiddenHttpResponse, NoContentHttpResponse } from "@duplojs/core";
+import { iWantUserExistById } from "../preset";
 
 useBuilder()
-    .createRoute("DELETE", "/users/{userId}")
-    .extract({
-        params: {
-            userId: zod.coerce.number(),
-        },
-    })
-    .presetCheck(
-        iWantUserExistById,
-        (pickup) => pickup("userId"),
-    )
-    .cut(
-        ({ pickup, dropper }) => {
-            const { email } = pickup("user");
+	.createRoute("DELETE", "/users/{userId}")
+	.extract({
+		params: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		iWantUserExistById,
+		(pickup) => pickup("userId"),
+	)
+	.cut(
+		({ pickup, dropper }) => {
+			const { email } = pickup("user");
 
-            if (email === "admin@example.com") {
-                return new ForbiddenHttpResponse("userIsAdmin");
-            }
+			if (email === "admin@example.com") {
+				return new ForbiddenHttpResponse("userIsAdmin");
+			}
 
-            return dropper(null);
-        },
-        []
-    )
-    .handler(
-        (pickup) => {
-            const { id } = pickup("user");
+			return dropper({ someData: "!false its true" });
+		},
+		["someData"],
+	)
+	.handler(
+		(pickup) => {
+			const { user, someData } = pickup(["user", "someData"]);
 
-            // ...
+			// action to delete user
 
-            return new NoContentHttpResponse("user.deleted");
-        },
-    );
+			return new NoContentHttpResponse("user.deleted");
+		},
+	);
 ```
 
 {: .highlight }
@@ -517,7 +518,8 @@ useBuilder()
 ><div markdown="block">
 - Une route avec un **cut** implémenté a été créée.
 - Le **cut** vérifie un cas particulier avant la suppression d'un utilisateur.
-- Le **cut** ne renvoie pas de données car il appelle la fonction `dropper` avec `null`.
+- Le **cut** peut retourné un objet `ForbiddenHttpResponse` pour intérompre l'éxecution dans un cas spécifique.
+- Le **cut** index a la clef `someData` dans le **floor** pour la suite de l'éxécution de la route. 
 - Aucune clé n'est indéxée dans le **floor** à la suite de ce **cut**.
 ></div>
 
