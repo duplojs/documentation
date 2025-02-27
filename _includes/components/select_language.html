@@ -12,8 +12,8 @@
     languageSelector.addEventListener("change", (event) => {
         const selectedlanguage = event.target.value;
 
-        const [_none, _currentlanguage, currentVersion] = window.location.pathname.split("/");
+        const [_none, _currentlanguage, currentVersion, ...paths] = window.location.pathname.split("/");
 
-        window.location.href = `/${selectedlanguage}/${currentVersion}/`;
+        window.location.href = `/${selectedlanguage}/${currentVersion}/${paths.join()}`;
     });
 </script>

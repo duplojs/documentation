@@ -12,8 +12,8 @@
     versionSelector.addEventListener("change", (event) => {
         const selectedVersion = event.target.value;
 
-        const [_none, currentlanguage] = window.location.pathname.split("/");
+        const [_none, currentlanguage, _currentVersion, ...paths] = window.location.pathname.split("/");
 
-        window.location.href = `/${currentlanguage}/${selectedVersion}/`;
+        window.location.href = `/${currentlanguage}/${selectedVersion}/${paths.join()}`;
     });
 </script>
