@@ -18,7 +18,7 @@ npm init -y
 
 Ensuite pour utiliser `Duplo` sur `NodeJS`, vous devez installer le package [@duplojs/core](https://github.com/duplojs/core) et la librairie de portage [@duplojs/node](https://github.com/duplojs/node).
 ```bash
-npm install "@duplojs/core@>=1.0.0" "@duplojs/node@>=1.0.0"
+npm install @duplojs/core@0.23.2 @duplojs/node@0.3.2
 ```
 
 Installer également les packages [typescript](https://www.npmjs.com/package/typescript) et [tsx](https://www.npmjs.com/package/tsx) en dépendances de développement.

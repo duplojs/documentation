@@ -8,7 +8,7 @@ nav_order: 3
 # Faire une vérification
 {: .no_toc }
 Dans cette section, nous allons voir comment faire des **vérifications explicites**.
-Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/0.x/get-started/do-check).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/1.x/get-started/do-check).
 
 1. TOC
 {:toc}
@@ -477,6 +477,7 @@ Pour implémenter un **cut**, il suffit d'utiliser la méthode `cut` du **[build
 
 ```ts
 import { useBuilder, zod, ForbiddenHttpResponse, NoContentHttpResponse } from "@duplojs/core";
+import { iWantUserExistById } from "../preset";
 
 useBuilder()
     .createRoute("DELETE", "/users/{userId}")
@@ -497,15 +498,15 @@ useBuilder()
                 return new ForbiddenHttpResponse("userIsAdmin");
             }
 
-            return dropper(null);
+            return dropper({ someData: "!false its true" });
         },
-        []
+        ["someData"],
     )
     .handler(
         (pickup) => {
-            const { id } = pickup("user");
+            const { user, someData } = pickup(["user", "someData"]);
 
-            // ...
+            // action to delete user
 
             return new NoContentHttpResponse("user.deleted");
         },
@@ -517,7 +518,8 @@ useBuilder()
 ><div markdown="block">
 - Une route avec un **cut** implémenté a été créée.
 - Le **cut** vérifie un cas particulier avant la suppression d'un utilisateur.
-- Le **cut** ne renvoie pas de données car il appelle la fonction `dropper` avec `null`.
+- Le **cut** peut retourner un objet `ForbiddenHttpResponse` pour intérompre l'éxecution dans un cas spécifique.
+Le **cut** stocke dans le **floor** la donnée à la clé `someData` pour la suite de l'exécution de la route.
 - Aucune clé n'est indéxée dans le **floor** à la suite de ce **cut**.
 ></div>
 

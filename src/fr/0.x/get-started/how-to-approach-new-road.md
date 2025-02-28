@@ -8,7 +8,7 @@ nav_order: 5
 # Aborder une nouvelle route
 {: .no_toc }
 Cette partie aborde la méthodologie de travail à adopter lors de l'utilisation du framework **DuploJS**.
-Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/1.x/get-started/how-to-approach-new-road).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/0.x/get-started/how-to-approach-new-road).
 
 1. TOC
 {:toc}

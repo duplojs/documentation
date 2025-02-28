@@ -8,7 +8,7 @@ nav_order: 2
 # Obtenir de la donnée d'une requête
 {: .no_toc }
 Dans cette section, nous allons voir comment **obtenir** de la **donnée typée** d'une **requête**, de manière **robuste** et **100% fiable**.
-Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/0.x/get-started/getting-data-from-request).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/1.x/get-started/getting-data-from-request).
 
 1. TOC
 {:toc}
@@ -167,7 +167,7 @@ useBuilder()
 Il est possible de changer le comportement par défaut des échecs pour toutes les **étapes** `ExtractStep` en utilisant `setExtractError` d'une instance **Duplo**. Cela s'applique à toutes les **routes** enregistrées dans cette instance.
 
 ```ts
-import { UnprocessableEntityHttpResponse, useBuilder, Duplo } from "@duplojs/core";
+import { UnprocessableEntityHttpResponse, Duplo } from "@duplojs/core";
 
 const duplo = new Duplo({ environment: "TEST" });
 
@@ -177,8 +177,6 @@ duplo.setExtractError(
         zodError,
     ),
 );
-
-duplo.register(...useBuilder.getAllCreatedDuplose());
 ```
 
 {: .highlight }

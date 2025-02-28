@@ -9,7 +9,7 @@ nav_order: 1
 {: .no_toc }
 
 Dans cette section, nous allons voir la **base** de la **création** et du **fonctionnement** des **routes**.
-Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/1.x/get-started/first-route).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/0.x/get-started/first-route).
 
 1. TOC
 {:toc}
@@ -121,6 +121,46 @@ const reponse = new Response(200, "OK", "Hello, World!");
 - L'utilisation du nombre `200` tel quel est une mauvaise pratique appelée `magic number`.
 ></div>
 
+### Créer ses réponses prédéfinies
+{: .no_toc }
+Il est très simple de créer ses propres **réponses prédéfinies**. Cela peut vous permettre de **factoriser** une **routine** de définition de headers par exemple.
+
+```ts
+import { Response } from "@duplojs/core";
+
+class MyCustomResponse<
+    GenericInformation extends string | undefined = undefined,
+    GenericBody extends unknown = undefined,
+> extends Response<
+        typeof MyCustomResponse.code,
+        GenericInformation,
+        GenericBody
+    > {
+    public constructor(
+        information: GenericInformation = undefined as GenericInformation,
+        body: GenericBody = undefined as GenericBody,
+    ) {
+        super(MyCustomResponse.code, information, body);
+
+        this.setHeader("Cache-Control", "max-age=3600");
+        this.setHeader("My-Super-Header", "my-super-value");
+    }
+
+    public static code = 200;
+}
+
+const myCustomResponse = new MyCustomResponse();
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- `MyCustomResponse` est une classe **étendue** de la classe `Response`.
+- Le code prédéfini sera `200`.
+- À chaque fois que la classe sera instanciée, les headers `Cache-Control` et `My-Super-Header` seront ajoutés à la **réponse**.
+- Les generics sont importants pour un typage **robuste**.
+></div>
+
 ## Les informations
 Comme vous pouvez l'observer dans les exemples donnés précédemment, lorsque l'on instancie une **réponse**, nous précisons en premier argument l'**information** de celle-ci.
 
@@ -171,29 +211,25 @@ duplo.register(myRoute);
 ### Enregistrer toutes les routes créées
 {: .no_toc }
 
-Il est possible d'**enregistrer** des **routes** à la volée sans les spécifier en utilisant `useRouteBuilder.getAllCreatedRoute()`.
+Il est possible d'**enregistrer** des **routes** à la volée sans les spécifier en utilisant `getAllCreatedDuplose()`.
 
 ```ts
-import { Duplo, useRouteBuilder } from "@duplojs/core";
+import { Duplo, useBuilder } from "@duplojs/core";
 import "./route";
 
 const duplo = new Duplo({
     environment: "TEST"
 });
 
-duplo.register(...useRouteBuilder.getAllCreatedRoute());
+duplo.register(...useBuilder.getAllCreatedDuplose());
 ```
 
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
 - `import "./route";` permet d'executer le fichier sans importer ses variables.
-- `useRouteBuilder.getAllCreatedRoute()` récupère toutes les **routes** créées.
+- `getAllCreatedDuplose()` récupère toutes les **routes** créées avec `useBuilder`.
 ></div>
-
-{: .note }
-Il est nécessaire d'importer les fichiers contenant vos routes avant d'utiliser `useRouteBuilder.getAllCreatedRoute()`, sans quoi elles ne seront pas créées et ne pourront donc pas être récupérées.
-Sinon aucune **route** ne sera enregistrée.
 
 ## Le floor
 
@@ -261,7 +297,7 @@ Le **floor** est un élément très important dans **duplo**. Chaque donnée ins
 
 ```ts
 import "@duplojs/node";
-import { Duplo, useRouteBuilder } from "@duplojs/core";
+import { Duplo, useBuilder } from "@duplojs/core";
 
 const duplo = new Duplo({
     environment: "DEV",
@@ -269,7 +305,7 @@ const duplo = new Duplo({
     port: 1506,
 });
 
-duplo.register(...useRouteBuilder.getAllCreatedRoute());
+duplo.register(...useBuilder.getAllCreatedDuplose());
 
 const server = await duplo.launch();
 ```

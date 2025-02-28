@@ -8,7 +8,7 @@ nav_order: 4
 # Définir une réponse
 {: .no_toc }
 Dans **Duplo**, il est possible de définir des réponses afin de créer des contrats de sortie pour les **routes**. Cela ne se fait pas via des interfaces Typescript mais par le biais des schémas Zod. Cela offre l'avantage de pouvoir être interprêté au runtime en plus de pouvoir servir de contrat de type pour Typescript. Par défaut, **Duplo** exécute les schémas à chaque renvoi d'une réponse. Cela permet de s'assurer de l'authenticité du type avant de répondre. Il est bien évidemment possible de désactiver cette fonctionalité en environnement de production.
-Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/1.x/get-started/define-response).
+Tous les exemples présentés dans ce cours sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/0.x/get-started/define-response).
 
 1. TOC
 {:toc}
