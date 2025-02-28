@@ -192,7 +192,8 @@ duplo.register(...useRouteBuilder.getAllCreatedRoute());
 ></div>
 
 {: .note }
-Il est obligatoire d'importer les fichiers contenant vos routes avant d'utiliser `useRouteBuilder.getAllCreatedRoute()`, sinon elles ne seront pas créées et ne pourront donc pas être récupérées.
+Il est nécessaire d'importer les fichiers contenant vos routes avant d'utiliser `useRouteBuilder.getAllCreatedRoute()`, sans quoi elles ne seront pas créées et ne pourront donc pas être récupérées.
+Sinon aucune **route** ne sera enregistrée.
 
 ## Le floor
 

@@ -518,8 +518,8 @@ useBuilder()
 ><div markdown="block">
 - Une route avec un **cut** implémenté a été créée.
 - Le **cut** vérifie un cas particulier avant la suppression d'un utilisateur.
-- Le **cut** peut retourné un objet `ForbiddenHttpResponse` pour intérompre l'éxecution dans un cas spécifique.
-- Le **cut** index a la clef `someData` dans le **floor** pour la suite de l'éxécution de la route. 
+- Le **cut** peut retourner un objet `ForbiddenHttpResponse` pour intérompre l'éxecution dans un cas spécifique.
+Le **cut** stocke dans le **floor** la donnée à la clé `someData` pour la suite de l'exécution de la route.
 - Aucune clé n'est indéxée dans le **floor** à la suite de ce **cut**.
 ></div>
 

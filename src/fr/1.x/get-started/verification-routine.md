@@ -20,16 +20,14 @@ Les `HandlerStep`, utilisés pour les **Routes**, ont pour rôle de contenir l'a
 
 - l’authentification,
 - la vérification des rôles,
-- la factorisation d'utilisations récurrentes de `CheckerStep` ou `CutStep`.
-
+- la factorisation d'utilisations récurrentes de `CheckerStep` et/ou `CutStep`.
 
 ## Créer un process
-Pour créer un **Process** il faut appeler la fonction `createProcess`, qui donne ensuite accès au **[builder](../../required/design-patern-builder)** de l'objet `Process`. 
+Pour créer un **Process** il faut appeler la fonction `createProcess`, qui donne ensuite accès au **[builder](../../required/design-patern-builder)** de l'objet `Process`.
 
-La fonction `createProcess` prend comme premier argument une `string` correspondant au nom du **Process**. La création d'un process se clôture par l'appel de la méthode `exportation` du **[builder](../../required/design-patern-builder)**. Cette méthode prend en argument un tableau de `string`, qui représente les index des données présentes dans le **floor** du **Process**. Chaque clé spécifiée pourra être utilisée pour importer des données du **Process** dans le floor des **Routes** ou des **Processes** qui l'implémentent.
+La fonction `createProcess` prend comme premier argument une `string` correspondant au nom du **Process**. La création d'un process se clôture par l'appel de la méthode `exportation` du **[builder](../../required/design-patern-builder)**. La méthode `exportation` prend en argument un tableau de `string`, qui représente les index des données présentes dans le **floor** du **Process**. Chaque clé spécifiée pourra être utilisée pour importer des données du **Process** dans le **floor** des **Routes** ou des **Processes** qui l'implémentent.
 
 Les **Processes** peuvent être créés avec des options pouvant être surchargées lors de leur implémentation. Pour cela, il suffit de définir la propriété `options` dans l'objet passé en deuxième argument de la fonction `createProcess`.
-
 
 ```ts
 import { ForbiddenHttpResponse, makeResponseContract, useBuilder, zod } from "@duplojs/core";
@@ -93,7 +91,8 @@ export const mustBeConnectedProcess = createProcess(
 Les processes ont les mêmes steps disponibles que les routes (sauf la `HandlerStep`). Il n'y a aucune différence d'utilisation.
 
 ## Enregistrer un proccess
-Comme les route, Les **processes** on besoins d'étre enregister dans une **instance Duplo**. Pour cela vous pouvez le faire de manier unitaire ou a la volée (comme les **route**).
+À l'instar des **routes**, les **processes** doivent être enregistrés dans une **instance Duplo**. Cet enregistrement peut se faire soit de manière unitaire, soit à la volée.
+L'enregistrement multiple d'un même **process** n'a aucune incidence car les **processes** sont uniques et ne seront pas dupliqués.
 ```ts
 import { Duplo, useProcessBuilder } from "@duplojs/core";
 
@@ -109,8 +108,8 @@ duplo.register(...useProcessBuilder.getAllCreatedProcess());
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Le **process** `mustBeConnectedProcess` a étais enregistré unitairement dans une **instance Duplo**.
-- Touts les **processes** créer on étais enregistré dans une **instance Duplo**.
+- Le **process** `mustBeConnectedProcess` a été enregistré unitairement dans une **instance Duplo**.
+- L'alternative permet d'enregistrer tous les **processes** créés en une seule fois dans l'**instance Duplo**.
 ></div>
 
 ## Implémentation d'un process
@@ -118,11 +117,11 @@ Les **processes** peuvent être implémentés dans des routes, dans d'autres pro
 
 ### Implémentation basic
 {: .no_toc }
-Pour implémenter un **process** dans une route ou un autre process, il faut utiliser la méthode `execute` des **[builders](../../required/design-patern-builder)**. Cette méthode prend en premier argument un process et en second les paramètres d'implémentation. 
+Pour implémenter un **process** dans une route ou un autre process, il faut utiliser la méthode `execute` des **[builders](../../required/design-patern-builder)**. Cette méthode prend en premier argument un process et en second les paramètres d'implémentation.
 
 Deux propriétés importantes sont à retenir dans les paramètres d'implémentation :  
-- `options` : permet de surcharger les options par défaut du process.  
-- `pickup` : permet de récupérer dans la route les données exportées depuis le **floor** du process. 
+- `options` : permet de surcharger les options par défaut du process
+- `pickup` : permet de récupérer dans la route les données exportées depuis le **floor** du process
 
 ```ts
 import { makeResponseContract, OkHttpResponse, useBuilder } from "@duplojs/core";
