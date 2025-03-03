@@ -1,7 +1,7 @@
 ---
 nav_order: 3
 layout: default
-title: Objet requête
+title: Objet Requête
 ---
 
 // présentation de l'objet requéte
