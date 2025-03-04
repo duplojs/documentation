@@ -43,7 +43,7 @@ Pour générer du typages à partir des routes de votre application, vous aurez 
 ></div>
 
 {: .note }
-il est également possible d'utiliser `type-codegen` via `npx` sans l'installer.
+Il est également possible d'utiliser `@duplojs/types-codegen` via `npx` sans l'installer.
 
 ## Options
 
