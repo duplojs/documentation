@@ -70,18 +70,23 @@ environment|`"DEV" | "PROD" | "TEST"`|requie|Définit l'environement dans lequel
 disabledRuntimeEndPointCheck|`boolean`|`false`|Désactive l'éxéctuion des contrat de sortie.
 disabledZodAccelerator|`boolean`|`false`|Désactive l'optimisation des schema zod pars [@duplojs/zod-accelerator](https://github.com/duplojs/zod-accelerator).
 keyToInformationInHeaders|`string`|`"information"`|Définit la clef de l'**information** dans les headers.
-plugins|`DuploPlugins[]`|`[]`|Tableau qui contien les plugins que vas utilisé l'instance.
-bodySizeLimit|`number | BytesInString`|`"50mb"`|La taille maximale du body qu'il est possible d'accepter.
-recieveFormDataOptions|`RecieveFormDataOptions`|`{ uploadDirectory: "upload", prefixTempName: "tmp-", strict: false }`|Permet de définir les option pars défaut de la récéption des form data.
+plugins|[`DuploPlugins[]`](#duploconfig)|`[]`|Tableau qui contien les plugins que vas utilisé l'instance.
+bodySizeLimit|[`number | BytesInString`](#bytesinstring)|`"50mb"`|La taille maximale du body qu'il est possible d'accepter.
+recieveFormDataOptions|[`RecieveFormDataOptions`](#recieveformdataoptions) |`{ uploadDirectory: "upload", prefixTempName: "tmp-", strict: false }`|Permet de définir les option pars défaut de la récéption des form data.
 prefix|`string | string[]`|`[]`|Définit un ou plusieur préfix sur chaq'une des routes enregistré.
 keepDescriptions|`boolean`|`false`|Indique qu'il faut garder les description aprés le lancement.
 
-// tableau type RecieveFormDataOptions
-// tableau type BytesInString
-// tableau type DuploPlugins
+### DuploPlugins
+
+### BytesInString
+
+### RecieveFormDataOptions
+Propriéter|type|valeur pars défaut|definition 
+---|---|---|---
+
 // exemple
 
-// présentation hook d'instance
+// présentation des fonction hook, setNotfoundHandler, setExtractError, register
 // exemple
 
 // présentation override
