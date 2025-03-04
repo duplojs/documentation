@@ -179,7 +179,7 @@ duplo.setNotfoundHandler((request) => new NotFoundHttpResponse("not_found"));
 - Lorsqu'une route est sera introuvable, une `NotFoundHttpResponse` sera envoyer avec l'information `"not_found"`.
 ></div>
 
-## Géstion de par défaut des erreur d'extraction
+## Géstion par défaut des erreur d'extraction
 Si une erreur survient lors d'une `ExtractStep`, celle si coupe l'éxécution de la route et renvois une réponse. La méthode de l'instance `setExtractError` permet définir la réponse pars défaut qui sera renvoyer.
 
 ```ts
