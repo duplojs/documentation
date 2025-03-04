@@ -4,12 +4,13 @@ layout: default
 title: Génération de types
 ---
 
-# Génération de types - types-codegen
+# Génération de types avec types-codegen
+{: .no_toc }
 
-`@duplojs/types-codegen` est une librairie permettant de générer des types TypeScript à partir des routes de votre application. Elle est particulièrement utile pour la création de clients HTTP typés.
-vous pouvez consulter la documentation du client HTTP typé [ici](https://docs.duplojs.dev/fr/latest/resources/http-client/) qui utilise les types générés par `@duplojs/types-codegen`.
+`@duplojs/types-codegen` est une librairie permettant de générer des types TypeScript à partir des routes de votre application. Elle est particulièrement utile pour la création de clients HTTP typés. vous pouvez consulter la documentation du client HTTP typé [ici](https://docs.duplojs.dev/fr/latest/resources/http-client/) qui utilise les types générés par `@duplojs/types-codegen`. Tous les exemples présentés dans cette section sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/1.x/resources/types-codegen).
 
-Tous les exemples présentés dans cette section sont disponibles en entier [ici](https://github.com/duplojs/examples/tree/1.x/resources/types-codegen).
+1. TOC
+{:toc}
 
 ## Installation
 
@@ -25,10 +26,11 @@ Pour générer du typages à partir des routes de votre application, vous aurez 
 
 ```json
 {
-  ...
+  ...,
   "scripts": {
+    ...,
     "generate-types": "duplojs-types-codegen --import @duplojs/node/globals --include src/routes/index.ts --output src/types/duplojsTypesCodegen.d.ts"
-  }
+  },
   ...
 }
 ```
