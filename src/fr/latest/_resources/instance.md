@@ -63,6 +63,7 @@ await duplo.launch();
 Pour instancier un objet `Duplo`, il faut passé en argument un objet qui définit les paramétre de l'instance.
 
 ### DuploConfig
+{: .no_toc }
 
 Propriéter|type|valeur pars défaut|definition 
 ---|---|---|---
@@ -71,16 +72,20 @@ disabledRuntimeEndPointCheck|`boolean`|`false`|Désactive l'éxéctuion des cont
 disabledZodAccelerator|`boolean`|`false`|Désactive l'optimisation des schema zod pars [@duplojs/zod-accelerator](https://github.com/duplojs/zod-accelerator).
 keyToInformationInHeaders|`string`|`"information"`|Définit la clef de l'**information** dans les headers.
 plugins|[`DuploPlugins[]`](#duploconfig)|`[]`|Tableau qui contien les plugins que vas utilisé l'instance.
-bodySizeLimit|[`number | BytesInString`](#bytesinstring)|`"50mb"`|La taille maximale du body qu'il est possible d'accepter.
+bodySizeLimit|`number | `[`BytesInString`](#bytesinstring)|`"50mb"`|La taille maximale du body qu'il est possible d'accepter.
 recieveFormDataOptions|[`RecieveFormDataOptions`](#recieveformdataoptions) |`{ uploadDirectory: "upload", prefixTempName: "tmp-", strict: false }`|Permet de définir les option pars défaut de la récéption des form data.
 prefix|`string | string[]`|`[]`|Définit un ou plusieur préfix sur chaq'une des routes enregistré.
 keepDescriptions|`boolean`|`false`|Indique qu'il faut garder les description aprés le lancement.
 
 ### DuploPlugins
+{: .no_toc }
 
 ### BytesInString
+{: .no_toc }
 
 ### RecieveFormDataOptions
+{: .no_toc }
+
 Propriéter|type|valeur pars défaut|definition 
 ---|---|---|---
 
