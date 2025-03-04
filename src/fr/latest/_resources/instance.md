@@ -117,7 +117,7 @@ const duplo = new Duplo({
 
 |Type|
 |---|
-|`${number}b` | `${number}kb` | `${number}mb` | `${number}gb` | `${number}tb` | `${number}pb`|
+|`\`${number}b\` | \`${number}kb\` | \`${number}mb\` | \`${number}gb\` | \`${number}tb\` | \`${number}pb\``|
 
 ### RecieveFormDataOptions
 {: .no_toc }
