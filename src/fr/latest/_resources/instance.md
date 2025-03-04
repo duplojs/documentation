@@ -80,9 +80,9 @@ keepDescriptions|`boolean`|`false`|Indique qu'il faut garder les description apr
 ### DuploPlugins
 {: .no_toc }
 
-|Type|
-|---|
-|`(instance: Duplo) => void;`|
+Type|Definition
+---|---
+`(instance: Duplo) => void;`|Le plugins son des fonction qui son appler lors de l'instanciation.
 
 ```ts
 import { Duplo } from "@duplojs/core";
@@ -115,9 +115,9 @@ const duplo = new Duplo({
 ### BytesInString
 {: .no_toc }
 
-|Type|
-|---|
-|`` `${number}b` | `${number}kb` | `${number}mb` | `${number}gb` | `${number}tb` | `${number}pb` ``|
+Type|Definition
+---|---
+`` `${number}b` | `${number}kb` | `${number}mb` | `${number}gb` | `${number}tb` | `${number}pb` ``|Ce type représente une quantiter de byts.
 
 ### RecieveFormDataOptions
 {: .no_toc }
