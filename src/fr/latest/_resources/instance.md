@@ -20,7 +20,7 @@ Pour créer un instance **Duplo** il suffit d'importer la class `Duplo` depuis `
 import { Duplo } from "@duplojs/core";
 
 const duplo = new Duplo({
-	environment: "DEV",
+    environment: "DEV",
 });
 ```
 
@@ -39,9 +39,9 @@ import "@duplojs/node";
 import { Duplo, useProcessBuilder, useRouteBuilder } from "@duplojs/core";
 
 const duplo = new Duplo({
-	environment: "DEV",
-	port: 1506,
-	host: "localhost",
+    environment: "DEV",
+    port: 1506,
+    host: "localhost",
 });
 
 duplo.register(...useProcessBuilder.getAllCreatedProcess());
@@ -87,23 +87,21 @@ keepDescriptions|`boolean`|`false`|Indique qu'il faut garder les description apr
 ```ts
 import { Duplo } from "@duplojs/core";
 
-export interface MyPluginOptions {
-	disabledOptimization?: boolean;
+interface MyPluginOptions {
+    disabledOptimization?: boolean;
 }
 
-export function myPlugin(options?: MyPluginOptions) {
-	return (instance: Duplo) => {
-		if (options?.disabledOptimization) {
-			instance.config.disabledZodAccelerator = true;
-		}
-	};
+function myPlugin(options?: MyPluginOptions) {
+    return (instance: Duplo) => {
+        if (options?.disabledOptimization) {
+            instance.config.disabledZodAccelerator = true;
+        }
+    };
 }
 
 const duplo = new Duplo({
-	environment: "DEV",
-	port: 1506,
-	host: "localhost",
-	plugins: [myPlugin({ disabledOptimization: true })],
+    environment: "DEV",
+    plugins: [myPlugin({ disabledOptimization: true })],
 });
 ```
 
@@ -111,7 +109,7 @@ const duplo = new Duplo({
 >Dans cet exemple :
 ><div markdown="block">
 - La fonction `myPlugin` créer un plugin en currying.
-- `myPlugin` est implémenter dans l'instance
+- `myPlugin` est implémenter dans l'instance.
 ></div>
 
 ### BytesInString
@@ -126,16 +124,101 @@ const duplo = new Duplo({
 
 Propriéter|Type|Valeur pars défaut|Definition
 ---|---|---|---
-uploadDirectory|`string`|`upload`|Définit le dossier par défaut qui serra utilisé pour l'upload des fichers de FormData.
-prefixTempName|`string`|`tmp-`|Définit un préfixe par défaut qui sera donner au fichier upload.
+uploadDirectory|`string`|`"upload"`|Définit le dossier par défaut qui serra utilisé pour l'upload des fichers de FormData.
+prefixTempName|`string`|`"tmp-"`|Définit un préfixe par défaut qui sera donner au fichier upload.
 strict|`boolean`|`false`|Définit la propriéter strict par défaut.
 
-### Exemple de plugins
+## Hooks de l'instance
+**Duplo** posséde un systéme de hook qui permet d'influencer le comportement des routes ou de l'instance. Les hooks sont des fonction callback qui seront appeler a des moment précie. 
+
 ```ts
+import { Duplo } from "@duplojs/core";
+
+const duplo = new Duplo({
+    environment: "DEV",
+});
+
+duplo.hook("beforeRouteExecution", (request) => {
+    console.log(request.method, request.path);
+});
+
+duplo.hook("onError", (request, error) => {
+    console.log("Error !");
+});
+
+duplo.hook("onStart", (instance) => {
+    console.log("Server is Ready !");
+});
 ```
 
-// présentation des fonction hook, setNotfoundHandler, setExtractError, register
-// exemple
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Un hook `beforeRouteExecution` a été ajouter a l'instance.
+- Un hook `onError` a été ajouter a l'instance.
+- Un hook `onStart` a été ajouter a l'instance.
+></div>
+
+## Géstion d'une route introuvable
+Géstion d'une route introuvable ce fait directement sur l'instance. Vous pouvez utilisez la méthode de l'instance `setNotfoundHandler` pour customisé la réponse.
+
+```ts
+import { Duplo } from "@duplojs/core";
+
+const duplo = new Duplo({
+    environment: "DEV",
+});
+
+duplo.setNotfoundHandler((request) => new NotFoundHttpResponse("not_found"));
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- La gestion d'une route introuvable a étais définit avec la méthode `setNotfoundHandler` de l'instance.
+- Lorsqu'une route est sera introuvable, une `NotFoundHttpResponse` sera envoyer avec l'information `"not_found"`.
+></div>
+
+## Géstion de par défaut des erreur d'extraction
+Si une erreur survient lors d'une `ExtractStep`, celle si coupe l'éxécution de la route et renvois une réponse. La méthode de l'instance `setExtractError` permet définir la réponse pars défaut qui sera renvoyer.
+
+```ts
+import { Duplo } from "@duplojs/core";
+
+const duplo = new Duplo({
+    environment: "DEV",
+});
+
+duplo.setExtractError((type, key, error) => new UnprocessableEntityHttpResponse("bad_type"));
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- La gestion des erreur d'extraction a étais définit avec la méthode `setExtractError` de l'instance.
+- Lorsqu'un schema zod d'`ExtractStep` ne sera pas respecter, pars défaut une réponse `UnprocessableEntityHttpResponse` sera envoyer avec l'information `"bad_type"`.
+></div>
+
+## Enregister les Duplose de la librairy
+`Duplose` est une class abstraite sur la qu'elle ce base la class `Route` et la class `Process`. Les objet `Duplose` peuvent avoir besoin de ce fair enregister dans une instance Duplo pour fonctioner. Pour cela on utilise la méthode `register`.
+
+```ts
+import { Duplo, useProcessBuilder, useRouteBuilder } from "@duplojs/core";
+
+const duplo = new Duplo({
+    environment: "DEV",
+});
+
+duplo.register(...useProcessBuilder.getAllCreatedProcess());
+duplo.register(...useRouteBuilder.getAllCreatedRoute());
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- On utilise la méthode `register` pour enregister tout les processes créer avec le `useProcessBuilder`.
+- On utilise la méthode `register` pour enregister toute les routes créer avec le `useRouteBuilder`.
+></div>
 
 // présentation override
 // exemple
