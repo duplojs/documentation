@@ -82,7 +82,7 @@ keepDescriptions|`boolean`|`false`|Indique qu'il faut garder les description apr
 
 |Type|
 |---|
-|`(instance: Duplo) => void;`.|
+|`(instance: Duplo) => void;`|
 
 ```ts
 import { Duplo } from "@duplojs/core";
@@ -117,7 +117,7 @@ const duplo = new Duplo({
 
 |Type|
 |---|
-|`\`${number}b\` | \`${number}kb\` | \`${number}mb\` | \`${number}gb\` | \`${number}tb\` | \`${number}pb\``|
+|`` `${number}b` | `${number}kb` | `${number}mb` | `${number}gb` | `${number}tb` | `${number}pb` ``|
 
 ### RecieveFormDataOptions
 {: .no_toc }
