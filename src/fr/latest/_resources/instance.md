@@ -220,5 +220,31 @@ duplo.register(...useRouteBuilder.getAllCreatedRoute());
 - On utilise la méthode `register` pour enregister toute les routes créer avec le `useRouteBuilder`.
 ></div>
 
-// présentation override
-// exemple
+## Override configuration
+Si vous voulez ajouter de nouvels options a la configuration ou créer un nouvel environment, il vous suffit d'override les types. C'est de cette manier que la librairy `@duplojs/node` ajoute des paramétre suplémentaire.
+
+```ts
+import { Duplo } from "@duplojs/core";
+
+declare module "@duplojs/core" {
+	interface DuploConfig {
+		myNewOptions: boolean;
+	}
+
+	interface Environments {
+		FOO: true; // true is obligatory
+	}
+}
+
+const duplo = new Duplo({
+	environment: "FOO",
+	myNewOptions: false,
+});
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- l'interface `DuploConfig` a étais override pour ajouter la propriété `myNewOptions`.
+- l'interface `Environments` a étais override l'environment `FOO`.
+></div>
