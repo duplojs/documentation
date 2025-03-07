@@ -17,7 +17,7 @@ title: Génération de types
 Pour utiliser `@duplojs/types-codegen`, vous devez l'installer en tant que dépendance de développement de votre projet.
 
 ```bash
-npm install --save-dev @duplojs/types-codegen
+npm install --save-dev "@duplojs/types-codegen@1.x"
 ```
 
 ## Utilisation
@@ -29,7 +29,7 @@ Pour générer du typages à partir des routes de votre application, vous aurez 
   ...,
   "scripts": {
     ...,
-    "generate-types": "duplojs-types-codegen --import @duplojs/node/globals --include src/routes/index.ts --output src/types/duplojsTypesCodegen.d.ts"
+    "generate-types": "duplojs-types-codegen --import @duplojs/node/globals --include src/routes/index.ts --output duplojsTypesCodegen.d.ts"
   },
   ...
 }
@@ -107,15 +107,205 @@ type CodegenRoutes = ({
 export { CodegenRoutes };
 ```
 
+## Source du typages
+Le type générer trouve ça source dans vos route. Les ellement de vos routes qui enrichisse la génération sont :
+- La méthode.
+- Les paths.
+- Les `ExtractStep`.
+- Les contrat de sortie des `Step`.
+
+```ts
+// preset checker
+export const IWantUserExistById = createPresetChecker(
+	userExistCheck,
+	{
+		transformInput: userExistInput.id,
+		result: "user.exist",
+		catch: () => new NotFoundHttpResponse("user.notfound"),
+		indexing: "user",
+	},
+	makeResponseContract(NotFoundHttpResponse, "user.notfound"), // Response Contract CheckerStep
+);
+
+// route
+useBuilder()
+	.createRoute("GET", "/users/{userId}") // méthod, path
+	.extract({ // ExtractStep
+		params: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		IWantUserExistById,
+		(pickup) => pickup("userId"),
+	)
+	.handler(
+		(pickup) => {
+			const { id, name, email } = pickup("user");
+
+			return new OkHttpResponse("user.found", {
+				id,
+				name,
+				email,
+			});
+		},
+		makeResponseContract(OkHttpResponse, "user.found", userSchema), // Response Contract HandlerStep
+    );
+
+// output
+type CodegenRoutes = ({
+    method: "GET";
+    path: "/users/{userId}";
+    params: {
+        userId: number;
+    };
+    response: {
+        code: 404;
+        information: "user.notfound";
+        body?: undefined;
+    } | {
+        code: 200;
+        information: "user.found";
+        body: {
+            id: number;
+            name: string;
+            email: string;
+        };
+    };
+});
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- Le type `CodegenRoutes` de l'exemple ci dessus a étais génére a patire de la route de ce même exemple.
+- Le preset checker `IWantUserExistById` a un contrat de réponse intégré, qui est transmit a la route dans laquel il est implémenter.
+- La `HandlerStep` de la route posséde un contrat de réponse.
+></div>
+
+{: .note }
+Les route hérite des contrat appartenent au proccess implémenter. 
+
+### Ignoré les contrat d'une step
+{: .no_toc }
+Il est possible d'indiquer au générateur qu'on ne souhaite pas prendre en compte les contrat du step. Pour cela, il suffit de passé une instance de l'objet `IgnoreByTypeCodegenDescription` dans les déscriptions d'une step.
+
+```ts
+import { useBuilder, zod, OkHttpResponse, makeResponseContract } from "@duplojs/core";
+import { IgnoreByTypeCodegenDescription } from "@duplojs/types-codegen";
+
+useBuilder()
+	.createRoute("GET", "/users/{userId}")
+	.extract(
+		{
+			headers: {
+				authorization: zod.string(),
+			},
+		},
+		undefined,
+		new IgnoreByTypeCodegenDescription(),  
+	)
+	.extract({
+		params: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		IWantUserExistById,
+		(pickup) => pickup("userId"),
+        new IgnoreByTypeCodegenDescription(),
+	)
+	.handler(
+		(pickup) => {
+			const { id, name, email } = pickup("user");
+
+			return new OkHttpResponse("user.found", {
+				id,
+				name,
+				email,
+			});
+		},
+		makeResponseContract(OkHttpResponse, "user.found", userSchema),
+	);
+
+// output
+type CodegenRoutes = ({
+    method: "GET";
+    path: "/users/{userId}";
+    params: {
+        userId: number;
+    };
+    response: {
+        code: 200;
+        information: "user.found";
+        body: {
+            id: number;
+            name: string;
+            email: string;
+        };
+    };
+});
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- L'`ExtractStep` sera ignorer et le type générer ne contiendra pas de header `authorization`.
+- La `CheckerStep` sera ignorer et le type générer ne contiendra pas de réponse associer a son contrat.
+></div>
+
+### Ignoré les contrat d'une route
+{: .no_toc }
+Il est aussi possible d'indiquer au générateur qu'on souhaite ignoré une route. Pour cela, il suffit de passé une instance de l'objet `IgnoreByTypeCodegenDescription` dans les déscriptions d'une route.
+
+```ts
+import { useBuilder, zod, OkHttpResponse, makeResponseContract } from "@duplojs/core";
+import { IgnoreByTypeCodegenDescription } from "@duplojs/types-codegen";
+
+useBuilder(new IgnoreByTypeCodegenDescription())
+	.createRoute("GET", "/users/{userId}", new IgnoreByTypeCodegenDescription()) // same thing
+	.extract({
+		params: {
+			userId: zod.coerce.number(),
+		},
+	})
+	.presetCheck(
+		IWantUserExistById,
+		(pickup) => pickup("userId"),
+	)
+	.handler(
+		(pickup) => {
+			const { id, name, email } = pickup("user");
+
+			return new OkHttpResponse("user.found", {
+				id,
+				name,
+				email,
+			});
+		},
+		makeResponseContract(OkHttpResponse, "user.found", userSchema),
+	);
+```
+
+{: .highlight }
+>Dans cet exemple :
+><div markdown="block">
+- La description `IgnoreByTypeCodegenDescription` peut étre placer sois en argument du `useBuilder` sois en argument de la méthode `createRoute`.
+- Aucun type ne sera générer a partir de cette route.
+></div>
+
+{: .note }
+Touts les exemple d'ignore de contrat sur les routes s'applique égalment au process.
+
 ## Utilsation sans la commande
 
 Il est également possible d'utiliser `@duplojs/types-codegen` sans la commande en important directement la fonction `generateTypeFromRoutes`.
 
 ```typescript
-import "@duplojs/node/globals";
 import { useRouteBuilder } from "@duplojs/core";
 import { generateTypeFromRoutes } from "@duplojs/types-codegen";
-import "@routes";
+
+import "./path-to-ma-routes";
 
 const routes = [...useRouteBuilder.getAllCreatedRoute()];
 const generatedTypes = generateTypeFromRoutes(routes);
@@ -127,7 +317,7 @@ console.log(generatedTypes);
 >Dans cet exemple :
 ><div markdown="block">
 - Les routes sont récupérées à l'aide de `useRouteBuilder.getAllCreatedRoute()`.
-- Les routes sont importées à l'aide de `@routes`.
+- Les routes sont importées à l'aide de `./path-to-ma-routes`.
 - Les types sont générés à l'aide de `generateTypeFromRoutes`.
 - Les types générés sont affichés dans la console.
 ></div>
