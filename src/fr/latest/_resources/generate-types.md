@@ -108,11 +108,12 @@ export { CodegenRoutes };
 ```
 
 ## Source du typages
-Le type générer trouve ça source dans vos route. Les ellement de vos routes qui enrichisse la génération sont :
-- La méthode.
-- Les paths.
-- Les `ExtractStep`.
-- Les contrat de sortie des `Step`.
+
+Le typage généré est basé sur les éléments de vos routes. Les composants qui enrichissent la génération sont :
+- La méthode HTTP (GET, POST, PUT, etc.)
+- Le chemin des routes (`/users/{id}`, `/products`, etc.)
+- Les `ExtractStep` (route params, query params, body, etc.)
+- Les contrats de sortie des `Step`
 
 ```ts
 // preset checker
@@ -129,7 +130,7 @@ export const IWantUserExistById = createPresetChecker(
 
 // route
 useBuilder()
-    .createRoute("GET", "/users/{userId}") // méthod, path
+    .createRoute("GET", "/users/{userId}") // method, path
     .extract({ // ExtractStep
         params: {
             userId: zod.coerce.number(),
@@ -178,17 +179,17 @@ type CodegenRoutes = ({
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Le type `CodegenRoutes` de l'exemple ci dessus a étais génére a patire de la route de ce même exemple.
-- Le preset checker `IWantUserExistById` a un contrat de réponse intégré, qui est transmit a la route dans laquel il est implémenter.
-- La `HandlerStep` de la route posséde un contrat de réponse.
+> - Le type `CodegenRoutes` a été généré à partir de la route définie ci-dessus
+> - Le preset checker `IWantUserExistById` possède un contrat de réponse intégré, qui est transmis à la route dans laquelle il est implémenté
+> - La `HandlerStep` de la route possède également un contrat de réponse
 ></div>
 
 {: .note }
-Les route hérite des contrat appartenent au proccess implémenter. 
+Les routes héritent des contrats appartenant aux process qu'elles implémentent.
 
-### Ignoré les contrat d'une step
+### Ignoré les contrats d'une step
 {: .no_toc }
-Il est possible d'indiquer au générateur qu'on ne souhaite pas prendre en compte les contrat du step. Pour cela, il suffit de passé une instance de l'objet `IgnoreByTypeCodegenDescription` dans les déscriptions d'une step.
+Il est possible d'indiquer au générateur qu'on ne souhaite pas prendre en compte les contrats d'une step. Pour cela, il suffit d'ajouté une instance de l'objet `IgnoreByTypeCodegenDescription` dans les déscriptions de la step.
 
 ```ts
 import { useBuilder, zod, OkHttpResponse, makeResponseContract } from "@duplojs/core";
@@ -250,13 +251,13 @@ type CodegenRoutes = ({
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- L'`ExtractStep` sera ignorer et le type générer ne contiendra pas de header `authorization`.
-- La `CheckerStep` sera ignorer et le type générer ne contiendra pas de réponse associer a son contrat.
+> - L'`ExtractStep` sera ignorée et le type généré ne contiendra pas de header `authorization`
+> - La `CheckerStep` sera ignorée et le type généré ne contiendra pas de réponse associée à son contrat
 ></div>
 
-### Ignoré les contrat d'une route
+### Ignoré les contrats d'une route
 {: .no_toc }
-Il est aussi possible d'indiquer au générateur qu'on souhaite ignoré une route. Pour cela, il suffit de passé une instance de l'objet `IgnoreByTypeCodegenDescription` dans les déscriptions d'une route.
+Il est aussi possible d'indiquer au générateur qu'on souhaite ignorer une route. Pour cela, il suffit d'ajouter une instance de l'objet `IgnoreByTypeCodegenDescription` dans les descriptions de la route.
 
 ```ts
 import { useBuilder, zod, OkHttpResponse, makeResponseContract } from "@duplojs/core";
@@ -290,12 +291,12 @@ useBuilder(new IgnoreByTypeCodegenDescription())
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- La description `IgnoreByTypeCodegenDescription` peut étre placer sois en argument du `useBuilder` sois en argument de la méthode `createRoute`.
-- Aucun type ne sera générer a partir de cette route.
+> - La description `IgnoreByTypeCodegenDescription` peut être placée soit en argument du `useBuilder` soit en argument de la méthode `createRoute`
+> - Aucun type ne sera généré à partir de cette route
 ></div>
 
 {: .note }
-Touts les exemple d'ignore de contrat sur les routes s'applique égalment au process.
+Tous les exemples d'ignorance de contrat sur les routes s'appliquent également aux process.
 
 ## Utilsation sans la commande
 
@@ -305,7 +306,7 @@ Il est également possible d'utiliser `@duplojs/types-codegen` sans la commande 
 import { useRouteBuilder } from "@duplojs/core";
 import { generateTypeFromRoutes } from "@duplojs/types-codegen";
 
-import "./path-to-ma-routes";
+import "./path-to-my-routes";
 
 const routes = [...useRouteBuilder.getAllCreatedRoute()];
 const generatedTypes = generateTypeFromRoutes(routes);
@@ -317,7 +318,7 @@ console.log(generatedTypes);
 >Dans cet exemple :
 ><div markdown="block">
 - Les routes sont récupérées à l'aide de `useRouteBuilder.getAllCreatedRoute()`.
-- Les routes sont importées à l'aide de `./path-to-ma-routes`.
+- Les routes sont importées à l'aide de `./path-to-my-routes`.
 - Les types sont générés à l'aide de `generateTypeFromRoutes`.
 - Les types générés sont affichés dans la console.
 ></div>
