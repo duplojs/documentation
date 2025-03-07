@@ -117,39 +117,39 @@ Le type générer trouve ça source dans vos route. Les ellement de vos routes q
 ```ts
 // preset checker
 export const IWantUserExistById = createPresetChecker(
-	userExistCheck,
-	{
-		transformInput: userExistInput.id,
-		result: "user.exist",
-		catch: () => new NotFoundHttpResponse("user.notfound"),
-		indexing: "user",
-	},
-	makeResponseContract(NotFoundHttpResponse, "user.notfound"), // Response Contract CheckerStep
+    userExistCheck,
+    {
+        transformInput: userExistInput.id,
+        result: "user.exist",
+        catch: () => new NotFoundHttpResponse("user.notfound"),
+        indexing: "user",
+    },
+    makeResponseContract(NotFoundHttpResponse, "user.notfound"), // Response Contract CheckerStep
 );
 
 // route
 useBuilder()
-	.createRoute("GET", "/users/{userId}") // méthod, path
-	.extract({ // ExtractStep
-		params: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		IWantUserExistById,
-		(pickup) => pickup("userId"),
-	)
-	.handler(
-		(pickup) => {
-			const { id, name, email } = pickup("user");
+    .createRoute("GET", "/users/{userId}") // méthod, path
+    .extract({ // ExtractStep
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        IWantUserExistById,
+        (pickup) => pickup("userId"),
+    )
+    .handler(
+        (pickup) => {
+            const { id, name, email } = pickup("user");
 
-			return new OkHttpResponse("user.found", {
-				id,
-				name,
-				email,
-			});
-		},
-		makeResponseContract(OkHttpResponse, "user.found", userSchema), // Response Contract HandlerStep
+            return new OkHttpResponse("user.found", {
+                id,
+                name,
+                email,
+            });
+        },
+        makeResponseContract(OkHttpResponse, "user.found", userSchema), // Response Contract HandlerStep
     );
 
 // output
@@ -195,38 +195,38 @@ import { useBuilder, zod, OkHttpResponse, makeResponseContract } from "@duplojs/
 import { IgnoreByTypeCodegenDescription } from "@duplojs/types-codegen";
 
 useBuilder()
-	.createRoute("GET", "/users/{userId}")
-	.extract(
-		{
-			headers: {
-				authorization: zod.string(),
-			},
-		},
-		undefined,
-		new IgnoreByTypeCodegenDescription(),  
-	)
-	.extract({
-		params: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		IWantUserExistById,
-		(pickup) => pickup("userId"),
+    .createRoute("GET", "/users/{userId}")
+    .extract(
+        {
+            headers: {
+                authorization: zod.string(),
+            },
+        },
+        undefined,
+        new IgnoreByTypeCodegenDescription(),  
+    )
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        IWantUserExistById,
+        (pickup) => pickup("userId"),
         new IgnoreByTypeCodegenDescription(),
-	)
-	.handler(
-		(pickup) => {
-			const { id, name, email } = pickup("user");
+    )
+    .handler(
+        (pickup) => {
+            const { id, name, email } = pickup("user");
 
-			return new OkHttpResponse("user.found", {
-				id,
-				name,
-				email,
-			});
-		},
-		makeResponseContract(OkHttpResponse, "user.found", userSchema),
-	);
+            return new OkHttpResponse("user.found", {
+                id,
+                name,
+                email,
+            });
+        },
+        makeResponseContract(OkHttpResponse, "user.found", userSchema),
+    );
 
 // output
 type CodegenRoutes = ({
@@ -263,28 +263,28 @@ import { useBuilder, zod, OkHttpResponse, makeResponseContract } from "@duplojs/
 import { IgnoreByTypeCodegenDescription } from "@duplojs/types-codegen";
 
 useBuilder(new IgnoreByTypeCodegenDescription())
-	.createRoute("GET", "/users/{userId}", new IgnoreByTypeCodegenDescription()) // same thing
-	.extract({
-		params: {
-			userId: zod.coerce.number(),
-		},
-	})
-	.presetCheck(
-		IWantUserExistById,
-		(pickup) => pickup("userId"),
-	)
-	.handler(
-		(pickup) => {
-			const { id, name, email } = pickup("user");
+    .createRoute("GET", "/users/{userId}", new IgnoreByTypeCodegenDescription()) // same thing
+    .extract({
+        params: {
+            userId: zod.coerce.number(),
+        },
+    })
+    .presetCheck(
+        IWantUserExistById,
+        (pickup) => pickup("userId"),
+    )
+    .handler(
+        (pickup) => {
+            const { id, name, email } = pickup("user");
 
-			return new OkHttpResponse("user.found", {
-				id,
-				name,
-				email,
-			});
-		},
-		makeResponseContract(OkHttpResponse, "user.found", userSchema),
-	);
+            return new OkHttpResponse("user.found", {
+                id,
+                name,
+                email,
+            });
+        },
+        makeResponseContract(OkHttpResponse, "user.found", userSchema),
+    );
 ```
 
 {: .highlight }
