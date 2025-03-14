@@ -23,47 +23,46 @@ npm install @duplojs/http-client
 ## Exemple minimal
 
 ```typescript
-httpClient
+import { HttpClient } from '@duplojs/http-client';
+
+const httpClient = new HttpClient({
+    baseUrl: "/"
+});
+
+const promiseRequest = httpClient
     .get(
         "/users/{userId}",
         {
             params: {
-                userId: String(1),
+                userId: "mySuperUserId",
             },
         },
     )
-    .whenResponseSuccess((res) => {
-        console.log(res)
+
+promiseRequest
+    .whenResponseSuccess((response) => {
+        console.log(response)
     })
     .whenError((error) => {
         console.error(error)
     });
+
+const response = await promiseRequest
+
+const successResponse = await promiseRequest.iWantResponseSuccess();
 ```
 
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-> - Nous utilisons la méthode `get` pour effectuer une requête HTTP GET.
-> - La route `/users/{userId}` est utilisée pour récupérer les informations d'un utilisateur.
-> - Le paramètre `userId` est défini dans l'objet `params`.
-> - La méthode `whenResponseSuccess` est utilisée pour exécuter du code en cas de succès.
-> - La méthode `whenError` est utilisée pour exécuter du code en cas d'erreur.
+> - Un client http a étais créer avec la baseUrl `"/"`.
+> - Nous utilisons la méthode `get` du client http pour effectuer une requête HTTP GET, cette méthode renvois un `Promise`.
+> - La requête est faite sur le path `/users/{userId}`, la valeur `{userId}` du path sera remplacer pars la valeur définit a `params.userId`.
+> - La méthode `whenResponseSuccess` de `PromiseRequest` est utilisée pour définir un callback qui sera executer dans le cas ou la requête porte un code `200`.
+> - La méthode `whenError` de `PromiseRequest` est utilisée pour définir un callback qui sera executer en cas de d'echec de la requête.
+> - La `PromiseRequest` est `await` pour obtenir la réponse.
+> - La méthode `iWantResponseSuccess` de `PromiseRequest` renvois un `Promise` qui réussis uniquement si la requête porte un code `200`.
 ></div>
-
-Vous pouvez également faire la requête ci dessus de cette manière :
-
-```typescript
-const response = await httpClient
-    .get(
-        "/users/{userId}",
-        {
-            params: {
-                userId: String(1),
-            },
-        },
-    )
-    .iWantResponseSuccess();
-```
 
 ## Pourquoi @duplojs/http-client ?
 
@@ -86,7 +85,7 @@ Pour créer une nouvelle instance du client HTTP, utilisez la classe `HttxpClien
 Celle-ci accepte un objet de configuration avec les propriétés suivantes :
 
 ```typescript
-import { HttpClient, type TransformCodegenRouteToHttpClientRoute } from '@duplojs';
+import { HttpClient, type TransformCodegenRouteToHttpClientRoute } from '@duplojs/http-client';
 import { CodegenRoutes } from "./types/routes";
 
 type HttpClientRoute = TransformCodegenRouteToHttpClientRoute<CodegenRoutes>;
