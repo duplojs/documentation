@@ -55,7 +55,7 @@ const successResponse = await promiseRequest.iWantResponseSuccess();
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-> - Un client http a étais créer avec la baseUrl `"/"`.
+> - Un client http a étais créer avec la baseUrl `/`.
 > - Nous utilisons la méthode `get` du client http pour effectuer une requête HTTP GET, cette méthode renvois un `Promise`.
 > - La requête est faite sur le path `/users/{userId}`, la valeur `{userId}` du path sera remplacer pars la valeur définit a `params.userId`.
 > - La méthode `whenResponseSuccess` de `PromiseRequest` est utilisée pour définir un callback qui sera executer dans le cas ou la requête porte un code `200`.
