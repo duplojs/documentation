@@ -64,6 +64,14 @@ const successResponse = await promiseRequest.iWantResponseSuccess();
 > - La méthode `iWantResponseSuccess` de `PromiseRequest` renvois un `Promise` qui réussis uniquement si la requête porte un code `200`.
 ></div>
 
+## Pourquoi @duplojs/http-client ?
+
+Bien que des librairies comme `fetch` ou `axios` soient largement utilisées pour les requêtes HTTP, `@duplojs/http-client` apporte plusieurs avantages significatifs :
+
+1. **Support des réponse avec information.**
+2. **Systéme de hook complet.**
+3. **Typage bout en bout possible**
+
 ## Création de l'instance du client HTTP
 
 Pour créer une nouvelle instance du client HTTP, utilisez la classe `HttpClient`.
@@ -85,12 +93,6 @@ const httpClient = new HttpClient({
 > - Le lien de l'API qui sera utilisé pour faire des requête est `https://google.com/base/url`.
 > - La clef a la qu'elle sera chercher l'information dans les headers est `my-info`.
 ></div>
-
-{: .note }
-> L'utilisation du typage généré par `@duplojs/types-codegen` permet de bénéficier de :
-> - L'autocomplétion des routes
-> - La vérification des types pour les paramètres de requête
-> - La validation des réponses à la compilation
 
 | Propriété | Type | Valeur par défaut | Description |
 |-----------|-----------|-----------|-------------|
@@ -596,21 +598,6 @@ httpClient.hooks.add({
     }
 });
 ```
-
-## Pourquoi @duplojs/http-client ?
-
-Bien que des librairies comme `fetch` ou `axios` soient largement utilisées pour les requêtes HTTP, `@duplojs/http-client` apporte plusieurs avantages significatifs :
-
-1. **Typage fort entre le front et le back**
-   - Génération automatique des types via `@duplojs/types-codegen`
-   - Cohérence garantie entre les types côté client et serveur
-   - Autocomplétion intelligente des routes et paramètres
-
-2. **Système d'informations typées**
-   - Les réponses sont typées en fonction de l'information retournée
-   - Le type retourné correspond exactement à ce que vous attendez
-
-En effet, avec `@duplojs/http-client`, vous bénéficier du travail de typage éffectuer en back. Avec cette solution plus besoin de swagger ou de documentation pour connaitre les routes et les types de retour. Vous avez tout en main pour travailler de manière plus efficace.
 
 {: .note }
 > Ces exemples illustrent des cas d'utilisation simples mais fréquents dans une application web moderne.
