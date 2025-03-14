@@ -64,46 +64,26 @@ const successResponse = await promiseRequest.iWantResponseSuccess();
 > - La méthode `iWantResponseSuccess` de `PromiseRequest` renvois un `Promise` qui réussis uniquement si la requête porte un code `200`.
 ></div>
 
-## Pourquoi @duplojs/http-client ?
-
-Bien que des librairies comme `fetch` ou `axios` soient largement utilisées pour les requêtes HTTP, `@duplojs/http-client` apporte plusieurs avantages significatifs :
-
-1. **Typage fort entre le front et le back**
-   - Génération automatique des types via `@duplojs/types-codegen`
-   - Cohérence garantie entre les types côté client et serveur
-   - Autocomplétion intelligente des routes et paramètres
-
-2. **Système d'informations typées**
-   - Les réponses sont typées en fonction de l'information retournée
-   - Le type retourné correspond exactement à ce que vous attendez
-
-En effet, avec `@duplojs/http-client`, vous bénéficier du travail de typage éffectuer en back. Avec cette solution plus besoin de swagger ou de documentation pour connaitre les routes et les types de retour. Vous avez tout en main pour travailler de manière plus efficace.
-
 ## Création de l'instance du client HTTP
 
-Pour créer une nouvelle instance du client HTTP, utilisez la classe `HttxpClient`.
+Pour créer une nouvelle instance du client HTTP, utilisez la classe `HttpClient`.
 Celle-ci accepte un objet de configuration avec les propriétés suivantes :
 
-```typescript
-import { HttpClient, type TransformCodegenRouteToHttpClientRoute } from '@duplojs/http-client';
-import { CodegenRoutes } from "./types/routes";
+```ts
+import { HttpClient } from '@duplojs/http-client';
 
-type HttpClientRoute = TransformCodegenRouteToHttpClientRoute<CodegenRoutes>;
-
-const httpClient = new HttpClient<HttpClientRoute>({
-    baseUrl: "your-base-url", // Obligatoire
-    keyToInformation: "your-key-to-information" // Optionnel
+const httpClient = new HttpClient({
+    baseUrl: "https://google.com/base/url",
+    keyToInformation: "my-info" 
 });
 ```
 
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-> - `CodegenRoutes` est le type généré par `@duplojs/types-codegen` à partir des routes de votre application DuploJS.
-> - Le type `TransformCodegenRouteToHttpClientRoute` est une fonction générique qui transforme le type `CodegenRoutes` en un type utilisable par `HttpClient`.
-> - `HttpClientRoute` est le type utilisable par `HttpClient` après transformation.
-> - `baseUrl` est l'URL de base de l'API.
-> - `keyToInformation` permet de redéfinir la clé qui désigne l'information dans les en-têtes HTTP.
+> - Un objet `HttpClient` a étais instancier.
+> - Le lien de l'API qui sera utilisé pour faire des requête est `https://google.com/base/url`.
+> - La clef a la qu'elle sera chercher l'information dans les headers est `my-info`.
 ></div>
 
 {: .note }
@@ -616,6 +596,21 @@ httpClient.hooks.add({
     }
 });
 ```
+
+## Pourquoi @duplojs/http-client ?
+
+Bien que des librairies comme `fetch` ou `axios` soient largement utilisées pour les requêtes HTTP, `@duplojs/http-client` apporte plusieurs avantages significatifs :
+
+1. **Typage fort entre le front et le back**
+   - Génération automatique des types via `@duplojs/types-codegen`
+   - Cohérence garantie entre les types côté client et serveur
+   - Autocomplétion intelligente des routes et paramètres
+
+2. **Système d'informations typées**
+   - Les réponses sont typées en fonction de l'information retournée
+   - Le type retourné correspond exactement à ce que vous attendez
+
+En effet, avec `@duplojs/http-client`, vous bénéficier du travail de typage éffectuer en back. Avec cette solution plus besoin de swagger ou de documentation pour connaitre les routes et les types de retour. Vous avez tout en main pour travailler de manière plus efficace.
 
 {: .note }
 > Ces exemples illustrent des cas d'utilisation simples mais fréquents dans une application web moderne.
