@@ -107,7 +107,7 @@ Par défaut, HTTP utilise des codes de statut (200, 404, 500, etc.) pour indique
 
 Pour résoudre ce problème, `@duplojs/http-client` introduit le concept d'**information**. Une information est un identifiant unique envoyé dans les en-têtes HTTP qui permet d'identifier précisément le résultat d'une requête.
 
-```typescript
+```ts
 await httpClient
     .post(
         "/timesheet",
@@ -146,20 +146,23 @@ await httpClient
 
 Pour effectuer une requête POST, utilisez la méthode `post` qui est disponible sur l'instance du client HTTP.
 
-```typescript
-httpClient.post(
-    "/products", 
-    {
-        body: {
-            name: "shoes",
-            price: 100
+```ts
+httpClient
+    .post(
+        "/products", 
+        {
+            body: {
+                name: "shoes",
+                price: 100
+            }
         }
-    }
-).whenResponseSuccess(() => {
-    console.log("Product created");
-}).whenError(() => {
-    console.log("Product not created");
-});
+    )
+    .whenResponseSuccess(() => {
+        console.log("Product created");
+    })
+    .whenError(() => {
+        console.log("Product not created");
+    });
 ```
 
 {: .highlight }
@@ -197,8 +200,8 @@ La méthode `setDefaultRequestParams` permet de définir des paramètres par dé
 ### Utilisation basique
 {: .no_toc }
 
-```typescript
-const httpClient = new HttpClient<HttpClientRoute>({
+```ts
+const httpClient = new HttpClient({
     baseUrl: "https://api.example.com"
 });
 
@@ -246,7 +249,7 @@ httpClient.setDefaultRequestParams({
 Pour montrer un cas d'utilisation complet, voici un exemple de configuration d'un client HTTP avec des paramètres par défaut ainsi que sont utilisation.
 Tout d'abord, nous créons une instance du client HTTP et définissons les paramètres par défaut :
 
-```typescript
+```ts
 export const httpClient = new HttpClient<HttpClientRoute>({
  baseUrl: "api.example.com",
 });
@@ -275,30 +278,34 @@ httpClient.setDefaultRequestParams({
 
 Ensuite nous utilisons le client HTTP pour effectuer une requête :
 
-```typescript
+```ts
 // Les paramètres par défaut sont appliqués automatiquement
-const response = await httpClient.get(
-    "/users/{userId}",
-    {
-        params: {
-            userId: String(1),
+const response = await httpClient
+    .get(
+        "/users/{userId}",
+        {
+            params: {
+                userId: "1",
+            },
         },
-    },
-).iWantInformation("user.found");
+    )
+    .iWantInformation("user.found");
 
 // Les paramètres peuvent être surchargés
-const specificResponse = await httpClient.get(
-    "/users/{userId}",
-    {
-        params: {
-            userId: String(1),
+const specificResponse = await httpClient
+    .get(
+        "/users/{userId}",
+        {
+            params: {
+                userId: "1",
+            },
+            headers: {
+                "Accept-Language": "en-US", // Surcharge le paramètre par défaut
+                "Authorization": "Bearer token" // Ajout d'un nouveau paramètre
+            }
         },
-        headers: {
-            "Accept-Language": "en-US", // Surcharge le paramètre par défaut
-            "Authorization": "Bearer token" // Ajout d'un nouveau paramètre
-        }
-    },
-).iWantInformation("user.found");
+    )
+    .iWantInformation("user.found");
 ```
 
 {: .highlight }
@@ -308,19 +315,11 @@ const specificResponse = await httpClient.get(
 > - La deuxième requête surcharge le paramètre `Accept-Language` et ajoute un nouvel en-tête `Authorization`.
 ></div>
 
-```typescript
-import {
- HttpClient,
- type TransformCodegenRouteToHttpClientRoute,
-} from "@duplojs/http-client";
-import { CodegenRoutes } from "../types/duplojsTypesCodegen";
+```ts
+import { HttpClient } from "@duplojs/http-client";
 
-export type HttpClientRoute = TransformCodegenRouteToHttpClientRoute<
- CodegenRoutes
->;
-
-export const httpClient = new HttpClient<HttpClientRoute>({
- baseUrl: "your.server.url",
+export const httpClient = new HttpClient({
+    baseUrl: "your.server.url",
 });
 
 httpClient.setDefaultRequestParams({
@@ -364,7 +363,7 @@ Les intercepteurs permettent d'intercepter et de modifier les requêtes avant le
 ### Exemple d'utilisation
 {: .no_toc }
 
-```typescript
+```ts
 // Intercepteur de requête
 httpClient.setInterceptor("request", async (request) => {
     // Ajout d'un token d'authentification
@@ -406,7 +405,7 @@ httpClient.setInterceptor("response", async (response) => {
 #### Authentification dynamique
 {: .no_toc }
 
-```typescript
+```ts
 httpClient.setInterceptor("request", async (request) => {
     const token = await getToken();
     if (request.headers) {
@@ -420,7 +419,7 @@ httpClient.setInterceptor("request", async (request) => {
 #### Logging des requêtes
 {: .no_toc }
 
-```typescript
+```ts
 httpClient.setInterceptor("request", (request) => {
     console.log(`[${new Date().toISOString()}] ${request.method} ${request.path}`);
     return request;
@@ -430,7 +429,7 @@ httpClient.setInterceptor("request", (request) => {
 #### Transformation du corp des réponses
 {: .no_toc }
 
-```typescript
+```ts
 httpClient.setInterceptor("response", async (response) => {
     if (response.body) {
         response.body = {
@@ -445,7 +444,7 @@ httpClient.setInterceptor("response", async (response) => {
 #### Gestion globale des erreurs
 {: .no_toc }
 
-```typescript
+```ts
 httpClient.setInterceptor("response", async (response) => {
     if (!response.ok) {
         switch (response.code) {
@@ -484,7 +483,7 @@ Les hooks permettent d'exécuter du code en fonction de certaines conditions sur
 #### Hook sur un code HTTP spécifique
 {: .no_toc }
 
-```typescript
+```ts
 httpClient.hooks.add({
     type: "code",
     value: 401,
@@ -497,7 +496,7 @@ httpClient.hooks.add({
 #### Hook sur une plage de codes HTTP
 {: .no_toc }
 
-```typescript
+```ts
 httpClient.hooks.add({
     type: "general",
     value: 200, // Se déclenche pour tous les codes 2XX
@@ -510,7 +509,7 @@ httpClient.hooks.add({
 #### Hook sur les erreurs
 {: .no_toc }
 
-```typescript
+```ts
 httpClient.hooks.add({
     type: "error",
     callback: async (response) => {
@@ -523,7 +522,7 @@ httpClient.hooks.add({
 #### Hook sur une information spécifique
 {: .no_toc }
 
-```typescript
+```ts
 httpClient.hooks.add({
     type: "information",
     value: "user.found",
@@ -548,7 +547,7 @@ httpClient.hooks.add({
 
 1. **Notification utilisateur**
 
-```typescript
+```ts
 // Afficher une notification pour chaque erreur
 httpClient.hooks.add({
     type: "error",
@@ -575,7 +574,7 @@ httpClient.hooks.add({
 
 1. **Rafraîchissement automatique**
 
-```typescript
+```ts
 // Actualiser la liste des utilisateurs
 httpClient.hooks.add({
     type: "information",
@@ -588,7 +587,7 @@ httpClient.hooks.add({
 
 1. **Redirection**
 
-```typescript
+```ts
 // Rediriger vers la page de connexion
 httpClient.hooks.add({
     type: "code",
