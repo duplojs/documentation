@@ -214,6 +214,7 @@ Une fois l'instance du client HTTP créée, vous pouvez utiliser les méthodes s
 La méthode `setDefaultRequestParams` permet de définir des paramètres par défaut qui seront appliqués à toutes les requêtes effectuées par le client HTTP. Ces paramètres peuvent être surchargés individuellement lors de l'appel des méthodes HTTP.
 
 ### Utilisation basique
+{: .no_toc }
 
 ```typescript
 const httpClient = new HttpClient<HttpClientRoute>({
@@ -239,6 +240,7 @@ httpClient.setDefaultRequestParams({
 ></div>
 
 ### Paramètres disponibles
+{: .no_toc }
 
 | Paramètre | Type | Description |
 |-----------|------|-------------|
@@ -258,6 +260,7 @@ httpClient.setDefaultRequestParams({
 | `duplex` | `"half" | undefined` | Duplex |
 
 ### Exemple complet
+{: .no_toc }
 
 Pour montrer un cas d'utilisation complet, voici un exemple de configuration d'un client HTTP avec des paramètres par défaut ainsi que sont utilisation.
 Tout d'abord, nous créons une instance du client HTTP et définissons les paramètres par défaut :
@@ -378,6 +381,7 @@ Les intercepteurs permettent d'intercepter et de modifier les requêtes avant le
 - Gérer les erreurs de manière centralisée
 
 ### Exemple d'utilisation
+{: .no_toc }
 
 ```typescript
 // Intercepteur de requête
@@ -408,6 +412,7 @@ httpClient.setInterceptor("response", async (response) => {
 ></div>
 
 ### Types d'intercepteurs
+{: .no_toc }
 
 | Type | Signature | Description |
 |------|-----------|-------------|
@@ -415,8 +420,10 @@ httpClient.setInterceptor("response", async (response) => {
 | `response` | `(response: Response) => Promise<Response>` | Transforme la réponse avant son traitement |
 
 ### Cas d'utilisation courants
+{: .no_toc }
 
 #### Authentification dynamique
+{: .no_toc }
 
 ```typescript
 httpClient.setInterceptor("request", async (request) => {
@@ -430,6 +437,7 @@ httpClient.setInterceptor("request", async (request) => {
 ```
 
 #### Logging des requêtes
+{: .no_toc }
 
 ```typescript
 httpClient.setInterceptor("request", (request) => {
@@ -439,6 +447,7 @@ httpClient.setInterceptor("request", (request) => {
 ```
 
 #### Transformation du corp des réponses
+{: .no_toc }
 
 ```typescript
 httpClient.setInterceptor("response", async (response) => {
@@ -453,6 +462,7 @@ httpClient.setInterceptor("response", async (response) => {
 ```
 
 #### Gestion globale des erreurs
+{: .no_toc }
 
 ```typescript
 httpClient.setInterceptor("response", async (response) => {
@@ -478,6 +488,7 @@ httpClient.setInterceptor("response", async (response) => {
 Les hooks permettent d'exécuter du code en fonction de certaines conditions sur les réponses HTTP. Contrairement aux intercepteurs qui modifient les requêtes/réponses, les hooks sont purement réactifs et ne peuvent pas modifier les réponses.
 
 ### Types de hooks disponibles
+{: .no_toc }
 
 | Type | Description |
 |------|-------------|
@@ -487,8 +498,10 @@ Les hooks permettent d'exécuter du code en fonction de certaines conditions sur
 | `information` | Se déclenche sur une information spécifique |
 
 ### Exemples d'utilisation des hooks
+{: .no_toc }
 
 #### Hook sur un code HTTP spécifique
+{: .no_toc }
 
 ```typescript
 httpClient.hooks.add({
@@ -501,6 +514,7 @@ httpClient.hooks.add({
 ```
 
 #### Hook sur une plage de codes HTTP
+{: .no_toc }
 
 ```typescript
 httpClient.hooks.add({
@@ -513,6 +527,7 @@ httpClient.hooks.add({
 ```
 
 #### Hook sur les erreurs
+{: .no_toc }
 
 ```typescript
 httpClient.hooks.add({
@@ -525,6 +540,7 @@ httpClient.hooks.add({
 ```
 
 #### Hook sur une information spécifique
+{: .no_toc }
 
 ```typescript
 httpClient.hooks.add({
@@ -535,6 +551,7 @@ httpClient.hooks.add({
     }
 });
 ```
+{: .no_toc }
 
 {: .highlight }
 >Points importants :
@@ -546,6 +563,7 @@ httpClient.hooks.add({
 ></div>
 
 ### Cas d'utilisation courants des hooks
+{: .no_toc }
 
 1. **Notification utilisateur**
 
