@@ -59,6 +59,7 @@ Les paramètres suivants sont fortement conseillés à inclure dans votre fichie
         "noEmit": true,
         "esModuleInterop": true,
         "strict": true,
+        "skipLibCheck": true,
         ...
     },
     /* ce paramètre dépend de votre configuration */
