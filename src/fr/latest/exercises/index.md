@@ -4,4 +4,4 @@ layout: default
 title: Exercices
 ---
 
-[Retour au Références](..)
+[Retour au sommaire](..)

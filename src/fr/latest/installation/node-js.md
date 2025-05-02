@@ -92,4 +92,4 @@ npm run dev
 ```
 
 
-[Retour au Références](../..)
+[Retour au sommaire](../..)

@@ -37,4 +37,4 @@ has_toc: false
     - Implémentation d'un process
     - Créer ses propres builders
 
-[Retour au Références](..)
+[Retour au sommaire](..)

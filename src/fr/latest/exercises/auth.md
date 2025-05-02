@@ -7,10 +7,10 @@ title: Authentification
 
 # Création d'un service d'authentification
 L'objectif de cet exercice est de créer une API d’authentification.
-Une réalisation de cet exercice est disponible [ici](https://github.com/duplojs/examples/tree/main/exercises/to-do).
+Une réalisation de cet exercice est disponible [ici](https://github.com/duplojs/examples/tree/main/exercises/auth).
 
 ## Cachier des charges 
-Le grand Georges souhaite avoir une application qui permet de stocker des informations personnelles. Il veut partager son application avec toute sa famille pour qu'ils puissent eux aussi enregistrer ce qu'ils souhaitent. Cependant, il ne veut pas que les un ai accès aux informations des autres.
+Le grand Georges souhaite avoir une application qui permet de stocker des informations personnelles. Il veut partager son application avec toute sa famille pour qu'ils puissent eux aussi enregistrer ce qu'ils souhaitent. Cependant, il ne veut pas que les uns aient accès aux informations des autres.
 
 Pour répondre à son besoin il faut :
 - Pouvoir s’inscrire. 
@@ -31,4 +31,4 @@ Les tâches à réaliser sont les suivantes :
 - Créer les schémas des documents des informations personelles.
 - Créer le CRUD pour les informations personelles.
 
-[Retour au Références](../..)
+[Retour au sommaire](../..)
