@@ -65,10 +65,10 @@ La théorie des ensembles en `TypeScript` se reflète dans la manière dont les 
 
 type A = "hello world";
 type checkA = A extends string ? true : false // checkA = true
-// "hello world" fait bien parti de l'ensemble string
+// "hello world" fait bien partie de l'ensemble string
 
 type checkString = string extends A ? true : false // checkString = false
-// string ne fait pas parti de "hello world" car c'est un type literal
+// string ne fait pas partie de "hello world" car c'est un type literal
 
 ```
 
@@ -121,4 +121,4 @@ const labelsContract: StatusLabel = {
 type labelsContractKeys = keyof typeof labelsContract // type string
 ```
 
-[Retour au Références](../..)
+[Retour au sommaire](../..)

@@ -55,11 +55,11 @@ const successResponse = await promiseRequest.iWantResponseSuccess();
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-> - Un client http a étais créer avec la baseUrl `/`.
+> - Un client http a été créé avec la baseUrl `/`.
 > - Nous utilisons la méthode `get` du client http pour effectuer une requête HTTP GET, cette méthode renvois un `Promise`.
-> - La requête est faite sur le path `/users/{userId}`, la valeur `{userId}` du path sera remplacer pars la valeur définit a `params.userId`.
-> - La méthode `whenResponseSuccess` de `PromiseRequest` est utilisée pour définir un callback qui sera executer dans le cas ou la requête porte un code `200`.
-> - La méthode `whenError` de `PromiseRequest` est utilisée pour définir un callback qui sera executer en cas de d'echec de la requête.
+> - La requête est faite sur le path `/users/{userId}`, la valeur `{userId}` du path sera remplacée par la valeur définit dans `params.userId`.
+> - La méthode `whenResponseSuccess` de `PromiseRequest` est utilisée pour définir un callback qui sera executé dans le cas où la requête porte un code `200`.
+> - La méthode `whenError` de `PromiseRequest` est utilisée pour définir un callback qui sera executé en cas de d'échec de la requête.
 > - La `PromiseRequest` est `await` pour obtenir la réponse.
 > - La méthode `iWantResponseSuccess` de `PromiseRequest` renvois un `Promise` qui réussis uniquement si la requête porte un code `200`.
 ></div>
@@ -68,7 +68,7 @@ const successResponse = await promiseRequest.iWantResponseSuccess();
 
 Bien que des librairies comme `fetch` ou `axios` soient largement utilisées pour les requêtes HTTP, `@duplojs/http-client` apporte plusieurs avantages significatifs :
 
-1. **Support des réponse avec information.**
+1. **Support des réponses avec information.**
 2. **Systéme de hook complet.**
 3. **Typage bout en bout possible**
 
@@ -89,9 +89,9 @@ const httpClient = new HttpClient({
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-> - Un objet `HttpClient` a étais instancier.
+> - Un objet `HttpClient` a été instancié.
 > - Le lien de l'API qui sera utilisé pour faire des requête est `https://google.com/base/url`.
-> - La clef a la qu'elle sera chercher l'information dans les headers est `my-info`.
+> - La clef à laquelle sera rattachée l'information dans les headers est `my-info`.
 ></div>
 
 | Propriété | Type | Valeur par défaut | Description |

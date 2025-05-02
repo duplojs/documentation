@@ -38,7 +38,7 @@ Pour générer du typages à partir des routes de votre application, vous aurez 
 {: .highlight }
 >Dans cet exemple :
 ><div markdown="block">
-- Une commande `generate-types` a étais ajouter dans le fichier `package.json`.
+- Une commande `generate-types` a été ajoutée dans le fichier `package.json`.
 - La commande `duplojs-types-codegen` est utilisé pour générer les types.
 - L'option `--include` est utilisé pour spécifier le fichier d'entrée.
 - L'option `--output` est utilisé pour spécifier le fichier de sortie des types.

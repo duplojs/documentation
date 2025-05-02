@@ -1,10 +1,10 @@
 ---
 nav_order: 1
 layout: default
-title: Références
+title: Sommaire
 ---
 
-# Références
+# Sommaire
 
 ## Introduction [▶](./introduction)
 

@@ -14,7 +14,7 @@ Tous les exemples présentés dans ce cours sont disponibles en entier [ici](htt
 {:toc}
 
 ## Les contrats de sortie
-Un contrat de sortie est un objet réponse avec comme body un schéma Zod. Les contrats s'appliquent uniquement pour 3 propriétés, le `code`, l'`information` et le `body`. Un contrat peut être un objet réponse ou un tableau d'objets réponse. La fonction `makeResponseContract` optimise les contrats dans le cas d'un code et body similaire mais a information différente.
+Un contrat de sortie est un objet réponse avec comme body un schéma Zod. Les contrats s'appliquent uniquement pour 3 propriétés, le `code`, l'`information` et le `body`. Un contrat peut être un objet réponse ou un tableau d'objets réponse. La fonction `makeResponseContract` optimise les contrats dans le cas d'un code et body similaire mais à information différente.
 
 ```ts
 import { OkHttpResponse, Response, zod, makeResponseContract, ForbiddenHttpResponse } from "@duplojs/core";

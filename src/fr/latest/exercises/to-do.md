@@ -15,16 +15,16 @@ Le petit Jean veut pouvoir s’organiser de manière innovante. Il souhaite cré
 Pour répondre à son besoin il faut :
 - Pouvoir créer des listes et les modifier. 
 - Pouvoir créer des tâches liées à des listes et les modifier.
-- Pouvoir récupérer toute les listes.
-- Pouvoir récupérer toute les tâches d'une liste.
+- Pouvoir récupérer toutes les listes.
+- Pouvoir récupérer toutes les tâches d'une liste.
 
 Pour la base de donnée, vous utiliserez ce [fichier](https://github.com/duplojs/examples/blob/main/exercises/to-do/src/providers/myDataBase.ts).
 
 ## Tâche à réaliser
-Les tâches a réaliser sont les suivantes :
+Les tâches à réaliser sont les suivantes :
 - Initialiser un projet Duplo.
 - Créer les checkers pour les tâches et les listes.
-- Créer les schémas des documents tâche et liste.
+- Créer les schémas des documents tâches et listes.
 - Créer les routes.
 
-[Retour au Références](../..)
+[Retour au sommaire](../..)

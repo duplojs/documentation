@@ -3,9 +3,11 @@ layout: default
 title: Introduction
 nav_order: 2
 ---
+
 # Introduction
 
 ## Raison d'être
+
 Comme beaucoup de développeurs **Node**, j’ai commencé à créer des serveurs **HTTP** avec **Express**. Tout me paraissait simple : **JavaScript** et **Express** forment un combo très flexible. **Express** offre une **liberté** totale dans la gestion des points d’entrée. Il met entre nos mains un objet représentant la **requête** et un autre représentant la **réponse**. Avec cela, et grâce à son système de **middleware**, il est très simple de lancer des projets.
 
 Cependant, au fur et à mesure que mes projets évoluaient, j’avais de plus en plus de mal à avancer. La codebase devenait trop grande et mon code manquait de **lisibilité**. Malheureusement, **JavaScript** et **Express**, en offrant tellement de **liberté**, ne proposent rien qui incite à bien **structurer** son code. Tout dépend uniquement du bon vouloir du développeur, l’être le plus **faillible** de tous les humains !
@@ -14,9 +16,9 @@ Puis un jour, comme beaucoup de développeurs **JavaScript**, j’ai découvert 
 
 Après cette crise existentielle et d’égo inutile, j’ai appris à utiliser **TypeScript**. J’ai rapidement remarqué que le typage **d’Express**, avec ses **middlewares** **implicites**, était complètement **incompatible** avec **TypeScript**. J’ai alors testé plusieurs bibliothèques. **D’Express**, je suis passé à **Fastify**, puis à **Adonis**, et enfin à **Nest**.
 
-**Adonis** et **Nest** me semblaient être de bons choix, mais ils n’exploitaient pas **TypeScript** à son plein potentiel. Ces **frameworks** proposer un typage **statique** basique et laissent encore trop d’actions **implicites** où le typage ne suit qu’au bon vouloir du développeur. Dans ce cas, autant utiliser **Symfony** ou **Laravel**, non ?
+**Adonis** et **Nest** me semblaient être de bons choix, mais ils n’exploitaient pas **TypeScript** à son plein potentiel. Ces **frameworks** proposent un typage **statique** basique et laissent encore trop d’actions **implicites** où le typage ne suit qu’au bon vouloir du développeur. Dans ce cas, autant utiliser **Symfony** ou **Laravel**, non ?
 
-C’est donc dans une optique d’obtenir un typage **continu**, de ne plus avoir de code **implicite**, de faciliter la **collaboration**, et de créer des **routes** **robustes** et **incassables** que **Duplo** est né. Ce sont ces problématiques que **Duplo** tente de résoudre. **Duplo** n’a pas pour objectif d’être une "nouvelle techno". Duplo n’invente rien. Même si vous ne l’utilisez pas avec toutes ses fonctionnalités, il vous simplifiera la vie.
+C’est donc dans une optique d’obtenir un typage **continu**, de ne plus avoir de code **implicite**, de faciliter la **collaboration**, et de créer des **routes robustes** et **incassables** que **Duplo** est né. Ce sont ces problématiques que **Duplo** tente de résoudre. **Duplo** n’a pas pour objectif d’être une "nouvelle techno". Duplo n’invente rien. Même si vous ne l’utilisez pas avec toutes ses fonctionnalités, il vous simplifiera la vie.
 
 ## Philosophie du framework
 
@@ -32,7 +34,7 @@ Enfin, **Duplo** se veut **agnostique**[^2]. Son **core** ne dépend d'aucune pl
 
 ## Le scope
 
-**Duplo** est comparable a un **Express** ou un **Fastify**, il se branche directement au **API**s natives des platforms. **Duplo** ne prend pas en charge la couche **ORM**[^6] et gestion des **services**. Cependant il met des solutions pour intégrer ce que vous souhaitez. Le rôle de **Duplo** est de vous **inciter** a faire le plus de **vérification** possible pour vous **garantir** la **fiabilité** des données.
+**Duplo** est comparable à un **Express** ou un **Fastify**, il se branche directement aux **API**s natives des plateformes. **Duplo** ne prend pas en charge la couche **ORM**[^6] et gestion des **services**. Cependant il met des solutions pour intégrer ce que vous souhaitez. Le rôle de **Duplo** est de vous **inciter** à faire le plus de **vérifications** possible pour vous **garantir** la **fiabilité** des données.
 
 [^1]: Helpers : Fonctions utilitaires et assistantes au typage.
 [^2]: Agnostique : Qui n'est pas lié à une technologie particulière.
@@ -41,4 +43,4 @@ Enfin, **Duplo** se veut **agnostique**[^2]. Son **core** ne dépend d'aucune pl
 [^5]: Middleware : Fonction intermédiaire qui peut être utilisée pour effectuer des tâches supplémentaires avant ou après le traitement de la requête.
 [^6]: ORM : Object-Relational Mapping, permet de manipuler des données de la base de données en utilisant des objets.
 
-[Retour au Références](..)
+[Retour au sommaire](..)

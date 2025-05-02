@@ -42,7 +42,7 @@ export const myRoute = useBuilder()
 ></div>
 
 {: .note }
-La méthode `handler` fait partir du **builder** de l'objet `Route`. Elle a pour effet direct d'ajouter une `HandlerStep` aux **étapes** de la **route** en cours de création. Les **routes** ne peuvent avoir qu'une seule `HandlerStep` qui doit obligatoirement être la dernière **étapes**. C'est pourquoi l'appel de cette méthode clôture la création de l'objet `Route` et le renvoie.
+La méthode `handler` fait partie du **builder** de l'objet `Route`. Elle a pour effet direct d'ajouter une `HandlerStep` aux **étapes** de la **route** en cours de création. Les **routes** ne peuvent avoir qu'une seule `HandlerStep` qui doit obligatoirement être la dernière **étapes**. C'est pourquoi l'appel de cette méthode clôture la création de l'objet `Route` et le renvoie.
 
 ### Cycle d'exécution
 {: .no_toc }
@@ -109,7 +109,7 @@ import { Response, OkHttpResponse } from "@duplojs/core";
 console.log(new OkHttpResponse(undefined) instanceof Response);
 
 const presetReponse = new OkHttpResponse("OK", "Hello, World!");
-// équivalent a
+// équivalent à
 const reponse = new Response(200, "OK", "Hello, World!");
 ```
 
