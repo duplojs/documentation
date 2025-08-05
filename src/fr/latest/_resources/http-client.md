@@ -600,5 +600,3 @@ httpClient.hooks.add({
 
 {: .note }
 > Ces exemples illustrent des cas d'utilisation simples mais fréquents dans une application web moderne.
-
-// TODO: proposer un mini projet duplo/vue pour montrer comment utiliser le client http dans un vrai projet
